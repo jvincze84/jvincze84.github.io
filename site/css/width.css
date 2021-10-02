@@ -1,0 +1,25 @@
+.wy-nav-content {
+	max-width: 80% !important;
+}
+
+.md-grid {
+#max-width: initial !important;
+max-width: 85% !important;
+}
+
+[data-linenos]:before {
+  content: attr(data-linenos);
+}
+
+ 
+ 
+.language-bassh  {
+        font-size: 0.6rem !important;
+    }
+ 
+pre[class*="language-"] {
+        font-size: 0.7rem !important;
+        max-height: 32em !important; 
+        overflow: auto !important;
+    }
+

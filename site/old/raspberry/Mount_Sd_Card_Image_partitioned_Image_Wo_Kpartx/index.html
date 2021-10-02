@@ -1,0 +1,1075 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="canonical" href="http://proba.voda.net/site/old/raspberry/Mount_Sd_Card_Image_partitioned_Image_Wo_Kpartx/">
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.0">
+    
+    
+      
+        <title>Mount SD card image (partitioned image) w/o kpartx - Vincze Janos blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.8b42a75e.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../../css/width.css">
+    
+      <link rel="stylesheet" href="../../../css/prism.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="ligh" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mount-sd-card-image-partitioned-image-wo-kpartx" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Vincze Janos blog" class="md-header__button md-logo" aria-label="Vincze Janos blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Vincze Janos blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Mount SD card image (partitioned image) w/o kpartx
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Vincze Janos blog" class="md-nav__button md-logo" aria-label="Vincze Janos blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Vincze Janos blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          Outdated Docs (WARIN)
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Outdated Docs (WARIN)" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Outdated Docs (WARIN)
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Collect_Network_Statistic_With_Telegraf_Vnstat/" class="md-nav__link">
+        Collect Network Statistic With Telegraf & VNSTAT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Iptables_Examples/" class="md-nav__link">
+        Iptables Examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Nokia_6120c_%28bb5%29_Forgotten_Security_Code/" class="md-nav__link">
+        Nokia 6120c (BB5) Forgotten Security Code
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Sonoff_Relays_With_Openhab_And_Tasmota_Firmware/" class="md-nav__link">
+        Sonoff Relays With OpenHab And Tasmota Firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_5" type="checkbox" id="__nav_1_5" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_5">
+          Raspberry & Orange PI
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Raspberry & Orange PI" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_5">
+          <span class="md-nav__icon md-icon"></span>
+          Raspberry & Orange PI
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Move_Root_File_System_To_Usb_Storage_%28rpi2_%26_Rpi3%29/" class="md-nav__link">
+        Move root file system to USB storage (RPI2 & RPI3)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Raspberry_Pi_3_As_Wifi_Range_Extender/" class="md-nav__link">
+        Raspberry PI 3 As Wifi Range Extender
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../How_To_Install_Nodered_On_Raspberry_Pi/" class="md-nav__link">
+        How To Install NodeRED on Raspberry PI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Compile_Go_Language_On_Raspberry_Pi/" class="md-nav__link">
+        Compile GO language on Raspberry PI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Raspberry_Pi_2_As_Print_Server_Airprint/" class="md-nav__link">
+        Raspberry PI 2 as print server + AirPrint
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Google_Cloud_Print_With_Orange_Pi_or_Rpi/" class="md-nav__link">
+        Google Cloud Print With Orange PI (or RPI)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Install_Debian_Jessie_To_Orange_Pi_Plus_2/" class="md-nav__link">
+        Install Debian Jessie to Orange PI Plus 2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Mount SD card image (partitioned image) w/o kpartx
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Mount SD card image (partitioned image) w/o kpartx
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#with-kpartx-utility" class="md-nav__link">
+    With kpartx utility
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#without-kpartx-utility" class="md-nav__link">
+    Without kpartx utility
+  </a>
+  
+    <nav class="md-nav" aria-label="Without kpartx utility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#determine-the-size-partitions-where-is-it-started-and-ended" class="md-nav__link">
+    Determine the size partitions (where is it started and ended)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-up-loopbak-devices" class="md-nav__link">
+    Set up loopbak devices
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mount-the-partitions" class="md-nav__link">
+    Mount the partitions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unmount-the-partitions" class="md-nav__link">
+    Unmount the partitions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodemcu/Install_Openalpr_On_Raspberry_Pi_3/" class="md-nav__link">
+        Install OpenALPR on Raspberry PI 3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Install_Openalpr_On_Raspberry_Pi_3_part_2/" class="md-nav__link">
+        Install OpenALPR on Raspberry PI 3 (Part 2)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_6" type="checkbox" id="__nav_1_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_6">
+          NodeMCU - LUA / ESP8266
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="NodeMCU - LUA / ESP8266" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_6">
+          <span class="md-nav__icon md-icon"></span>
+          NodeMCU - LUA / ESP8266
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodemcu/How_To_Unbrick_Esp8266_blinking_Blue_Led/" class="md-nav__link">
+        How To Unbrick ESP8266 (Blinking Blue Led)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodemcu/Very_Simple_Way_To_Send_Email_Using_Nodemcu_Firmware/" class="md-nav__link">
+        Very Simple Way to Send Email Using NodeMCU firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodemcu/Reliable_MQTT_conenction_with_NodeMCU/" class="md-nav__link">
+        Reliable MQTT conenction with NodeMCU
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodemcu/Reliable_Mqtt_Connection_With_Nodemcu_%28part_2%29/" class="md-nav__link">
+        Reliable MQTT connection with NodeMCU (part 2)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodemcu/How_To_Compile_Nodemcu_Firmware/" class="md-nav__link">
+        How to compile NodeMCU firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodemcu/Logging_Mqtt_Data_%28subscription%29_To_Mysql_With_Shell_Script/" class="md-nav__link">
+        Logging MQTT data (subscription) to MySQL with Shell Script
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_7" type="checkbox" id="__nav_1_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_7">
+          Linux Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Linux Tutorials" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_7">
+          <span class="md-nav__icon md-icon"></span>
+          Linux Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/Install_%28compile%29_%26_Configure_Motion_Av_Tools/" class="md-nav__link">
+        Install (compile) & Configure motion + AV tools
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/Create_Self_Signed_Certificate_For_Apache_Webserver/" class="md-nav__link">
+        Create Self Signed Certificate for Apache WebServer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/Compile_Apache_Httpd_2.4.x_Php/" class="md-nav__link">
+        Compile Apache HTTPD 2.4.X & PHP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/Install_Mps-youtube_Console_Based_Youtube_Player/" class="md-nav__link">
+        Install mps-youtube console based youtube player
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/create_Your_Own_Dyndns_Service_With_Bind_named/" class="md-nav__link">
+        Create Your Own DynDns Service with Bind (Named)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Tips_And_Tricks/" class="md-nav__link">
+        Tips And Tricks
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#with-kpartx-utility" class="md-nav__link">
+    With kpartx utility
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#without-kpartx-utility" class="md-nav__link">
+    Without kpartx utility
+  </a>
+  
+    <nav class="md-nav" aria-label="Without kpartx utility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#determine-the-size-partitions-where-is-it-started-and-ended" class="md-nav__link">
+    Determine the size partitions (where is it started and ended)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-up-loopbak-devices" class="md-nav__link">
+    Set up loopbak devices
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mount-the-partitions" class="md-nav__link">
+    Mount the partitions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unmount-the-partitions" class="md-nav__link">
+    Unmount the partitions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="mount-sd-card-image-partitioned-image-wo-kpartx">Mount SD card image (partitioned image) w/o kpartx<a class="headerlink" href="#mount-sd-card-image-partitioned-image-wo-kpartx" title="Permanent link">&para;</a></h1>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>This page hasn't recently updated. Information found here could be outdated and may lead to missconfiguration.<br />
+Some of the links and references may be broken or lead to non existing pages.<br />
+Please use this docs carefully. Most of the information here now is only for reference or example!</p>
+</div>
+<p>If you are working with SD card image I pretty sure that you were in the situation when you had to mount the image before write it to the SD card. 
+Particular example when you want to modify <code>cmdline.txt</code> in a Raspberry PI image (because you want to use different partition for booting).</p>
+<h2 id="with-kpartx-utility">With kpartx utility<a class="headerlink" href="#with-kpartx-utility" title="Permanent link">&para;</a></h2>
+<p>If your system doesn't have <code>kpartx</code> utility install it for example with <code>apt-get install kpartx</code> command in case of Debian-Like systems.</p>
+<p>For demonstration I use <code>2016-05-27-raspbian-jessie-lite.img</code> image. </p>
+<ol>
+<li>
+<p>set up loop devices
+<code>losetup -f 2016-05-27-raspbian-jessie-lite.img</code></p>
+</li>
+<li>
+<p>(optional) Check the loop device</p>
+</li>
+</ol>
+<pre><code class="language-bash">losetup
+NAME       SIZELIMIT OFFSET AUTOCLEAR RO BACK-FILE
+/dev/loop0         0      0         0  0 /home/vinyo/Downloads/2016-05-27-raspbian-jessie-lite.img
+</code></pre>
+<ol>
+<li>Create device maps from partition tables</li>
+</ol>
+<pre><code class="language-bash">kpartx -av /dev/loop0
+add map loop0p1 (254:0): 0 129024 linear /dev/loop0 8192
+add map loop0p2 (254:1): 0 2572288 linear /dev/loop0 137216
+</code></pre>
+<ol>
+<li>(optional) Check mapped partitions with <code>blkid</code></li>
+</ol>
+<pre><code>Simpliy type `blkid` and hit enter. Output:  
+...
+/dev/mapper/loop0p1: SEC_TYPE=&quot;msdos&quot; LABEL=&quot;boot&quot; UUID=&quot;22E0-C711&quot; TYPE=&quot;vfat&quot; PARTUUID=&quot;6fcf21f3-01&quot;
+/dev/mapper/loop0p2: UUID=&quot;202638e1-4ce4-45df-9a00-ad725c2537bb&quot; TYPE=&quot;ext4&quot; PARTUUID=&quot;6fcf21f3-02&quot;
+...
+</code></pre>
+<ol>
+<li>Mount these partitions</li>
+</ol>
+<pre><code>mkdir /mnt/tmp1  
+mkdir /mnt/tmp2
+mount -t vfat /dev/mapper/loop0p1 /mnt/tmp1  
+mount -t ext4 /dev/mapper/loop0p2 /mnt/tmp2
+</code></pre>
+<p>After you are done with the neccessary modifications you can dismount everything.</p>
+<ol>
+<li>DisMount</li>
+</ol>
+<pre><code class="language-bash">umount /mnt/tmp1
+umount /mnt/tmp2
+kpartx -dv /dev/loop0
+losetup -d /dev/loop0
+</code></pre>
+<p>You can check it everything is unmounted by running <code>losetup</code> command, it should return with "nothing".</p>
+<h2 id="without-kpartx-utility">Without kpartx utility<a class="headerlink" href="#without-kpartx-utility" title="Permanent link">&para;</a></h2>
+<p>It is possible to mount partitions inside an image without kpart utility as well, but I think this way a little bit more complicated.</p>
+<p>Follow these steps:</p>
+<h3 id="determine-the-size-partitions-where-is-it-started-and-ended">Determine the size partitions (where is it started and ended)<a class="headerlink" href="#determine-the-size-partitions-where-is-it-started-and-ended" title="Permanent link">&para;</a></h3>
+<p>1.1. Run <code>parted 2016-05-27-raspbian-jessie-lite.img</code><br />
+  1.2. Type <code>u b</code> and enter. --&gt; This will change the display unit to bytes.<br />
+  1.3. Type <code>print</code> to display partition layout. Sample output:  </p>
+<pre><code class="language-bash">parted 2016-05-27-raspbian-jessie-lite.img 
+GNU Parted 3.2
+Using /home/vinyo/Downloads/2016-05-27-raspbian-jessie-lite.img
+Welcome to GNU Parted! Type 'help' to view a list of commands.
+(parted) u b                                                              
+(parted) print                                                            
+Model:  (file)
+Disk /home/vinyo/Downloads/2016-05-27-raspbian-jessie-lite.img: 1387266048B
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags: 
+
+Number  Start      End          Size         Type     File system  Flags
+ 1      4194304B   70254591B    66060288B    primary  fat16        lba
+ 2      70254592B  1387266047B  1317011456B  primary  ext4
+
+(parted) q                                                                
+</code></pre>
+<h3 id="set-up-loopbak-devices">Set up loopbak devices<a class="headerlink" href="#set-up-loopbak-devices" title="Permanent link">&para;</a></h3>
+<p>As you can see there are two partition inside the image file. We need to create two loopback device for them:</p>
+<pre><code class="language-bash">losetup -f -o 4194304 --sizelimit 66060288 2016-05-27-raspbian-jessie-lite.img 
+losetup -f -o 70254592 --sizelimit 1317011456 2016-05-27-raspbian-jessie-lite.img 
+</code></pre>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please double check the offset and sizelimit parameters!</p>
+</div>
+<p>Check with <code>losetup</code> and <code>blkid</code> commands:
+<strong>losetup:</strong></p>
+<pre><code>NAME        SIZELIMIT   OFFSET AUTOCLEAR RO BACK-FILE
+/dev/loop0   66060288  4194304         0  0 /home/vinyo/Downloads/2016-05-27-raspbian-jessie-lite.img
+/dev/loop1 1317011456 70254592         0  0 /home/vinyo/Downloads/2016-05-27-raspbian-jessie-lite.img
+</code></pre>
+<p><strong>blkid:</strong></p>
+<pre><code>/dev/loop0: SEC_TYPE=&quot;msdos&quot; LABEL=&quot;boot&quot; UUID=&quot;22E0-C711&quot; TYPE=&quot;vfat&quot;
+/dev/loop1: UUID=&quot;202638e1-4ce4-45df-9a00-ad725c2537bb&quot; TYPE=&quot;ext4&quot;
+</code></pre>
+<h3 id="mount-the-partitions">Mount the partitions<a class="headerlink" href="#mount-the-partitions" title="Permanent link">&para;</a></h3>
+<pre><code>mount /dev/loop0 /mnt/tmp1
+mount /dev/loop1 /mnt/tmp2
+</code></pre>
+<p><strong>Check:</strong></p>
+<pre><code>df -hT /dev/loop*
+Filesystem     Type      Size  Used Avail Use% Mounted on
+/dev/loop0     vfat       63M   21M   43M  33% /mnt/tmp1
+/dev/loop1     ext4      1.2G  738M  389M  66% /mnt/tmp2
+udev           devtmpfs   10M     0   10M   0% /dev
+udev           devtmpfs   10M     0   10M   0% /dev
+udev           devtmpfs   10M     0   10M   0% /dev
+udev           devtmpfs   10M     0   10M   0% /dev
+udev           devtmpfs   10M     0   10M   0% /dev
+udev           devtmpfs   10M     0   10M   0% /dev
+udev           devtmpfs   10M     0   10M   0% /dev
+</code></pre>
+<p>After you are done with you work unmount everything.</p>
+<h3 id="unmount-the-partitions">Unmount the partitions<a class="headerlink" href="#unmount-the-partitions" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">root@debian:~# umount /mnt/tmp1 /mnt/tmp2/
+root@debian:~# losetup 
+NAME        SIZELIMIT   OFFSET AUTOCLEAR RO BACK-FILE
+/dev/loop0   66060288  4194304         0  0 /home/vinyo/Downloads/2016-05-27-raspbian-jessie-lite.img
+/dev/loop1 1317011456 70254592         0  0 /home/vinyo/Downloads/2016-05-27-raspbian-jessie-lite.img
+root@debian:~# losetup -d /dev/loop0 /dev/loop1
+root@debian:~# losetup 
+root@debian:~# 
+</code></pre>
+                
+              
+              
+                
+
+
+  <h2 id="__comments">Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>var disqus_config=function(){this.page.url="http://proba.voda.net/site/old/raspberry/Mount_Sd_Card_Image_partitioned_Image_Wo_Kpartx/",this.page.identifier="old/raspberry/Mount_Sd_Card_Image_partitioned_Image_Wo_Kpartx/"};window.addEventListener("load",function(){var e=document,i=e.createElement("script");i.src="//shortname-jvincze-test.disqus.com/embed.js",i.setAttribute("data-timestamp",+new Date),(e.head||e.body).appendChild(i)})</script>
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../Install_Debian_Jessie_To_Orange_Pi_Plus_2/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Install Debian Jessie to Orange PI Plus 2" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Install Debian Jessie to Orange PI Plus 2
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../nodemcu/Install_Openalpr_On_Raspberry_Pi_3/" class="md-footer__link md-footer__link--next" aria-label="Next: Install OpenALPR on Raspberry PI 3" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Install OpenALPR on Raspberry PI 3
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tracking", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "search.suggest", "search.highlight"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.f8263e09.min.js", "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.4fc53ad4.min.js"></script>
+      
+        <script src="../../../js/prism.js"></script>
+      
+    
+  </body>
+</html>
