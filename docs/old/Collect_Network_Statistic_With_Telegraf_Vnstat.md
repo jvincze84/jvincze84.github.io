@@ -31,7 +31,7 @@ Here is the configuration:
 * [Input Data Formats](https://github.com/influxdata/telegraf/blob/master/docs/DATA_FORMATS_INPUT.md)
 * [JSON](https://github.com/influxdata/telegraf/tree/master/plugins/parsers/json)
 
-## Example InfluxDB Commands
+# Example InfluxDB Commands
 
 * **List avaiable hosts:**
 ```sql

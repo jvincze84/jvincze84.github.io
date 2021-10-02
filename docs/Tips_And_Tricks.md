@@ -6,28 +6,46 @@ Some of them will be commented, but not all.
 ---
 
 ## **Generate random strings**
-`tr -cd '[:alnum:]' < /dev/./urandom | fold -w12 | head -n4`  
+
+```bash
+tr -cd '[:alnum:]' < /dev/./urandom | fold -w12 | head -n4
+```
 You can use these string for example as random generated passwords.
 
 ---
 
 ## **Run simple python http server**
 
-`nohup python -m SimpleHTTPServer 8888 >>../access.log &`  
+```bash
+`nohup python -m SimpleHTTPServer 8888 >>../access.log &`
+```
+
 This will create a very simple http server on port 8888. 
 Useful for shearing files quickly and easily over http protocol.
 
 ---
 
 ## **Poor man's VPN with sshuttle**
-`sshuttle -r [USER]@[HOSTNAME] 0.0.0.0/0 --dns -v`
+
+```bash
+sshuttle -r [USER]@[HOSTNAME] 0.0.0.0/0 --dns -v
+```
 
 ---
 
 ## **Split MP3 into equal time length slices**
-Install required package: `apt-get install poc-streamer`
-Split into 3mins slices:
-`mp3splt  -t  3.00  [MP3 FILE] -o @n`  
+
+**Install required package:**
+
+```bash
+apt-get install poc-streamer
+```
+
+**Split into 3mins slices:**
+
+```bash
+mp3splt  -t  3.00  [MP3 FILE] -o @n
+```
 Output will be: 01.mp3, 02.mp3, 04.mp3 . . . .
 
 ---
@@ -35,9 +53,11 @@ Output will be: 01.mp3, 02.mp3, 04.mp3 . . . .
 ## **Convert  Video to 1280X (lower quality)**
 It us useful when you want to convert your video files to lower quality.
 Command:
+
 ```bash
 avconv -y -i $MOVIE -vf "scale=1280:trunc(ow/a/2)*2" -vcodec libx264 -acodec libmp3lame $NEWNAME
 ```
+
 Where:
 
   * **-y** overwrite output files
@@ -51,6 +71,7 @@ You can replace "1280" to any other values which is divisible by 2. (640,480,etc
 ---
 
 ## **LUA - delay function**
+
 Sometimes you have to use delay before the next function, and in this situation can be useful this little function.
 ```lua
 function sleepAndContinueWithCommand(command)
@@ -80,10 +101,11 @@ Change `max-width` in this section
     word-wrap: break-word;
 }
 ```
----
+
+
 ## **Limit OprengePI CPU cores (enable/disable cores)**
 
-```
+```bash
 echo 1 >/sys/devices/system/cpu/cpu0/online
 echo 0 >/sys/devices/system/cpu/cpu1/online
 echo 0 >/sys/devices/system/cpu/cpu2/online
@@ -95,6 +117,7 @@ Check CPU temperature:
 `/sys/devices/virtual/thermal/thermal_zone0/temp`
 
 ---
+
 ## **tar from/to remote machine**
 
 **tar from remote machine:**  
@@ -131,7 +154,8 @@ Check power management status:
 `cat /sys/module/8189es/parameters/rtw_power_mgnt` 
 If it is equal to 0 then you are OK.
 If not, create a file something like this:
-```
+
+```bash
 cat /etc/modprobe.d/8189es.conf 
 options 8189es rtw_power_mgnt=0 rtw_enusbss=0
 ```
@@ -141,9 +165,12 @@ Restart.
 ---
 
 ## **Rename OpenVZ container**
-`vzctl set [CTID] --hostname [NEW HOSTNAME] --save`
 
----
+```bash
+vzctl set [CTID] --hostname [NEW HOSTNAME] --save
+```
+
+
 ## **Unzip Each .zip File To Separate Directory**
 
 You have to be in the directory which contains the .zip files.
@@ -152,7 +179,7 @@ You have to be in the directory which contains the .zip files.
 for Z in $( find . -type f -name '*.zip') ; do B=$( basename $Z ) ; F=${B%.*} ; mkdir $F ; unzip $Z -d $F ; done
 ```
 
----
+
 ## **Read Parameter File In Linux Shell (bash)**
 
 ```bash
@@ -172,18 +199,22 @@ done < $PARAM_FILE
 
 ## **Some Linux Console Fun**
 Try them out, if you are brave enough. :)
-```
+
+```bash
 apt-get moo
 apt-get install sl  
 apt-get install furtune
 apt-get install cowsay
 apt-get install figlet
 ```
+
 Examples:
 
-sl
 ```bash
+sl
+
 fortune | cowsay
+
 figlet "Hello"
 ```
 
@@ -220,13 +251,13 @@ xvfb-run --server-args="-screen 0, 1024x768x24" /usr/bin/wkhtmltopdf $*
 
 There are 2 typical command I'm using with xvfb-run: `ssconvert` and `wkhtmltopdf `
 
----
+
 
 ## **Simple Image Viewer For Linux**
 
 feh -- image viewer and cataloguer
 
----
+
 ## **Failed To Install Cisco AnyConnect on Xubuntu 16.04**
 
 Error message: `Failed to start vpnagentd.service: Unit vpnagentd.service not found.` 
@@ -256,15 +287,23 @@ So I have a Logitech M505 mouse and I love using the vertical scroll button to m
 * xdotool
 * wmctrl  
 
-Install them with one command: `sudo apt install xbindkeys xvkbd xdotool wmctrl`
+Install them with one command: 
+
+```bash
+sudo apt install xbindkeys xvkbd xdotool wmctrl
+```
 
 ### Create sample configuration file
-`xbindkeys -d > ~/.xbindkeysrc`  
+
+```bash
+xbindkeys -d > ~/.xbindkeysrc
+```
+
 This will create a sample configuration file in your home directory.
 
 Please remove the "Examples of commands:" section from this file to avoid furtherer conflicts.
 
-```
+```plain
 "xbindkeys_show" 
   control+shift + q
 ```
@@ -273,7 +312,8 @@ Please remove the "Examples of commands:" section from this file to avoid furthe
 It is very simple. Just run `xev` command.
 
 For example my left button code (button 1):
-```
+
+```plain
 ButtonPress event, serial 37, synthetic NO, window 0x4800001,
     root 0xc5, subw 0x0, time 7138218, (103,85), root:(965,1564),
     state 0x10, button 1, same_screen YES
@@ -284,7 +324,10 @@ ButtonRelease event, serial 37, synthetic NO, window 0x4800001,
 ```
 
 Example with `grep` to easier determine button ID:
-`xev | egrep -o 'button [0-9]{1,2}'`
+
+```plain
+xev | egrep -o 'button [0-9]{1,2}'
+```
 
 ### Configure `.xbindkeysrc`
 So in my case I want to configure only two buttons:
@@ -295,20 +338,22 @@ So in my case I want to configure only two buttons:
 I had to add only these two section to .xbindkeysrc:
 
 * Minimize (Button 11)
-```
+
+```plain
 "xdotool getactivewindow windowminimize"
 b:11
 ```
 * Maximize (button 12)
-```
+
+```plain
 "wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz"
 b:12
 ```
+
 As you can see we had to use two different command: `xdotool` and `wmctrl`.
 
 If you want to use your buttons for any other activity I'm pretty sure that after some googleing you will find your solution.
 
----
 
 ##**Case Insensitive Search In Oracle DB**##
 
@@ -318,6 +363,7 @@ alter session set NLS_SORT=BINARY_CI;
 ```
 
 ==**REFERENCE:**==  
+
 [http://stackoverflow.com/questions/1031844/oracle-db-how-can-i-write-query-ignoring-case](http://stackoverflow.com/questions/1031844/oracle-db-how-can-i-write-query-ignoring-case)
 
 ## **Change Date & Timestamp Format In Oracle DB**
@@ -350,7 +396,7 @@ You can redirect stdout and stderr to differrent files or into the same file.
 
 1. `nohup ./program >stdout.log 2>stderr.log`
 2. `nohup ./progrem >stoutAndStderr.log 2>&1`
-3. `abbreviated syntax `
+3. `abbreviated syntax`
 
 nohup command > output-$(date +%Y%m%d_%H%M%S).log &
 
@@ -386,24 +432,5 @@ nohup java \
 ```
 
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

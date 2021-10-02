@@ -1,4 +1,4 @@
-site_name: Vincze Janos blog
+site_name: Vincze Janos Blog
 #repo_url: https://github.com/example/repository/
 site_url: http://proba.voda.net/site
 
@@ -8,7 +8,7 @@ theme:
     locale: en
     features:
       - navigation.tracking
-      - navigation.sections
+#      - navigation.sections
 #      - navigation.expand
       - navigation.top
       - search.suggest
@@ -42,7 +42,8 @@ markdown_extensions:
 
 
 nav:
-  - "Outdated Docs (WARIN)":
+  - "Tips And Tricks": 'Tips_And_Tricks.md'
+  - "Old Blog Conetent":
     - "Collect Network Statistic With Telegraf & VNSTAT": 'old/Collect_Network_Statistic_With_Telegraf_Vnstat.md'
     - "Iptables Examples": 'old/Iptables_Examples.md'
     - "Nokia 6120c (BB5) Forgotten Security Code": 'old/Nokia_6120c_(bb5)_Forgotten_Security_Code.md'
@@ -71,7 +72,6 @@ nav:
       - "Compile Apache HTTPD 2.4.X & PHP": 'old/linux/Compile_Apache_Httpd_2.4.x_Php.md'
       - "Install mps-youtube console based youtube player": 'old/linux/Install_Mps-youtube_Console_Based_Youtube_Player.md'
       - "Create Your Own DynDns Service with Bind (Named)": 'old/linux/create_Your_Own_Dyndns_Service_With_Bind_named.md'
-  - "Tips And Tricks": 'Tips_And_Tricks.md'
 
 
 

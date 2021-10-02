@@ -1,17 +1,27 @@
-# Welcome to MkDocs
+# Welcome To My Blog
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+This site is the newver version of [https://blog.vinczejanos.info](https://blog.vinczejanos.info).  
+All conent have been migrated to this new site.
 
-## Commands
+## Migrate From Ghost To MKDocs
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+Maybe a bit strange that I use MKDocs for my Blog, but it was neccessary to replace my old Ghost site.  
+I really liked the Ghost platform when it was at 1.x version, but the new editor is not my taste, so I started to find a new platform.
+I need a simple and easy to use markdown based platform, so the widely used Joomla, Drupal, Wordpress could not come into the picture. And to be honest I don't need a complete CMS system for this little site.
 
-## Project layout
+After some hours of researching I decided to use [https://www.mkdocs.org](MKDocs) to migrate my conetnt into it.
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+I know this is not a typical Blog platform, but after some hours I think it can fulfill all my needs.
+
+## Old Content 
+
+All of old conents can be found here under the "**Old Blog Conetent**" menu.
+But please aware that these conents are relally old, and I keep them only for examples. 
+I think most of the tutorials could not be followed step by step, because a lot of things has been changed since these posts were written.
+
+## What the future will be like?
+
+Since I have learnt a lot about of Docker, Kubernetes, OpenShift it tha past 1-2 years I want to write some new post about Containers and container platforms.
+
+
+
