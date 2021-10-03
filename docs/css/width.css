@@ -17,9 +17,13 @@ max-width: 85% !important;
         font-size: 0.6rem !important;
     }
  
-pre[class*="language-"] {
-        font-size: 0.7rem !important;
-        max-height: 32em !important; 
-        overflow: auto !important;
-    }
+#pre[class*="language-"] {
+#       font-size: 0.7rem !important;
+#       max-height: 32em !important; 
+#       overflow: auto !important;
+#   }
+
+.md-clipboard {
+  display: none !important;
+}
 

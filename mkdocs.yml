@@ -1,6 +1,6 @@
 site_name: Vincze Janos Blog
 #repo_url: https://github.com/example/repository/
-site_url: http://proba.voda.net/site
+site_url: https://readthedocs.vinczejanos.info
 
 
 theme:
@@ -18,7 +18,16 @@ theme:
       - search.highlight
 #      - toc.integrate
     palette:
-      scheme: ligh
+      - scheme: default
+        toggle:
+          icon: material/toggle-switch-off-outline
+          name: Switch to dark mode
+      - scheme: slate
+        toggle:
+          icon: material/toggle-switch
+          name: Switch to light mode
+          primary: green
+          accent: ambe
 
 markdown_extensions:
   - admonition
@@ -88,3 +97,6 @@ extra_javascript:
 
 extra:
   disqus: shortname-jvincze-test
+  analytics:
+    provider: google
+    property: G-3LZJ7L57GQ
