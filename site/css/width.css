@@ -23,6 +23,10 @@ max-width: 85% !important;
 #       overflow: auto !important;
 #   }
 
+pre[class*="language-"] {
+    padding: unset !important; 
+}
+
 .md-clipboard {
   display: none !important;
 }

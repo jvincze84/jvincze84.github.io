@@ -55,7 +55,8 @@ exec_vnstat
 SHOW SERIES ON telegraf FROM exec_vnstat;
 ```
 Output:
-```plain
+
+```bash
 key
 ---
 exec_vnstat,dc=barber,host=*****-opi0,interface=eth0,rack=opi0
