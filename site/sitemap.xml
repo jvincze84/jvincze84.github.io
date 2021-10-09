@@ -2,157 +2,162 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://readthedocs.vinczejanos.info/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://readthedocs.vinczejanos.info/How_to_use_MKdocs/</loc>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/Tips_And_Tricks/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/kub/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/proba/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/multi/diff/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/multi/okd/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/Collect_Network_Statistic_With_Telegraf_Vnstat/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/Iptables_Examples/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/Nokia_6120c_%28bb5%29_Forgotten_Security_Code/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/Sonoff_Relays_With_Openhab_And_Tasmota_Firmware/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/linux/Compile_Apache_Httpd_2.4.x_Php/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/linux/Create_Self_Signed_Certificate_For_Apache_Webserver/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/linux/Install_%28compile%29_%26_Configure_Motion_Av_Tools/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/linux/Install_Mps-youtube_Console_Based_Youtube_Player/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/linux/create_Your_Own_Dyndns_Service_With_Bind_named/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/nodemcu/How_To_Compile_Nodemcu_Firmware/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/nodemcu/How_To_Unbrick_Esp8266_blinking_Blue_Led/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/nodemcu/Install_Openalpr_On_Raspberry_Pi_3/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/nodemcu/Logging_Mqtt_Data_%28subscription%29_To_Mysql_With_Shell_Script/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/nodemcu/Reliable_MQTT_conenction_with_NodeMCU/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/nodemcu/Reliable_Mqtt_Connection_With_Nodemcu_%28part_2%29/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/nodemcu/Very_Simple_Way_To_Send_Email_Using_Nodemcu_Firmware/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/raspberry/Compile_Go_Language_On_Raspberry_Pi/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/raspberry/Google_Cloud_Print_With_Orange_Pi_or_Rpi/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/raspberry/How_To_Install_Nodered_On_Raspberry_Pi/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/raspberry/Install_Debian_Jessie_To_Orange_Pi_Plus_2/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/raspberry/Install_Openalpr_On_Raspberry_Pi_3_part_2/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/raspberry/Mount_Sd_Card_Image_partitioned_Image_Wo_Kpartx/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/raspberry/Move_Root_File_System_To_Usb_Storage_%28rpi2_%26_Rpi3%29/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/raspberry/Raspberry_Pi_2_As_Print_Server_Airprint/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://readthedocs.vinczejanos.info/old/raspberry/Raspberry_Pi_3_As_Wifi_Range_Extender/</loc>
-         <lastmod>2021-10-03</lastmod>
+         <lastmod>2021-10-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

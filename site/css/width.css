@@ -4,30 +4,35 @@
 
 .md-grid {
 #max-width: initial !important;
-max-width: 85% !important;
+max-width: initial ;
 }
 
-[data-linenos]:before {
-  content: attr(data-linenos);
-}
+#[data-linenos]:before {
+#content: attr(data-linenos);
+#}
 
  
  
-.language-bassh  {
-        font-size: 0.6rem !important;
-    }
+#.language-bash  {
+#        font-size: 0.6rem !important;
+#    }
  
-#pre[class*="language-"] {
-#       font-size: 0.7rem !important;
-#       max-height: 32em !important; 
-#       overflow: auto !important;
-#   }
-
 pre[class*="language-"] {
-    padding: unset !important; 
+#       font-size: 0.7rem !important;
+       max-height: 32em !important; 
+#       overflow: auto !important;
 }
+
+#pre[class*="language-"] {
+#    padding: unset !important; 
+#}
 
 .md-clipboard {
   display: none !important;
 }
 
+.md-typeset pre>code {
+#  display: inherit !important;
+   overflow: unset !important;
+   padding: unset !important;
+}

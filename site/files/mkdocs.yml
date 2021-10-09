@@ -1,23 +1,16 @@
 site_name: Vincze Janos Blog
-#repo_url: https://github.com/example/repository/
 site_url: https://readthedocs.vinczejanos.info
-
-
 theme:
     name: material
     locale: en
     custom_dir: overrides
     features:
       - navigation.tracking
-#      - navigation.sections
-#      - navigation.expand
       - navigation.top
       - search.suggest
       - search.highlight
-##      - navigation.instant
       - search.suggest
       - search.highlight
-#      - toc.integrate
     palette:
       - scheme: default
         toggle:
@@ -27,34 +20,22 @@ theme:
         toggle:
           icon: material/toggle-switch
           name: Switch to light mode
-          primary: amber
-          accent: amber
-
+          primary: green
+          accent: ambe
 markdown_extensions:
   - admonition
-  - pymdownx.tabbed:
-      alternate_style: true
   - toc:
       permalink: true
       toc_depth: 4
   - pymdownx.betterem:
       smart_enable: all
-#  - pymdownx.caret
   - pymdownx.mark
   - pymdownx.tilde
   - pymdownx.details
-#  - pymdownx.highlight
-#  - pymdownx.inlinehilite
-#  - pymdownx.superfences
   - pymdownx.snippets  
-#  - pymdownx.highlight:
-#      linenums: true
   - attr_list
-
-
-
 nav:
-  - "How To Use MKDocs with Docker?": 'How_to_use_MKdocs.md'
+  - "How I Built This Site?": 'How_I_Built_This_Site.md'
   - "Tips And Tricks": 'Tips_And_Tricks.md'
   - "Old Blog Conetent":
     - "Collect Network Statistic With Telegraf & VNSTAT": 'old/Collect_Network_Statistic_With_Telegraf_Vnstat.md'
@@ -64,43 +45,21 @@ nav:
     - "Raspberry & Orange PI":
       - "Move root file system to USB storage (RPI2 & RPI3)": 'old/raspberry/Move_Root_File_System_To_Usb_Storage_(rpi2_&_Rpi3).md'
       - "Raspberry PI 3 As Wifi Range Extender": 'old/raspberry/Raspberry_Pi_3_As_Wifi_Range_Extender.md'
-      - "How To Install NodeRED on Raspberry PI": 'old/raspberry/How_To_Install_Nodered_On_Raspberry_Pi.md'      
-      - "Compile GO language on Raspberry PI": 'old/raspberry/Compile_Go_Language_On_Raspberry_Pi.md'
-      - "Raspberry PI 2 as print server + AirPrint": 'old/raspberry/Raspberry_Pi_2_As_Print_Server_Airprint.md'
-      - "Google Cloud Print With Orange PI (or RPI)": 'old/raspberry/Google_Cloud_Print_With_Orange_Pi_or_Rpi.md'
-      - "Install Debian Jessie to Orange PI Plus 2": 'old/raspberry/Install_Debian_Jessie_To_Orange_Pi_Plus_2.md'
-      - "Mount SD card image (partitioned image) w/o kpartx": 'old/raspberry/Mount_Sd_Card_Image_partitioned_Image_Wo_Kpartx.md'
-      - "Install OpenALPR on Raspberry PI 3": 'old/nodemcu/Install_Openalpr_On_Raspberry_Pi_3.md'
       - "Install OpenALPR on Raspberry PI 3 (Part 2)": 'old/raspberry/Install_Openalpr_On_Raspberry_Pi_3_part_2.md'
     - "NodeMCU - LUA / ESP8266":
       - "How To Unbrick ESP8266 (Blinking Blue Led)": 'old/nodemcu/How_To_Unbrick_Esp8266_blinking_Blue_Led.md'
-      - "Very Simple Way to Send Email Using NodeMCU firmware": 'old/nodemcu/Very_Simple_Way_To_Send_Email_Using_Nodemcu_Firmware.md'
-      - "Reliable MQTT conenction with NodeMCU": 'old/nodemcu/Reliable_MQTT_conenction_with_NodeMCU.md'
-      - "Reliable MQTT connection with NodeMCU (part 2)": 'old/nodemcu/Reliable_Mqtt_Connection_With_Nodemcu_(part_2).md'
-      - "How to compile NodeMCU firmware": 'old/nodemcu/How_To_Compile_Nodemcu_Firmware.md'
       - "Logging MQTT data (subscription) to MySQL with Shell Script": 'old/nodemcu/Logging_Mqtt_Data_(subscription)_To_Mysql_With_Shell_Script.md'
     - "Linux Tutorials":
-      - "Install (compile) & Configure motion + AV tools": 'old/linux/Install_(compile)_&_Configure_Motion_Av_Tools.md'
-      - "Create Self Signed Certificate for Apache WebServer": 'old/linux/Create_Self_Signed_Certificate_For_Apache_Webserver.md'
-      - "Compile Apache HTTPD 2.4.X & PHP": 'old/linux/Compile_Apache_Httpd_2.4.x_Php.md'
       - "Install mps-youtube console based youtube player": 'old/linux/Install_Mps-youtube_Console_Based_Youtube_Player.md'
       - "Create Your Own DynDns Service with Bind (Named)": 'old/linux/create_Your_Own_Dyndns_Service_With_Bind_named.md'
-
-
-
 extra_css:
-  - css/width.css
+  - css/extra.css
   - css/prism.css
-
 extra_javascript:
   - js/prism.js
-
-#plugins:
-#  - search:
-#      indexing: 'full'
-
 extra:
   disqus: shortname-jvincze-test
   analytics:
     provider: google
     property: G-3LZJ7L57GQ
+
