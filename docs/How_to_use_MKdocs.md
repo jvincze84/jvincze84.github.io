@@ -237,15 +237,15 @@ More abaout Nginx container image: [https://hub.docker.com/_/nginx](https://hub.
 This is the method I use. I'm not borering with own web server instead I use github pages: [https://pages.github.com](https://pages.github.com)  
 For this you need a free [Github](https://github.com) registration. 
 
-#### 1. Create a repository
+* **1. Create a repository**
 
 ![CreateRepository](https://images.vinczejanos.info/uploads/big/41c3c94672675263b04db274cd510a8f.png)
 
-The name of the repository must be [your username]**.github.io** and  public. In my case:
+The name of the repository must be [your username]**.github.io** and must be public. In my case:
 
 ![RepoName](https://images.vinczejanos.info/uploads/big/57e634cde0ddd63b898847414de0b8fb.png)
 
-#### 2. Push
+* **2. Push**
 
 Github does not support user/pass uath anymore, so you need to create an auth token.
 
@@ -281,12 +281,9 @@ git commit -m 'Initial release'
 git remote add origin https://github.com/jvincze84/test-delete.git
 git push -u origin master</code></pre>
 
-!!! important
-    When you asked for the password, use your previously created token!
+* **3. Push gh-pages**
 
-#### 3. Push gh-pages
-
-<pre class="command-line" data-user="root" data-host="mkdocs" data-output="3-7,10-24"><code class="language-bash">clear
+<pre class="command-line" data-user="root" data-host="mkdocs" data-output="3-24"><code class="language-bash">clear
 docker run -it -v /root/test-delete/:/usr/src/mkdocs/build example-mkdocs:v2 gh-deploy
 INFO     -  Cleaning site directory
 INFO     -  Building documentation to directory: /usr/src/mkdocs/build/site
@@ -315,7 +312,7 @@ We are almost done. Go back to Github, and set up the newly created "gh-pages" b
 
 ![GHpages](https://images.vinczejanos.info/uploads/big/6554ba8a7110913475f9457514a8a084.png)
 
-#### 4. Custom Domain
+* **4. Custom Domain**
 
 Github publishes your content to "https://[username].github.io" (example: jvincze84.github.io). If you want to use your custom domain, put a file into the docs folder with name `CNAME`:
 
@@ -333,12 +330,31 @@ But first you need to create a CNAME DNS record which points to "[username].gith
 
 
 
+## Update The Site
 
+If you want to update a page or add new pages you can follow these steps:
 
+**Clone your repository**
 
+<pre class="command-line" data-user="root" data-host="mkdocs" data-output="2-8"><code class="language-bash">
+git clone https://github.com/jvincze84/jvincze84.github.io
+Cloning into 'jvincze84.github.io'...
+remote: Enumerating objects: 850, done.
+remote: Counting objects: 100% (850/850), done.
+remote: Compressing objects: 100% (292/292), done.
+remote: Total 850 (delta 351), reused 820 (delta 327), pack-reused 0
+Receiving objects: 100% (850/850), 16.09 MiB | 10.59 MiB/s, done.
+Resolving deltas: 100% (351/351), done.</code></pre>
 
+!!! info
+    If you want to save your git credetials run this command: `git config --global credential.helper store`
 
+After you have done the neccessary modification (add/change page) push your changes:
 
+!!! warning
+    If you add a new page (.md) don't forget to add it to the `nav` section in mkdocs.yml
 
+**push to git**
 
+git add docs/How_to_use_MKdocs.md mkdocs.yml
 
