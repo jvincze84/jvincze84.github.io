@@ -1,4 +1,4 @@
-# How I Built This Site?
+# How to use MKdocs?
 
 ## TL;DR
 
@@ -183,18 +183,153 @@ If you are done writing your docs, and `nav` section is properly configured in `
     `mkdocs serve` is absolutely not suitable for production. It's only purpose to help you developing the site, and watch realtime your modification.
 
 ### Build Site & Own Web Server
+
+If you already have a web servers you can simply copy your content to the DocmentRoot.  
+You can simply build your site:
+
+```bash
+docker run -it \
+-v /tmp/example:/build exmaple-mkdocs:v1 \
+build
+```
+
+This command will put your static html site into the `/tmp/example/site` directory on your host machine.
+Or you can sepcify where to store the generated content:
+
+```bash
+docker run -it \
+-v /tmp/example:/build exmaple-mkdocs:v1 \
+-v /var/www/html/mysite:/site \
+build --site-dir /site
+```
+
 ### Build Site & Nginx with Docer
+
+This method almost the same as the previous one, except that here we are using another Docker container to server our page. First build your site with buld command. 
+
+**Server your page with Nginx**
+
+First start your container in the foreground to check if everything is fine:
+```bash
+docker run -it --rm \
+--name mkdocs \
+-v [PATH TO YOUR SITE DIR]:/usr/share/nginx/html:ro \
+-p 8087:80 \
+nginx:latest
+```
+
+If you can access your site on the host port 8087, you should stop the container (ctrl+c) and start again in detached mode:
+
+```bash
+docker run -d \
+--restart alaway \
+--name mkdocs \
+-v [PATH TO YOUR SITE DIR]:/usr/share/nginx/html:ro \
+-p 8087:80 \
+nginx:latest
+```
+
+More abaout Nginx container image: [https://hub.docker.com/_/nginx](https://hub.docker.com/_/nginx)
+
+
 ### GitHub Pages
 
+This is the method I use. I'm not borering with own web server instead I use github pages: [https://pages.github.com](https://pages.github.com)  
+For this you need a free [Github](https://github.com) registration. 
 
+#### 1. Create a repository
 
+![CreateRepository](https://images.vinczejanos.info/uploads/big/41c3c94672675263b04db274cd510a8f.png)
 
+The name of the repository must be [your username]**.github.io** and  public. In my case:
 
+![RepoName](https://images.vinczejanos.info/uploads/big/57e634cde0ddd63b898847414de0b8fb.png)
 
+#### 2. Push
 
+Github does not support user/pass uath anymore, so you need to create an auth token.
 
+Go to **settings**: 
 
+![Settings](https://images.vinczejanos.info/uploads/big/299ad76f3df10dd6737cd6ccb5bffb3e.png)
 
+**Developer settings**:
+
+![DeveloperSettings](https://images.vinczejanos.info/uploads/big/d1a100ee22aa3c7dc35a3a847df578da.png)
+
+And **Personal access tokens**:
+
+Finally click on the **Generate new token**, select the permissions you need and generate the token.
+
+**Push your mkdocs root dir:**
+
+<pre class="command-line" data-user="root" data-host="mkdocs" data-output="2-12"><code class="language-bash">ls -al
+total 40
+drwxr-xr-x  7 root root 4096 Oct  9 14:34 .
+drwx------ 22 root root 4096 Oct  9 14:33 ..
+drwxr-xr-x  6 root root 4096 Oct  9 14:33 cinder
+-rw-r--r--  1 root root  162 Oct  9 14:33 docker.cmd
+drwxr-xr-x  8 root root 4096 Oct  9 14:33 docs
+drwxr-xr-x  8 root root 4096 Oct  9 14:35 .git
+-rw-r--r--  1 root root 4471 Oct  9 14:33 mkdocs.yml
+drwxr-xr-x  2 root root 4096 Oct  9 14:33 overrides
+drwxr-xr-x 11 root root 4096 Oct  9 14:33 site
+
+git init
+git add --all
+git commit -m 'Initial release'
+git remote add origin https://github.com/jvincze84/test-delete.git
+git push -u origin master</code></pre>
+
+!!! important
+    When you asked for the password, use your previously created token!
+
+#### 3. Push gh-pages
+
+<pre class="command-line" data-user="root" data-host="mkdocs" data-output="3-7,10-24"><code class="language-bash">clear
+docker run -it -v /root/test-delete/:/usr/src/mkdocs/build example-mkdocs:v2 gh-deploy
+INFO     -  Cleaning site directory
+INFO     -  Building documentation to directory: /usr/src/mkdocs/build/site
+INFO     -  Documentation built in 1.04 seconds
+WARNING  -  Version check skipped: No version specified in previous deployment.
+INFO     -  Copying '/usr/src/mkdocs/build/site' to 'gh-pages' branch and pushing to GitHub.
+Username for 'https://github.com': jvincze84
+Password for 'https://jvincze84@github.com': 
+Enumerating objects: 219, done.
+Counting objects: 100% (219/219), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (109/109), done.
+Writing objects: 100% (219/219), 14.91 MiB | 9.50 MiB/s, done.
+Total 219 (delta 72), reused 219 (delta 72), pack-reused 0
+remote: Resolving deltas: 100% (72/72), done.
+remote: 
+remote: Create a pull request for 'gh-pages' on GitHub by visiting:
+remote:      https://github.com/jvincze84/test-delete/pull/new/gh-pages
+remote: 
+To https://github.com/jvincze84/test-delete.git
+ * [new branch]      gh-pages -> gh-pages
+INFO     -  Based on your CNAME file, your documentation should be available shortly at: http://readthedocs.vinczejanos.info
+INFO     -  NOTE: Your DNS records must be configured appropriately for your CNAME URL to work.</code></pre>
+
+We are almost done. Go back to Github, and set up the newly created "gh-pages" branch for pages:
+
+![GHpages](https://images.vinczejanos.info/uploads/big/6554ba8a7110913475f9457514a8a084.png)
+
+#### 4. Custom Domain
+
+Github publishes your content to "https://[username].github.io" (example: jvincze84.github.io). If you want to use your custom domain, put a file into the docs folder with name `CNAME`:
+
+```bash
+cat docs/CNAME 
+readthedocs.vinczejanos.info
+```
+
+But first you need to create a CNAME DNS record which points to "[username].github.io". Godaddy example:
+
+![Godaddy](https://images.vinczejanos.info/uploads/big/de8abd46fe31f44a970d5128b301c877.png)
+
+!!! warning
+    Do not modify your custom domain directly on github.com; `mkdocs gh-deploy` will overwrite your config.
 
 
 
