@@ -368,9 +368,9 @@ Writing objects: 100% (4/4), 993 bytes | 993.00 KiB/s, done.
 Total 4 (delta 3), reused 0 (delta 0)
 remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
 To https://github.com/jvincze84/jvincze84.github.io
-   a9585e6..0949efa  master -> master
+   a9585e6..0949efa  master -> master</code></pre>
 
-**gh-pages**
+**gh-deploy**
 
 Finally apply the modification on Github Pages
 
