@@ -6,7 +6,6 @@ site_url: https://readthedocs.vinczejanos.info
 theme:
     name: material
     locale: en
-    custom_dir: overrides
     features:
       - navigation.tracking
 #      - navigation.sections

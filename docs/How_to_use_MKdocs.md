@@ -336,8 +336,7 @@ If you want to update a page or add new pages you can follow these steps:
 
 **Clone your repository**
 
-<pre class="command-line" data-user="root" data-host="mkdocs" data-output="2-8"><code class="language-bash">
-git clone https://github.com/jvincze84/jvincze84.github.io
+<pre class="command-line" data-user="root" data-host="mkdocs" data-output="2-8"><code class="language-bash">git clone https://github.com/jvincze84/jvincze84.github.io
 Cloning into 'jvincze84.github.io'...
 remote: Enumerating objects: 850, done.
 remote: Counting objects: 100% (850/850), done.
@@ -356,5 +355,32 @@ After you have done the neccessary modification (add/change page) push your chan
 
 **push to git**
 
-git add docs/How_to_use_MKdocs.md mkdocs.yml
+<pre class="command-line" data-user="root" data-host="mkdocs" data-output="3,4,6-14"><code class="language-bash">git add docs/How_to_use_MKdocs.md mkdocs.yml
+git commit -m 'Add new page : docs/How_to_use_MKdocs.md'
+master 0949efa] Add new page : docs/How_to_use_MKdocs.md
+ 1 file changed, 25 insertions(+), 9 deletions(-)
+git push
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 993 bytes | 993.00 KiB/s, done.
+Total 4 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/jvincze84/jvincze84.github.io
+   a9585e6..0949efa  master -> master
+
+**gh-pages**
+
+Finally apply the modification on Github Pages
+
+```bash
+docker run -it --rm \
+-v /home/mkdocs/Documents/mkdocs/jvincze84.github.io/:/usr/src/mkdocs/build \
+mkdocs:1 gh-deploy
+```
+
+
+
+
 
