@@ -358,44 +358,17 @@
     GitHub Pages
   </a>
   
-    <nav class="md-nav" aria-label="GitHub Pages">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-create-a-repository" class="md-nav__link">
-    1. Create a repository
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-push" class="md-nav__link">
-    2. Push
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-push-gh-pages" class="md-nav__link">
-    3. Push gh-pages
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-custom-domain" class="md-nav__link">
-    4. Custom Domain
-  </a>
-  
 </li>
         
       </ul>
     </nav>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#update-the-site" class="md-nav__link">
+    Update The Site
+  </a>
   
 </li>
       
@@ -1031,44 +1004,17 @@
     GitHub Pages
   </a>
   
-    <nav class="md-nav" aria-label="GitHub Pages">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-create-a-repository" class="md-nav__link">
-    1. Create a repository
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-push" class="md-nav__link">
-    2. Push
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-push-gh-pages" class="md-nav__link">
-    3. Push gh-pages
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-custom-domain" class="md-nav__link">
-    4. Custom Domain
-  </a>
-  
 </li>
         
       </ul>
     </nav>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#update-the-site" class="md-nav__link">
+    Update The Site
+  </a>
   
 </li>
       
@@ -1278,11 +1224,15 @@ nginx:latest
 <h3 id="github-pages">GitHub Pages<a class="headerlink" href="#github-pages" title="Permanent link">&para;</a></h3>
 <p>This is the method I use. I'm not borering with own web server instead I use github pages: <a href="https://pages.github.com">https://pages.github.com</a><br />
 For this you need a free <a href="https://github.com">Github</a> registration. </p>
-<h4 id="1-create-a-repository">1. Create a repository<a class="headerlink" href="#1-create-a-repository" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>1. Create a repository</strong></li>
+</ul>
 <p><img alt="CreateRepository" src="https://images.vinczejanos.info/uploads/big/41c3c94672675263b04db274cd510a8f.png" /></p>
-<p>The name of the repository must be [your username]<strong>.github.io</strong> and  public. In my case:</p>
+<p>The name of the repository must be [your username]<strong>.github.io</strong> and must be public. In my case:</p>
 <p><img alt="RepoName" src="https://images.vinczejanos.info/uploads/big/57e634cde0ddd63b898847414de0b8fb.png" /></p>
-<h4 id="2-push">2. Push<a class="headerlink" href="#2-push" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>2. Push</strong></li>
+</ul>
 <p>Github does not support user/pass uath anymore, so you need to create an auth token.</p>
 <p>Go to <strong>settings</strong>: </p>
 <p><img alt="Settings" src="https://images.vinczejanos.info/uploads/big/299ad76f3df10dd6737cd6ccb5bffb3e.png" /></p>
@@ -1309,12 +1259,10 @@ git commit -m 'Initial release'
 git remote add origin https://github.com/jvincze84/test-delete.git
 git push -u origin master</code></pre>
 
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>When you asked for the password, use your previously created token!</p>
-</div>
-<h4 id="3-push-gh-pages">3. Push gh-pages<a class="headerlink" href="#3-push-gh-pages" title="Permanent link">&para;</a></h4>
-<pre class="command-line" data-user="root" data-host="mkdocs" data-output="3-7,10-24"><code class="language-bash">clear
+<ul>
+<li><strong>3. Push gh-pages</strong></li>
+</ul>
+<pre class="command-line" data-user="root" data-host="mkdocs" data-output="3-24"><code class="language-bash">clear
 docker run -it -v /root/test-delete/:/usr/src/mkdocs/build example-mkdocs:v2 gh-deploy
 INFO     -  Cleaning site directory
 INFO     -  Building documentation to directory: /usr/src/mkdocs/build/site
@@ -1341,7 +1289,9 @@ INFO     -  NOTE: Your DNS records must be configured appropriately for your CNA
 
 <p>We are almost done. Go back to Github, and set up the newly created "gh-pages" branch for pages:</p>
 <p><img alt="GHpages" src="https://images.vinczejanos.info/uploads/big/6554ba8a7110913475f9457514a8a084.png" /></p>
-<h4 id="4-custom-domain">4. Custom Domain<a class="headerlink" href="#4-custom-domain" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>4. Custom Domain</strong></li>
+</ul>
 <p>Github publishes your content to "https://[username].github.io" (example: jvincze84.github.io). If you want to use your custom domain, put a file into the docs folder with name <code>CNAME</code>:</p>
 <pre><code class="language-bash">cat docs/CNAME 
 readthedocs.vinczejanos.info
@@ -1352,6 +1302,49 @@ readthedocs.vinczejanos.info
 <p class="admonition-title">Warning</p>
 <p>Do not modify your custom domain directly on github.com; <code>mkdocs gh-deploy</code> will overwrite your config.</p>
 </div>
+<h2 id="update-the-site">Update The Site<a class="headerlink" href="#update-the-site" title="Permanent link">&para;</a></h2>
+<p>If you want to update a page or add new pages you can follow these steps:</p>
+<p><strong>Clone your repository</strong></p>
+<pre class="command-line" data-user="root" data-host="mkdocs" data-output="2-8"><code class="language-bash">git clone https://github.com/jvincze84/jvincze84.github.io
+Cloning into 'jvincze84.github.io'...
+remote: Enumerating objects: 850, done.
+remote: Counting objects: 100% (850/850), done.
+remote: Compressing objects: 100% (292/292), done.
+remote: Total 850 (delta 351), reused 820 (delta 327), pack-reused 0
+Receiving objects: 100% (850/850), 16.09 MiB | 10.59 MiB/s, done.
+Resolving deltas: 100% (351/351), done.</code></pre>
+
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>If you want to save your git credetials run this command: <code>git config --global credential.helper store</code></p>
+</div>
+<p>After you have done the neccessary modification (add/change page) push your changes:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you add a new page (.md) don't forget to add it to the <code>nav</code> section in mkdocs.yml</p>
+</div>
+<p><strong>push to git</strong></p>
+<pre class="command-line" data-user="root" data-host="mkdocs" data-output="3,4,6-14"><code class="language-bash">git add docs/How_to_use_MKdocs.md mkdocs.yml
+git commit -m 'Add new page : docs/How_to_use_MKdocs.md'
+master 0949efa] Add new page : docs/How_to_use_MKdocs.md
+ 1 file changed, 25 insertions(+), 9 deletions(-)
+git push
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 993 bytes | 993.00 KiB/s, done.
+Total 4 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/jvincze84/jvincze84.github.io
+   a9585e6..0949efa  master -> master</code></pre>
+
+<p><strong>gh-deploy</strong></p>
+<p>Finally apply the modification on Github Pages</p>
+<pre><code class="language-bash">docker run -it --rm \
+-v /home/mkdocs/Documents/mkdocs/jvincze84.github.io/:/usr/src/mkdocs/build \
+mkdocs:1 gh-deploy
+</code></pre>
                 
               
               

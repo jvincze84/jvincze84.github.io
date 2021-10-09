@@ -1,8 +1,9 @@
-# How to use MKdocs?
+# How To Use MKDocs with Docker?
+
 
 ## TL;DR
 
-As wrote on the index page, I changed from Ghos Blog to MKDocs. This was necessary because my Ghost version was really outdated and I could not get used to its new editor.  
+As wrote on the index page, I changed from Ghost Blog to MKDocs. This was necessary because my Ghost version was really outdated and I could not get used to its new editor.  
 I have some essential requirement against the platform I use:
 
 * Should be easy to use with native MarkDown support
