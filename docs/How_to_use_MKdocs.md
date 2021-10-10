@@ -1,4 +1,4 @@
-# How To Use MKDocs with Docker?
+﻿# How To Use MKDocs with Docker?
 
 
 ## TL;DR
@@ -9,9 +9,9 @@ I have some essential requirement against the platform I use:
 * Should be easy to use with native MarkDown support
 * Should not have billions of features I won't use ever (to avoid unnecessary system load)
 * Must have integrated very good search engine
-* Look-And-Feel must be easily customised without plugins or addons
+* Look-And-Feel must be easily customized without plugins or addons
 * Since I post a lot of code bloks, code highlighting is must. It should be achieved natively or using prism.js
-* Source code of the contens (*.md) shold be stored in a Git repository.
+* Source code of the contents (*.md) should be stored in a Git repository.
 
 ### What was the alternatives?
 
@@ -22,11 +22,11 @@ I have some essential requirement against the platform I use:
 
 And how I chose up MKDocs over the rest? My selection process was really simple. I gave a try all of them, this means I spent 2 hours to try each of them. The winner was with which I could get closer to my expectations in 2 hours. And of course which was closer to my taste in coding, manageability and flexibility.
 
-Now It seems MKDocs does exactly what I need. Probably most of the other static website gernerator would have been perfect for me, but after 2 hours of using I found it rellay comfortable for me. And I did not regret my choice. All of my old contents are migrated to this site, and meantime I did some customisation on the the theme and the site. And this is the main topic of this post: How I migrated the content and how I use MKDocs?
+Now It seems MKDocs does exactly what I need. Probably most of the other static website generator would have been perfect for me, but after 2 hours of using I found it really comfortable for me. And I did not regret my choice. All of my old contents are migrated to this site, and meantime I did some customization on the the theme and the site. And this is the main topic of this post: How I migrated the content and how I use MKDocs?
 
 ## Prepare MKDocs Docker Image
 
-If you blinks at the official MKDocs installtion page you can see that the installation should be done by run `python pip install` command.  
+If you read the official MKDocs installation page you can see that the installation should be done by run `python pip install` command.  
 I don't like to install various python packages on my computer, because sooner or later I'm going to stuck in failed requirements. So at the first step I had to make decision what to use: python virtualenv or Docker. Of course I chose Docker.
 
 I do know that "Material for MkDocs" have official Docker image, but I like to use Docker images was built by my own. Every time I build a new Docker image from scratch I learn something or make my knowledge deeper about Dockerfiles, so it's absolutely worth it.
@@ -88,7 +88,7 @@ serve --dev-addr 0.0.0.0:8000 --config-file /build/mkdocs.yml
 
 This command may need some explanation:
 
-* `docker run -it` --> Run the container in interacrive mode and allocate a pseudo-tty.
+* `docker run -it` --> Run the container in interactive mode and allocate a pseudo-tty.
 * `-p 8789:8000` --> Publish container port **8000** on the host port **8789**. This means process binding the port 8000 inside the container will be published on the local port 8789.
 * `serve --dev-addr 0.0.0.0:8000 --config-file /build/mkdocs.yml` --> Arguments of the `mkdocs` command. (ENTRYPOINT)
   - The bind port (8000) must be the same as specified at `-p` parameter.
@@ -96,7 +96,7 @@ This command may need some explanation:
 
 
 Now you can access your newly created site at http://localhost:8789 or http://[your machine ip address]:8789.  
-Every modification inside the `/tmp/example` directory immediately take effetcs, so you don't need to restart the container, your browser will refresh the page automatically. But be aware that if you make systax error in the `mkdocs.yml` the container will exit and you need to manually retart it.
+Every modification inside the `/tmp/example` directory immediately take effects, so you don't need to restart the container, your browser will refresh the page automatically. But be aware that if you make systax error in the `mkdocs.yml` the container will exit and you need to manually retart it.
 
 ## Configure
 
@@ -142,7 +142,7 @@ pre[class*="language-"] {
 I know using `!important` is not the best things to do, but I'm not a web developer and I needed a 'quick and dirty solution'. Maybe later, if I have more time I will customise the mkdocs theme and leave `!important`.
 
 ??? info
-    More about `!important`: [https://stackoverflow.com/questions/9245353/what-does-important-mean-in-css](https://stackoverflow.com/questions/9245353/what-does-important-mean-in-css). "Using !important has its purposes (though I struggle to think of them), but it's much like using a nuclear explosion to stop the foxes killing your chickens; yes, the foxes will be killed, but so will the chickens. And the neighbourhood."
+    More about `!important`: [https://stackoverflow.com/questions/9245353/what-does-important-mean-in-css](https://stackoverflow.com/questions/9245353/what-does-important-mean-in-css). "Using !important has its purposes (though I struggle to think of them), but it's much like using a nuclear explosion to stop the foxes killing your chickens; yes, the foxes will be killed, but so will the chickens. And the neighborhood."
 
 * **md-grid (Material Theme)**
 
@@ -156,7 +156,7 @@ Reference: [Content area width](https://squidfunk.github.io/mkdocs-material/setu
 
 * **pre[class*="language-"] (prismjs)**
 
-Add vertical scroll bar when code block cointans more than 32 lines.
+Add vertical scroll bar when code block contains more than 32 lines.
 
 * **md-clipboard (Material Theme)**
 
@@ -181,7 +181,7 @@ You can see that the line number from the left hand side of the lines are missin
 If you are done writing your docs, and `nav` section is properly configured in `mkdocs.yml` it's time to build your site. I will show three methods to publis the site.
 
 !!! important
-    `mkdocs serve` is absolutely not suitable for production. It's only purpose to help you developing the site, and watch realtime your modification.
+    `mkdocs serve` is absolutely not suitable for production. It's only purpose to help you developing the site, and watch real-time your modification.
 
 ### Build Site & Own Web Server
 
@@ -195,7 +195,7 @@ build
 ```
 
 This command will put your static html site into the `/tmp/example/site` directory on your host machine.
-Or you can sepcify where to store the generated content:
+Or you can specify where to store the generated content:
 
 ```bash
 docker run -it \
@@ -230,7 +230,7 @@ docker run -d \
 nginx:latest
 ```
 
-More abaout Nginx container image: [https://hub.docker.com/_/nginx](https://hub.docker.com/_/nginx)
+More about Nginx container image: [https://hub.docker.com/_/nginx](https://hub.docker.com/_/nginx)
 
 
 ### GitHub Pages
@@ -248,7 +248,7 @@ The name of the repository must be [your username]**.github.io** and must be pub
 
 * **2. Push**
 
-Github does not support user/pass uath anymore, so you need to create an auth token.
+Github does not support user/pass auth anymore, so you need to create an auth token.
 
 Go to **settings**: 
 
@@ -347,7 +347,7 @@ Receiving objects: 100% (850/850), 16.09 MiB | 10.59 MiB/s, done.
 Resolving deltas: 100% (351/351), done.</code></pre>
 
 !!! info
-    If you want to save your git credetials run this command: `git config --global credential.helper store`
+    If you want to save your git credentials run this command: `git config --global credential.helper store`
 
 After you have done the neccessary modification (add/change page) push your changes:
 
