@@ -821,6 +821,8 @@ We need this: **kubernetes-dashboard-token-24jfb**
 kubectl -n kubernetes-dashboard get secret kubernetes-dashboard-token-24jfb -o json | jq -r  '.data.token' | base64 -d ; echo 
 ```
 
+### Fix Permission
+
 You will see a lot of error message like this:
 
 ```log
@@ -839,11 +841,6 @@ kubectl  edit  clusterrole kubernetes-dashboard
 
 And modify:
 ```diff
-root@kube-test:~# diff -u 01 02
-   labels:
-     k8s-app: kubernetes-dashboard
-   name: kubernetes-dashboard
-
  rules:
  - apiGroups:
 -  - metrics.k8s.io
@@ -893,23 +890,148 @@ rules:
 !!! caution
     Do NOT do this in Production system! This way you give cluster-admin role to kubernetes-dashboard ServiceAccount. Everybody who knows the token can do anything with your Kubernetes cluster!
 
+## CheatSheet
+
+Finally I write here some command I'm using in daily basis.
+
+#### List And Delete `Completed` PODS
+
+  When a Job finishes it's work, the container is left as `Completed`. A lot of PODS in `Completed` statw can be disturbing, and they can be safely deleted.
+
+List: 
+
+```bash
+kubectl get pods --all-namespaces --field-selector=status.phase=Succeeded
+```
+
+Delete:
+
+```bash
+kubectl delete pods --all-namespaces --field-selector=status.phase=Succeeded
+```
+
+#### Check Container Logs
+
+```bash
+# List PODS
+kubectl -n default get pods
+
+# Show the logs:
+kubectl -n default logs ghost-test-66846549b5-qgcl8
+
+# Or follow the logs:
+kubectl -n default logs ghost-test-66846549b5-qgcl8 -f
+
+# Or follow without showing only the logs written from now.
+kubectl -n default logs ghost-test-66846549b5-qgcl8 -f --tail=0
+```
+
+#### Get Into The Container
+
+Sometimes you need to see what happens inside a container. In this case you can get a shell inside the container.
+
+```bash
+kubectl -n default exec -it ghost-test-66846549b5-qgcl8 -- /bin/bash
+
+# Or if no bash installed, you can try sh
+kubectl -n default exec -it ghost-test-66846549b5-qgcl8 -- /bin/sh
+```          
+
+#### Pending PODS (nginx ingress)
+
+Example:
+```plain
+NAME                                        READY   STATUS    RESTARTS   AGE
+ingress-nginx-controller-5f7bb7476d-2nhqc   0/1     Pending   0          4s
+ingress-nginx-controller-745c7c9f6c-m9q5q   1/1     Running   2          128m
+```
+
+Events:
+<pre class="command-line" data-user="kube" data-host="kube-test" data-output="2-7"><code class="language-bash">kubectl -n ingress-nginx get events
+LAST SEEN   TYPE      REASON              OBJECT                                           MESSAGE
+34s         Warning   FailedScheduling    pod/ingress-nginx-controller-5f7bb7476d-2nhqc    0/1 nodes are available: 1 node(s) didn't have free ports for the requested pod ports.
+35s         Normal    SuccessfulCreate    replicaset/ingress-nginx-controller-5f7bb7476d   Created pod: ingress-nginx-controller-5f7bb7476d-2nhqc
+36s         Normal    ScalingReplicaSet   deployment/ingress-nginx-controller              Scaled up replica set ingress-nginx-controller-5f7bb7476d to 1</code></pre>
+
+The problem: `0/1 nodes are available: 1 node(s) didn't have free ports for the requested pod ports.`
+
+NGinx Ingress Controller (the POD) uses hostPort, and RollingUpdate strategy. This means that Kubernetes tries to start a new instance, and after the new instance is Running and healthy stop the "old" one. But in this case it is not possible because two container can not bind the same ports (80,443). 
+
+The easiest way to solve this is to delete the old pod manually. ( `ingress-nginx-controller-745c7c9f6c-m9q5q` )
+
+```bash
+kubectl -n ingress-nginx delete pod ingress-nginx-controller-745c7c9f6c-m9q5q
+```
+
+Permanent solution could be changing the strategy to ReCreate.
+
+```bash
+kubectl patch deployment/ingress-nginx-controller -n ingress-nginx  -p '{ "spec": { "strategy":{ "$retainKeys": ["type"],"type": "Recreate"}}}'
+```
+
+Show pretty print Json
+```json
+{
+  "spec": {
+    "strategy": {
+      "$retainKeys": [
+        "type"
+      ],
+      "type": "Recreate"
+    }
+  }
+}
+```
+
+Reference: 
+
+* [Use strategic merge patch to update a Deployment using the retainKeys strategy](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/update-api-object-kubectl-patch/#use-strategic-merge-patch-to-update-a-deployment-using-the-retainkeys-strategy)
+* [https://blog.container-solutions.com/kubernetes-deployment-strategies](https://blog.container-solutions.com/kubernetes-deployment-strategies)
 
 
+#### Get All / All Namespaces
 
+```bash
+kubectl -n ingress-nginx get all
 
+# Get all ingress in the cluster
 
+kubectl get ingress --all-namespaces -o wide
+```
 
+#### Print Join Command (Add Worker Node)
 
+```bash
+kubeadm token create --print-join-command
+```
 
+#### Get All Resources / Get Help
 
+```bash
+kubectl api-resources
 
+# Explain
 
+kubectl explain pod
+kubectl explain pod.spec
+kubectl explain pod.spec.tolerations
+```
 
+#### Copy Dir / File From Container
 
+```bash
+# File 
 
-    
+kubectl -n default cp ghost-test-66846549b5-qgcl8:/var/lib/ghost/config.production.json  config.production.json
 
+# Directory
+kubectl -n default cp ghost-test-66846549b5-qgcl8:/var/lib/ghost .
+```
 
+??? warning
+    `kubectl -n default cp ghost-test-66846549b5-qgcl8:/var/lib/ghost .` <-- This will copy the conents of the directory. If you want to create the 'ghost' directory on the destination use: 
+
+    `kubectl -n default cp ghost-test-66846549b5-qgcl8:/var/lib/ghost ghost`
 
 
 
