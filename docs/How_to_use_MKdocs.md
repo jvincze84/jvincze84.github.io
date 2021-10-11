@@ -381,6 +381,14 @@ docker run -it --rm \
 mkdocs:1 gh-deploy
 ```
 
+If you previously saved your git credentials you may want to use it inside the container:
+
+```bash
+docker run -it --rm \
+-v /home/mkdocs/.git-credentials:/usr/src/mkdocs/.git-credentials \
+-v /home/mkdocs/Documents/mkdocs/jvincze84.github.io/:/usr/src/mkdocs/build \
+mkdocs:1 gh-deploy
+```
 
 
 

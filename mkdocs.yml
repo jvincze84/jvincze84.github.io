@@ -18,16 +18,16 @@ theme:
       - search.highlight
 #      - toc.integrate
     palette:
-      - scheme: default
-        toggle:
-          icon: material/toggle-switch-off-outline
-          name: Switch to dark mode
       - scheme: slate
         toggle:
           icon: material/toggle-switch
           name: Switch to light mode
           primary: amber
           accent: amber
+      - scheme: default
+        toggle:
+          icon: material/toggle-switch-off-outline
+          name: Switch to dark mod
 
 markdown_extensions:
   - admonition
@@ -53,6 +53,7 @@ markdown_extensions:
 
 
 nav:
+  -  "Install Single Node Kubernetes Cluster": 'Install_Single_Node_Kubernetes_Cluster.md'
   - "How To Use MKDocs with Docker?": 'How_to_use_MKdocs.md'
   - "Tips And Tricks": 'Tips_And_Tricks.md'
   - "Old Blog Conetent":
