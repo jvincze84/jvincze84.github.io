@@ -6,6 +6,7 @@ site_url: https://readthedocs.vinczejanos.info
 theme:
     name: material
     locale: en
+    custom_dir: overrides
     features:
       - navigation.tracking
 #      - navigation.sections
@@ -53,7 +54,8 @@ markdown_extensions:
 
 
 nav:
-  -  "Install Single Node Kubernetes Cluster": 'Install_Single_Node_Kubernetes_Cluster.md'
+  - "Get Started With Portainer": 'Get_Started_With_Portainer.md'
+  - "Install Single Node Kubernetes Cluster": 'Install_Single_Node_Kubernetes_Cluster.md'
   - "How To Use MKDocs with Docker?": 'How_to_use_MKdocs.md'
   - "Tips And Tricks": 'Tips_And_Tricks.md'
   - "Old Blog Conetent":
