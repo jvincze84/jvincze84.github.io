@@ -3,8 +3,8 @@
 ## TL;DR
 
 
-Nowadays everybody speaking and writing about containers, Docker, Kubernetes, OpenShift, etc. I don't want to explain here what are these meaning, instead give some practical use cases. Most of my examples are suitable for home users. I'm always testing my solutions at home with low cost HWs.  
-I have an article about installing single node Kubernetes cluster, but now I step back to Docker containers. This is because deploying a container orchestrator not always a the goal. This article could be useful for home users, or developers who want learn about containers. 
+Nowadays everybody talking and writing about containers, Docker, Kubernetes, OpenShift, etc. I don't want to explain here what are these meaning, instead give some practical use cases. I'm always testing my solutions at home with low cost HWs.  
+I have an article about installing single node Kubernetes cluster, but now I step back to Docker containers. This is because deploying a container orchestrator not always the goal. This article could be useful for home users, or developers who want learn about containers. 
 
 ## Use Containers Instead Of Virtual Machines
 
@@ -16,7 +16,7 @@ What is wrong with installing software to your Laptop or Desktop? Sooner or late
 * [Proxmox](https://www.proxmox.com/en/)
 * [PythonVirtualEnv](https://docs.python.org/3/tutorial/venv.html)
 
-All of them has the advantages and disadvantages. Proxmox is really good if you have a separate hardware to install. It can handle LXC Containers and HW virtualization as well. VirtualBox is an easy-to-use Virtualisation platform. It can be installed on Linux, Windows and even on MAC.  
+All of them has the advantages and disadvantages. Proxmox is really good if you have a separate hardware to install. It can handle LXC Containers and HW virtualization as well. VirtualBox is an easy-to-use Virtualization platform. It can be installed on Linux, Windows and even on MAC.  
 But all of these have bigger footprint on you host hardware than Docker.
 
 Let's see how easy to try a software with Docker, for example Ghost blog:
@@ -35,9 +35,9 @@ ghost:alpine
 In some seconds you can access Ghost on `http://localhost:3001`. I can't imagine easier or faster way to try out something.
 
 !!! note
-  The situation is more complicated, of coures, if you want to use external database, redis, etc in conjungtion with Ghost. But if you only want to test/try out Ghost it is the fastest way I think.
+    The situation is more complicated, of coures, if you want to use external database, redis, etc in conjungtion with Ghost. But if you only want to test/try out Ghost it is the fastest way I think.
 
-In most cases you can find a really goot documentation about how to use a software with Docker. --> A lot of application have Dockerized version, but you can create own image, as well.
+In most cases you can find a really good documentation about how to use a software with Docker. --> A lot of application have Dockerized version, but you can create own image, as well.
 
 Docker can be useful even in a situation where you don't have root access to the system, but Docker engine is installed and you can access to it. 
 
@@ -51,7 +51,7 @@ What is Portainer?
 Official Install Documentation: [https://docs.portainer.io/v/ce-2.9/start/install/server/docker/linux](https://docs.portainer.io/v/ce-2.9/start/install/server/docker/linux)
 
 The doc says: "First, create the volume that Portainer Server will use to store its database"  
-But I won't do that. I don't like using Docker volumes. By default the volumes are stored in `/var/lib/docker/volumes` directory, and extra stepes are needed to find which volume belongs to which container. So I usually use [Bind Mounts](https://docs.docker.com/storage/bind-mounts/). 
+But I won't do that. I don't like using Docker volumes. By default the volumes are stored in `/var/lib/docker/volumes` directory, and extra steps are needed to find which volume belongs to which container. So I usually use [Bind Mounts](https://docs.docker.com/storage/bind-mounts/). 
 
 **Start Portainer:**
 
@@ -205,7 +205,7 @@ I want to emphasize two adventages:
 * You can enable manual container attachment
 
 !!! hint
-    Inside a docker network it us absolutely not recommended to use static IP addresses for containers. It is antipatern. Use the container's name instead of the IP address when you have to connect containers to each other and put them into the same network.
+    Inside a docker network it is absolutely not recommended to use static IP addresses for containers. It is antipatern. Use the container's name instead of the IP address when you have to connect containers to each other and put them into the same network.
 
 Click on the "Add network" button.
 
@@ -250,7 +250,7 @@ Chheck the container:
 
 You can click on it and see all the details. 
 
-Try our new docker Registry:
+Try out our new docker Registry:
 
 <pre class="command-line" data-user="root" data-host="dockerhost" data-output="3-9"><code class="language-bash">docker tag registry:latest 127.0.0.1:49153/registry/registry:v1
 docker push 127.0.0.1:49153/registry/registry:v1
@@ -333,6 +333,9 @@ NGINX_PROXY_PASS_URL=http://registry:5000
 
 ![1634228818.jpg](assets/images/1634228818.jpg)
 
+!!! warning
+    **In the above screenshot the port number is wrong at `REGISTRY_URL`. The correct one is: `REGISTRY_URL=http://localhost:18081`**
+
 * **REGISTRY_URL**
 
 Use the host on which you want to access your registry-ui. It should be the same as used in Docker port publishing (-p), or at portainer gui.
@@ -340,11 +343,12 @@ Another example:
 
 ![1634229389.jpg](assets/images/1634229389.jpg)
 
+
 In this case the REGISTRY_URL should be `http://10.5.0.2:18081`.
 
 * **NGINX_PROXY_PASS_URL**
 
-The most important is attaching both the registry and registry URL to the same network (custom_bridge)! In this way containers can acceess each other inside this network with there name.
+The most important is attaching both the registry and registry-ui to the same network (custom_bridge)! In this way containers can access each other inside this network with there name.
 
 For better understanding please see the following examples:
 
@@ -399,7 +403,7 @@ Deploying singe containers is suitable only for a quick test. Main problems:
 * If you need to connect two or more container to each other you must manually assign them to the same network, and even the network has to be created manually.
 * Containers won't be backed up when you create Portainer backup. 
 
-The solution is [docker-compose](https://docs.docker.com/compose/compose-file/compose-file-v3/), or the the Portainer way = Stack. Create a Stack means writing a docker compose file (yaml).
+The solution is [docker-compose](https://docs.docker.com/compose/compose-file/compose-file-v3/), or the the Portainer way = Stack. Create a Stack means writing a docker compose (yaml) file .
 
 All we have done before can be defined in a single file:
 
@@ -473,14 +477,14 @@ Creating registry    ... done
 You can stop the Stack with `docker-compose down` command. 
 
 !!! warning
-    You have to be in th directory which contains `docker-compose.yaml` file when running  `docker-compose` command
+    You have to be in the directory which contains `docker-compose.yaml` file when running  `docker-compose` command
 
 ??? tip
     Do not mix using docker-compose and Portainer Stack, unless you are brave enough. It won't cause any tehcnical problem, but very confusing, I think.
 
 ### Stack With Git
 
-When you are working on something for hours or days it become really important to have a backup of your work. In this case also important that your work could be reproducable on any other system (portability). Stack are very good start points. But how to track the modifications? How to make backups? Where to store our yaml files?  
+When you are working on something for hours or days it become really important to have a backup of your work. In this case also important that your work could be reproducible on any other system (portability). Stack are very good start points. But how to track the modifications? How to make backups? Where to store our yaml files?  
 You can create backup from your portainer instance. [(Setting / Backup configuration)](https://docs.portainer.io/v/ce-2.9/admin/settings#backup-portainer) But unfortunately scheduled backup available only for business users. Workaround could be saving the portainer data directory (`/opt/docker/portainer/data`).  
 Despite backup we still need track the modifications. 
 
@@ -492,7 +496,7 @@ Portainer has a great feature: We can use a git repository for creating stacks. 
 
 !!! tip
     You can use any Git based repository not just Github (eg.: Self hosted [Gitea](https://gitea.io/en-us/))  
-    If you repository protected with username and password, don't forget to enable "Authentication" and provide you credentials.
+    If your repository protected with username and password, don't forget to enable "Authentication" and provide you credentials.
 
 ## Install Portainer On Kubernetes
 
@@ -502,7 +506,7 @@ Before you install Portainer on the top of your Kubernetes cluster you have to d
 
 ### Persistent Storage
 
-At this article I don't want to bother too much with this topic, therefore I chose a minimal installation of OpenEBS. 
+In this article I don't want to bother too much with this topic, therefore I chose a minimal installation of OpenEBS. 
 
 Link: [https://docs.openebs.io/docs/next/uglocalpv-hostpath.html](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html)
 
@@ -518,7 +522,7 @@ Download the StorageClass manifest:
 wget https://openebs.github.io/charts/openebs-lite-sc.yaml
 ```
 
-And remove the second StorageClass (openebs-device). Or you can use this snipplet:
+And remove the second StorageClass (openebs-device). Or you can use this snippet:
 
 ```bash
 
@@ -607,7 +611,7 @@ Now you can access Portainer on every Kubernetes node using the port number 3077
 
 ## Final Thoughts
 
-I think Portainer can be a very helful tool for everyone who whats to work with containers, but for managing Kubernetes cluster I think there are bertter softwares. I always like to see the Kubernetes objects ("Kinds") as they are. I like Kubernetes Dashboard much more than Portainer for managing my cluster, but everybody has different taste. I advise to try [Kubernetes Dashboard](https://github.com/kubernetes/dashboard), [Rancher](https://rancher.com/products/rancher/), Portainer, [K8Sdash](https://github.com/hashmapinc/k8dash) and so on, and choose what you really liked.
+I think Portainer can be a very helpful tool for everyone who whats to work with containers, but for managing Kubernetes cluster I think there are bertter software. I always like to see the Kubernetes objects ("Kinds") as they are. I like Kubernetes Dashboard much more than Portainer for managing my cluster, but everybody has different taste. I advise to try [Kubernetes Dashboard](https://github.com/kubernetes/dashboard), [Rancher](https://rancher.com/products/rancher/), Portainer, [K8Sdash](https://github.com/hashmapinc/k8dash) and so on, and choose what you really liked.
 
 But, if you just now getting familiar to Containers I think Portainer can help you to understand how Networks/Volumes/Stack/Swarms/Images/etc work. Most people like to see things on a graphical interface not just the CLI, this is where the Portainer is great. But I think CLIs (kubectl, oc, docker-compose, docker) are the most powerfull tools, if you are willing to learn them. All the outputs can be piped to grep, sed, jq, etc, and you can write scripts to automate your daily work or process the outputs.
 
