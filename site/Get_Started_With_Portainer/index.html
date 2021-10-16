@@ -1,0 +1,1664 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="canonical" href="https://readthedocs.vinczejanos.info/Get_Started_With_Portainer/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
+    
+    
+      
+        <title>Get Started With Portainer - Vincze Janos Blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.24c991ad.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../css/width.css">
+    
+      <link rel="stylesheet" href="../css/prism.css">
+    
+    
+      
+
+  
+
+
+  
+
+  
+
+
+  <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-3LZJ7L57GQ"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-3LZJ7L57GQ",{page_path:t.pathname})})})</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3LZJ7L57GQ"></script>
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#get-started-with-portainer" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Vincze Janos Blog" class="md-header__button md-logo" aria-label="Vincze Janos Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Vincze Janos Blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Get Started With Portainer
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mod"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mod" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Vincze Janos Blog" class="md-nav__button md-logo" aria-label="Vincze Janos Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Vincze Janos Blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Get Started With Portainer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Get Started With Portainer
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    TL;DR
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-containers-instead-of-virtual-machines" class="md-nav__link">
+    Use Containers Instead Of Virtual Machines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-portainer" class="md-nav__link">
+    Install Portainer
+  </a>
+  
+    <nav class="md-nav" aria-label="Install Portainer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#portainer-on-vps-public-internet" class="md-nav__link">
+    Portainer On VPS (Public Internet)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-portainer" class="md-nav__link">
+    Using Portainer
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Portainer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-steps" class="md-nav__link">
+    First Steps
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-new-docker-network" class="md-nav__link">
+    Create New Docker Network
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-app-container-from-template" class="md-nav__link">
+    Deploy App (Container) From Template
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-single-container" class="md-nav__link">
+    Deploy Single Container
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy Single Container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#name-registry-an-port-mapping" class="md-nav__link">
+    Name, Registry An Port Mapping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network" class="md-nav__link">
+    Network
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environments" class="md-nav__link">
+    Environments
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stack-compose" class="md-nav__link">
+    Stack (compose)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stack-with-git" class="md-nav__link">
+    Stack With Git
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-portainer-on-kubernetes" class="md-nav__link">
+    Install Portainer On Kubernetes
+  </a>
+  
+    <nav class="md-nav" aria-label="Install Portainer On Kubernetes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#persistent-storage" class="md-nav__link">
+    Persistent Storage
+  </a>
+  
+    <nav class="md-nav" aria-label="Persistent Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#default-storageclass" class="md-nav__link">
+    Default StorageClass
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-portainer" class="md-nav__link">
+    Deploy Portainer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-thoughts" class="md-nav__link">
+    Final Thoughts
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Install_Single_Node_Kubernetes_Cluster/" class="md-nav__link">
+        Install Single Node Kubernetes Cluster
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../How_to_use_MKdocs/" class="md-nav__link">
+        How To Use MKDocs with Docker?
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Tips_And_Tricks/" class="md-nav__link">
+        Tips And Tricks
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Old Blog Conetent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Old Blog Conetent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Old Blog Conetent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/Collect_Network_Statistic_With_Telegraf_Vnstat/" class="md-nav__link">
+        Collect Network Statistic With Telegraf & VNSTAT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/Iptables_Examples/" class="md-nav__link">
+        Iptables Examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/Nokia_6120c_%28bb5%29_Forgotten_Security_Code/" class="md-nav__link">
+        Nokia 6120c (BB5) Forgotten Security Code
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/Sonoff_Relays_With_Openhab_And_Tasmota_Firmware/" class="md-nav__link">
+        Sonoff Relays With OpenHab And Tasmota Firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_5" type="checkbox" id="__nav_5_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_5">
+          Raspberry & Orange PI
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Raspberry & Orange PI" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_5">
+          <span class="md-nav__icon md-icon"></span>
+          Raspberry & Orange PI
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/Move_Root_File_System_To_Usb_Storage_%28rpi2_%26_Rpi3%29/" class="md-nav__link">
+        Move root file system to USB storage (RPI2 & RPI3)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/Raspberry_Pi_3_As_Wifi_Range_Extender/" class="md-nav__link">
+        Raspberry PI 3 As Wifi Range Extender
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/How_To_Install_Nodered_On_Raspberry_Pi/" class="md-nav__link">
+        How To Install NodeRED on Raspberry PI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/Compile_Go_Language_On_Raspberry_Pi/" class="md-nav__link">
+        Compile GO language on Raspberry PI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/Raspberry_Pi_2_As_Print_Server_Airprint/" class="md-nav__link">
+        Raspberry PI 2 as print server + AirPrint
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/Google_Cloud_Print_With_Orange_Pi_or_Rpi/" class="md-nav__link">
+        Google Cloud Print With Orange PI (or RPI)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/Install_Debian_Jessie_To_Orange_Pi_Plus_2/" class="md-nav__link">
+        Install Debian Jessie to Orange PI Plus 2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/Mount_Sd_Card_Image_partitioned_Image_Wo_Kpartx/" class="md-nav__link">
+        Mount SD card image (partitioned image) w/o kpartx
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/nodemcu/Install_Openalpr_On_Raspberry_Pi_3/" class="md-nav__link">
+        Install OpenALPR on Raspberry PI 3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/Install_Openalpr_On_Raspberry_Pi_3_part_2/" class="md-nav__link">
+        Install OpenALPR on Raspberry PI 3 (Part 2)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_6" type="checkbox" id="__nav_5_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_6">
+          NodeMCU - LUA / ESP8266
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="NodeMCU - LUA / ESP8266" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_6">
+          <span class="md-nav__icon md-icon"></span>
+          NodeMCU - LUA / ESP8266
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/nodemcu/How_To_Unbrick_Esp8266_blinking_Blue_Led/" class="md-nav__link">
+        How To Unbrick ESP8266 (Blinking Blue Led)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/nodemcu/Very_Simple_Way_To_Send_Email_Using_Nodemcu_Firmware/" class="md-nav__link">
+        Very Simple Way to Send Email Using NodeMCU firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/nodemcu/Reliable_MQTT_conenction_with_NodeMCU/" class="md-nav__link">
+        Reliable MQTT conenction with NodeMCU
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/nodemcu/Reliable_Mqtt_Connection_With_Nodemcu_%28part_2%29/" class="md-nav__link">
+        Reliable MQTT connection with NodeMCU (part 2)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/nodemcu/How_To_Compile_Nodemcu_Firmware/" class="md-nav__link">
+        How to compile NodeMCU firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/nodemcu/Logging_Mqtt_Data_%28subscription%29_To_Mysql_With_Shell_Script/" class="md-nav__link">
+        Logging MQTT data (subscription) to MySQL with Shell Script
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_7" type="checkbox" id="__nav_5_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_7">
+          Linux Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Linux Tutorials" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_7">
+          <span class="md-nav__icon md-icon"></span>
+          Linux Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/linux/Install_%28compile%29_%26_Configure_Motion_Av_Tools/" class="md-nav__link">
+        Install (compile) & Configure motion + AV tools
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/linux/Create_Self_Signed_Certificate_For_Apache_Webserver/" class="md-nav__link">
+        Create Self Signed Certificate for Apache WebServer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/linux/Compile_Apache_Httpd_2.4.x_Php/" class="md-nav__link">
+        Compile Apache HTTPD 2.4.X & PHP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/linux/Install_Mps-youtube_Console_Based_Youtube_Player/" class="md-nav__link">
+        Install mps-youtube console based youtube player
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/linux/create_Your_Own_Dyndns_Service_With_Bind_named/" class="md-nav__link">
+        Create Your Own DynDns Service with Bind (Named)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    TL;DR
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-containers-instead-of-virtual-machines" class="md-nav__link">
+    Use Containers Instead Of Virtual Machines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-portainer" class="md-nav__link">
+    Install Portainer
+  </a>
+  
+    <nav class="md-nav" aria-label="Install Portainer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#portainer-on-vps-public-internet" class="md-nav__link">
+    Portainer On VPS (Public Internet)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-portainer" class="md-nav__link">
+    Using Portainer
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Portainer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-steps" class="md-nav__link">
+    First Steps
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-new-docker-network" class="md-nav__link">
+    Create New Docker Network
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-app-container-from-template" class="md-nav__link">
+    Deploy App (Container) From Template
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-single-container" class="md-nav__link">
+    Deploy Single Container
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy Single Container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#name-registry-an-port-mapping" class="md-nav__link">
+    Name, Registry An Port Mapping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network" class="md-nav__link">
+    Network
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environments" class="md-nav__link">
+    Environments
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stack-compose" class="md-nav__link">
+    Stack (compose)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stack-with-git" class="md-nav__link">
+    Stack With Git
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-portainer-on-kubernetes" class="md-nav__link">
+    Install Portainer On Kubernetes
+  </a>
+  
+    <nav class="md-nav" aria-label="Install Portainer On Kubernetes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#persistent-storage" class="md-nav__link">
+    Persistent Storage
+  </a>
+  
+    <nav class="md-nav" aria-label="Persistent Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#default-storageclass" class="md-nav__link">
+    Default StorageClass
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-portainer" class="md-nav__link">
+    Deploy Portainer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-thoughts" class="md-nav__link">
+    Final Thoughts
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="get-started-with-portainer">Get Started With Portainer<a class="headerlink" href="#get-started-with-portainer" title="Permanent link">&para;</a></h1>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<p>Nowadays everybody talking and writing about containers, Docker, Kubernetes, OpenShift, etc. I don't want to explain here what are these meaning, instead give some practical use cases. I'm always testing my solutions at home with low cost HWs.<br />
+I have an article about installing single node Kubernetes cluster, but now I step back to Docker containers. This is because deploying a container orchestrator not always the goal. This article could be useful for home users, or developers who want learn about containers. </p>
+<h2 id="use-containers-instead-of-virtual-machines">Use Containers Instead Of Virtual Machines<a class="headerlink" href="#use-containers-instead-of-virtual-machines" title="Permanent link">&para;</a></h2>
+<p>What is wrong with installing software to your Laptop or Desktop? Sooner or later you will end up in having a lot of unnecessary software on your machine. Or you have to install various software with various dependencies which could not be resolved. There are so many possibilities to separate a test environment from your host machine:</p>
+<ul>
+<li><a href="https://www.virtualbox.org">WirtualBox</a></li>
+<li><a href="https://linuxcontainers.org">LXC</a></li>
+<li><a href="https://www.linux-kvm.org">KVM</a></li>
+<li><a href="https://www.proxmox.com/en/">Proxmox</a></li>
+<li><a href="https://docs.python.org/3/tutorial/venv.html">PythonVirtualEnv</a></li>
+</ul>
+<p>All of them has the advantages and disadvantages. Proxmox is really good if you have a separate hardware to install. It can handle LXC Containers and HW virtualization as well. VirtualBox is an easy-to-use Virtualization platform. It can be installed on Linux, Windows and even on MAC.<br />
+But all of these have bigger footprint on you host hardware than Docker.</p>
+<p>Let's see how easy to try a software with Docker, for example Ghost blog:</p>
+<p>Link: <a href="https://hub.docker.com/_/ghost">https://hub.docker.com/_/ghost</a></p>
+<pre><code class="language-bash">docker run -d --name some-ghost \
+-p 3001:2368 \
+-v /path/to/ghost/blog:/var/lib/ghost/content \
+ghost:alpine
+</code></pre>
+<p>In some seconds you can access Ghost on <code>http://localhost:3001</code>. I can't imagine easier or faster way to try out something.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The situation is more complicated, of coures, if you want to use external database, redis, etc in conjungtion with Ghost. But if you only want to test/try out Ghost it is the fastest way I think.</p>
+</div>
+<p>In most cases you can find a really good documentation about how to use a software with Docker. --&gt; A lot of application have Dockerized version, but you can create own image, as well.</p>
+<p>Docker can be useful even in a situation where you don't have root access to the system, but Docker engine is installed and you can access to it. </p>
+<h2 id="install-portainer">Install Portainer<a class="headerlink" href="#install-portainer" title="Permanent link">&para;</a></h2>
+<p>What is Portainer?</p>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p>Portainer is a really nice web UI for Docker. Portainer is a lightweight management UI which allows you to easily manage your different Docker environments (Docker hosts or Swarm clusters). Portainer is meant to be as simple to deploy as it is to use.</p>
+</div>
+<p>Official Install Documentation: <a href="https://docs.portainer.io/v/ce-2.9/start/install/server/docker/linux">https://docs.portainer.io/v/ce-2.9/start/install/server/docker/linux</a></p>
+<p>The doc says: "First, create the volume that Portainer Server will use to store its database"<br />
+But I won't do that. I don't like using Docker volumes. By default the volumes are stored in <code>/var/lib/docker/volumes</code> directory, and extra steps are needed to find which volume belongs to which container. So I usually use <a href="https://docs.docker.com/storage/bind-mounts/">Bind Mounts</a>. </p>
+<p><strong>Start Portainer:</strong></p>
+<pre><code class="language-bash">docker run -d \
+-p 8000:8000 -p 9443:9443 \
+--name portainer \
+--restart=always \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-v /opt/docker/portainer/data:/data \
+portainer/portainer-ce:2.9.1-alpine
+</code></pre>
+<p>The official documentation says to use the <code>latest</code> (<code>portainer/portainer-ce:latest</code>) image, but:</p>
+<p>Read about <code>latest</code> tag: <a href="https://vsupalov.com/docker-latest-tag/">https://vsupalov.com/docker-latest-tag/</a></p>
+<p>What is my biggest problem with the <code>latest</code> tag? The updates! For example: an application is installed to the Kubernetes cluster, with database dependency. A new version of the app come out and the <code>latest</code> tag will points to this newer version. Next time when the pod restarts (for some reason) the newer version will be deployed. If the new version has breaking changes (eg.: database scheme changes, or manual config needs), your app won't start (properly).<br />
+Or simply you don't want always use the latest version...</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The situation above partially can be avoided with properly configured imagePullPolicy: <a href="https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy">https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy</a></p>
+<p>Just partially because if the pod restarts in a node that don't have the image, alway  the <code>latest</code> image will be pulled...</p>
+</div>
+<p>So I recommend not to use the <code>latest</code> tag.</p>
+<h3 id="portainer-on-vps-public-internet">Portainer On VPS (Public Internet)<a class="headerlink" href="#portainer-on-vps-public-internet" title="Permanent link">&para;</a></h3>
+<p>It is not an elegant to publish your Portainer to the public Internet. Of Course this not an issue when you install portainer inside a private network. But if you planning to use portainer on a VPS which has public IP address it is recommended not to bind the public IP address, or set up a firewall (iptables).</p>
+<p>I think the best solution is setting up a VPN connection between the server and your PC. I can recommend two almost zero config VPN solutions:</p>
+<ul>
+<li><a href="https://tailscale.com">https://tailscale.com</a></li>
+<li><a href="https://www.wireguard.com">https://www.wireguard.com</a></li>
+<li>Or you can use OpenVPN/IpSecVPN, if you familiar with them.</li>
+</ul>
+<p>So if you want to bind Portainer on a specific IP address use the following command:</p>
+<pre><code class="language-bash">docker run -d \
+-p 10.5.0.2:8000:8000 -p 10.5.0.2:9443:9443 \
+--name portainer \
+--restart=always \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-v /opt/docker/portainer/data:/data \
+portainer/portainer-ce:2.9.1-alpine
+</code></pre>
+<p>Where the <code>10.5.0.2</code>  is the IP Address of your VPN interface (tun0,wg0,tailscale0, etc).</p>
+<p>How does it look like:</p>
+<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-3"><code class="language-bash">docker ps --filter name=portainer
+CONTAINER ID   IMAGE                           COMMAND        CREATED        STATUS        PORTS                                                          NAMES
+90ca6ef446e3   portainer/portainer-ce:latest   "/portainer"   43 hours ago   Up 43 hours   10.5.0.2:8000->8000/tcp, 10.5.0.2:9443->9443/tcp, 9000/tcp   portainer</code></pre>
+
+<p>Now you can access Portainer on <a href="https://10.5.0.2:9443">https://10.5.0.2:9443</a></p>
+<p>We are now done with the installation.</p>
+<h2 id="using-portainer">Using Portainer<a class="headerlink" href="#using-portainer" title="Permanent link">&para;</a></h2>
+<h3 id="first-steps">First Steps<a class="headerlink" href="#first-steps" title="Permanent link">&para;</a></h3>
+<p><strong>Create an admin user</strong></p>
+<p><img alt="AdminUser" src="../assets/images/1634213236.jpg" /></p>
+<p><strong>Select "GetStarted"</strong></p>
+<p><img alt="GetStarted" src="../assets/images/1634213308.jpg" /></p>
+<p><strong>Click on the "local" machine</strong></p>
+<p><img alt="Local" src="../assets/images/1634213381.jpg" /></p>
+<h3 id="create-new-docker-network">Create New Docker Network<a class="headerlink" href="#create-new-docker-network" title="Permanent link">&para;</a></h3>
+<p>By default there are three networks:</p>
+<p><img alt="Local" src="../assets/images/1634213626.jpg" /></p>
+<p>What you see is equialent to <code>docker network ls</code> command:</p>
+<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-5"><code class="language-bash">docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+e15c0c8f8d67   bridge    bridge    local
+f728316f0193   host      host      local
+54ac360308df   none      null      local</code></pre>
+
+<p>If you need more details about a network use the <code>inspect</code> command:</p>
+<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-46"><code class="language-bash">docker inspect  e15c0c8f8d67
+[
+    {
+        "Name": "bridge",
+        "Id": "e15c0c8f8d67adc6b03876861c15c97bf581a97c75b9bedef7d48ecf6c906b0a",
+        "Created": "2021-10-01T11:25:52.320103343+02:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.18.0.0/16",
+                    "Gateway": "172.18.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "6c543ab5794bd752c29709a622f561a5d6647a071e802729ab8386759d3bcae6": {
+                "Name": "portainer",
+                "EndpointID": "b22b41e7e501de25a5b25d4320297224b5a87deb7c898c56ed0376af02c54917",
+                "MacAddress": "02:42:ac:12:00:02",
+                "IPv4Address": "172.18.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {
+            "com.docker.network.bridge.default_bridge": "true",
+            "com.docker.network.bridge.enable_icc": "true",
+            "com.docker.network.bridge.enable_ip_masquerade": "true",
+            "com.docker.network.bridge.host_binding_ipv4": "0.0.0.0",
+            "com.docker.network.bridge.name": "docker0",
+            "com.docker.network.driver.mtu": "1500"
+        },
+        "Labels": {}
+    }
+]</code></pre>
+
+<p><strong>Why should we create new network?</strong></p>
+<p>Link: <a href="https://docs.docker.com/network/bridge/#differences-between-user-defined-bridges-and-the-default-bridge">https://docs.docker.com/network/bridge/#differences-between-user-defined-bridges-and-the-default-bridge</a></p>
+<p>I want to emphasize two adventages:</p>
+<ul>
+<li>User-defined bridges provide automatic DNS resolution between containers</li>
+<li>You can enable manual container attachment</li>
+</ul>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Inside a docker network it is absolutely not recommended to use static IP addresses for containers. It is antipatern. Use the container's name instead of the IP address when you have to connect containers to each other and put them into the same network.</p>
+</div>
+<p>Click on the "Add network" button.</p>
+<ul>
+<li><strong>Name:</strong> Give a name to the new network. (custom_bridge)</li>
+<li><strong>Driver:</strong> Bridge</li>
+<li>IPV4 Network configuration</li>
+</ul>
+<p><img alt="AddNet" src="../assets/images/1634214165.jpg" /></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+</div>
+<p><strong>IP range:</strong> Can differ from the Subnet. The containers will automatically get IP address from this range. (DHCP) Must be smaller than the entire Subnet.</p>
+<ul>
+<li><strong>Enable manual container attachment:</strong> Turn On</li>
+</ul>
+<p>This can achieve with cli command as well:</p>
+<pre><code class="language-bash">docker network create custom-cli \
+--attachable \
+--driver bridge \
+--gateway 10.10.10.1 \
+--ip-range 10.10.10.0/24 \
+--subnet 10.10.10.0/24
+</code></pre>
+<p>You can decide which method (portainer or cli) is best for you.</p>
+<h3 id="deploy-app-container-from-template">Deploy App (Container) From Template<a class="headerlink" href="#deploy-app-container-from-template" title="Permanent link">&para;</a></h3>
+<p>This is the easies way in Portainer to deploy an application. Choose "App Templates" from the menu, and click on Docker "Registry":</p>
+<p><img alt="DeployRegistry" src="../assets/images/1634214698.jpg" /></p>
+<p>And Fill Name and Network, then click on "Deploy the container":</p>
+<p><img alt="DeployRegistry2" src="../assets/images/1634214770.jpg" /></p>
+<p>Chheck the container:</p>
+<p><img alt="DeployRegistry2" src="../assets/images/1634214840.jpg" /></p>
+<p>You can click on it and see all the details. </p>
+<p>Try out our new docker Registry:</p>
+<pre class="command-line" data-user="root" data-host="dockerhost" data-output="3-9"><code class="language-bash">docker tag registry:latest 127.0.0.1:49153/registry/registry:v1
+docker push 127.0.0.1:49153/registry/registry:v1
+The push refers to repository [127.0.0.1:49153/registry/registry]
+6da1e15d5d7f: Pushed
+d385a2515a0f: Pushed
+d661c8a70d1e: Pushed
+02ada6f7a843: Pushed
+39982b2a789a: Pushed
+v1: digest: sha256:b0b8dd398630cbb819d9a9c2fbd50561370856874b5d5d935be2e0af07c0ff4c size: 1363</code></pre>
+
+<p>We successfully pushed the locally stored portainer image to our new registry.
+Unfortunately there is no easy way the list the images form the custom registry. If you need a gui please check this: <a href="https://github.com/Joxit/docker-registry-ui">https://github.com/Joxit/docker-registry-ui</a></p>
+<p>At the moment we don't have any other choice than use the API:</p>
+<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-7,9-14"><code class="language-bash">curl -s http://127.0.0.1:49153/v2/_catalog | jq
+{
+  "repositories": [
+    "registry/registry"
+  ]
+}
+
+curl -s http://127.0.0.1:49153/v2/registry/registry/tags/list | jq
+{
+  "name": "registry/registry",
+  "tags": [
+    "v1"
+  ]
+}</code></pre>
+
+<h3 id="deploy-single-container">Deploy Single Container<a class="headerlink" href="#deploy-single-container" title="Permanent link">&para;</a></h3>
+<p>We are going to deploy the registy ui, metioned in the previous chapter.</p>
+<p>Docker HUB link: <a href="https://hub.docker.com/r/joxit/docker-registry-ui">https://hub.docker.com/r/joxit/docker-registry-ui</a></p>
+<h4 id="name-registry-an-port-mapping">Name, Registry An Port Mapping<a class="headerlink" href="#name-registry-an-port-mapping" title="Permanent link">&para;</a></h4>
+<p><img alt="1634217920.jpg" src="../assets/images/1634217920.jpg" /></p>
+<ul>
+<li><strong>Name</strong>: registriy-ui</li>
+<li><strong>Registry</strong>: DockerHub</li>
+<li><strong>Image</strong>: joxit/docker-registry-ui</li>
+<li><strong>Always pull the image</strong>: OFF</li>
+<li><strong>Publish all exposed network ports to random host ports</strong>: ON</li>
+<li><strong>Publish Port</strong> 18081 --&gt; 80</li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You have to pull the image first, if you use always pull image: <strong><mark>off</mark></strong>
+<code>docker pull joxit/docker-registry-ui</code> Or you can use the Portainer Image menu for pulling the image.</p>
+<p>Do not use "Publish all exposed network ports to random host ports"! Every time the container restart new host port will be assigned!</p>
+</div>
+<h4 id="network">Network<a class="headerlink" href="#network" title="Permanent link">&para;</a></h4>
+<p>Use the previusly defined network:</p>
+<p><img alt="1634216142.jpg" src="../assets/images/1634216142.jpg" /></p>
+<h4 id="environments">Environments<a class="headerlink" href="#environments" title="Permanent link">&para;</a></h4>
+<p>Check the official documentation on DockerHUB: <a href="https://hub.docker.com/r/joxit/docker-registry-ui">https://hub.docker.com/r/joxit/docker-registry-ui</a></p>
+<pre><code class="language-conf">REGISTRY_URL=http://localhost:18081
+REGISTRY_TITLE=Test Registry @ localhost
+SHOW_CONTENT_DIGEST=true
+SINGLE_REGISTRY=true
+NGINX_PROXY_PASS_URL=http://registry:5000
+</code></pre>
+<p><strong>Screenshot</strong></p>
+<p><img alt="1634228818.jpg" src="../assets/images/1634228818.jpg" /></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>In the above screenshot the port number is wrong at <code>REGISTRY_URL</code>. The correct one is: <code>REGISTRY_URL=http://localhost:18081</code></strong></p>
+</div>
+<ul>
+<li><strong>REGISTRY_URL</strong></li>
+</ul>
+<p>Use the host on which you want to access your registry-ui. It should be the same as used in Docker port publishing (-p), or at portainer gui.
+Another example:</p>
+<p><img alt="1634229389.jpg" src="../assets/images/1634229389.jpg" /></p>
+<p>In this case the REGISTRY_URL should be <code>http://10.5.0.2:18081</code>.</p>
+<ul>
+<li><strong>NGINX_PROXY_PASS_URL</strong></li>
+</ul>
+<p>The most important is attaching both the registry and registry-ui to the same network (custom_bridge)! In this way containers can access each other inside this network with there name.</p>
+<p>For better understanding please see the following examples:</p>
+<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-6,9-13,16-22"><code class="language-bash">docker ps
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED          STATUS          PORTS                                                      NAMES
+dcbf77aa6492   joxit/docker-registry-ui:latest       "/docker-entrypoint.…"   11 minutes ago   Up 11 minutes   0.0.0.0:18081->80/tcp                                      registriy-ui
+031ffbed2392   registry:latest                       "/entrypoint.sh /etc…"   4 hours ago      Up 4 hours      0.0.0.0:49153->5000/tcp                                    registry
+6c543ab5794b   portainer/portainer-ce:2.9.1-alpine   "/portainer"             5 hours ago      Up 5 hours      0.0.0.0:8000->8000/tcp, 0.0.0.0:9443->9443/tcp, 9000/tcp   portainer
+
+docker exec -it registriy-ui /bin/sh
+curl -i http://registry:5000
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Date: Thu, 14 Oct 2021 16:43:45 GMT
+Content-Length: 0
+
+docker exec -it registry /bin/sh
+ping registriy-ui
+PING registriy-ui (10.1.1.3): 56 data bytes
+64 bytes from 10.1.1.3: seq=0 ttl=64 time=0.068 ms
+64 bytes from 10.1.1.3: seq=1 ttl=64 time=0.098 ms
+^C
+--- registriy-ui ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 0.068/0.083/0.098 ms</code></pre>
+
+<p>Regarding the port, inside a Docker network always use the port on which the process itself is listening on, NOT the published port. (<code>0.0.0.0:49153-&gt;5000/tcp</code>)</p>
+<p>If you get error like this:</p>
+<pre><code class="language-plain">An error occured: Check your connection and your registry must have `Access-Control-Allow-Origin` header set to `http://127.0.0.1:18081`
+</code></pre>
+<p>This is likely becase the <code>REGISTRY_URL</code> is miss-configured.</p>
+<p>If everything went good, the Registry-UI web should look like this:</p>
+<p><img alt="1634230166.jpg" src="../assets/images/1634230166.jpg" /></p>
+<h3 id="stack-compose">Stack (compose)<a class="headerlink" href="#stack-compose" title="Permanent link">&para;</a></h3>
+<p>What Is The Problem With Single containers?</p>
+<p>Deploying singe containers is suitable only for a quick test. Main problems:</p>
+<ul>
+<li>If you accidentally delete the container you loose all it's configuration (port mapping, environments, volume and network settings).</li>
+<li>You can not easily reproduce the container on another host</li>
+<li>If you need to connect two or more container to each other you must manually assign them to the same network, and even the network has to be created manually.</li>
+<li>Containers won't be backed up when you create Portainer backup. </li>
+</ul>
+<p>The solution is <a href="https://docs.docker.com/compose/compose-file/compose-file-v3/">docker-compose</a>, or the the Portainer way = Stack. Create a Stack means writing a docker compose (yaml) file .</p>
+<p>All we have done before can be defined in a single file:</p>
+<pre><code class="language-yaml">version: &quot;3&quot;
+services:
+  registry:
+    deploy:
+      replicas: 1
+    image: registry:latest
+    container_name: registry
+    restart: always
+    volumes:
+      - /var/lib/registry:/var/lib/registry
+    environment:
+      - TZ=Europe/Budapest
+    ports:
+      - 5000:5000
+    networks:
+      - registy
+  registry-ui:
+    deploy:
+      replicas: 1
+    image: joxit/docker-registry-ui:latest
+    container_name: registry-ui
+    ports:
+      - 18081:80
+    environment:
+      - REGISTRY_URL=http://localhost:18081
+      - REGISTRY_TITLE=Test Registry @ localhost
+      - SHOW_CONTENT_DIGEST=true
+      - SINGLE_REGISTRY=true
+      - NGINX_PROXY_PASS_URL=http://registry:5000
+    networks:
+      - registy
+networks:
+  registy:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+       - subnet: &quot;10.101.0.1/29&quot;
+</code></pre>
+<p>Copy and paste this yaml to your Portainer:</p>
+<p><img alt="1634232029.jpg" src="../assets/images/1634232029.jpg" /></p>
+<p>And Click "Deploy the stack" button.</p>
+<p>This Stack will create a network:</p>
+<p><img alt="1634232209.jpg" src="../assets/images/1634232209.jpg" /></p>
+<p>And the Stack will look like this:</p>
+<p><img alt="1634232253.jpg" src="../assets/images/1634232253.jpg" /></p>
+<p>This <code>yaml</code> file can be used on any Portainer instance or without Portainer using the <code>docker-compose</code> cli tool.</p>
+<p>Save the above <code>yaml</code> as <code>docker-compose.yaml</code> and start the containers:</p>
+<pre><code>docker-compose up -d
+Creating network &quot;registry_registy&quot; with driver &quot;bridge&quot;
+Creating registry-ui ... done
+Creating registry    ... done
+</code></pre>
+<p>You can stop the Stack with <code>docker-compose down</code> command. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You have to be in the directory which contains <code>docker-compose.yaml</code> file when running  <code>docker-compose</code> command</p>
+</div>
+<details class="tip"><summary>Tip</summary><p>Do not mix using docker-compose and Portainer Stack, unless you are brave enough. It won't cause any tehcnical problem, but very confusing, I think.</p>
+</details>
+<h3 id="stack-with-git">Stack With Git<a class="headerlink" href="#stack-with-git" title="Permanent link">&para;</a></h3>
+<p>When you are working on something for hours or days it become really important to have a backup of your work. In this case also important that your work could be reproducible on any other system (portability). Stack are very good start points. But how to track the modifications? How to make backups? Where to store our yaml files?<br />
+You can create backup from your portainer instance. <a href="https://docs.portainer.io/v/ce-2.9/admin/settings#backup-portainer">(Setting / Backup configuration)</a> But unfortunately scheduled backup available only for business users. Workaround could be saving the portainer data directory (<code>/opt/docker/portainer/data</code>).<br />
+Despite backup we still need track the modifications. </p>
+<p>Portainer has a great feature: We can use a git repository for creating stacks. I absolutely recommend everybody to use Git repository to store the Stack (comopse) files. </p>
+<p><strong>Example:</strong></p>
+<p><img alt="1634304270.jpg" src="../assets/images/1634304270.jpg" /></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can use any Git based repository not just Github (eg.: Self hosted <a href="https://gitea.io/en-us/">Gitea</a>)<br />
+If your repository protected with username and password, don't forget to enable "Authentication" and provide you credentials.</p>
+</div>
+<h2 id="install-portainer-on-kubernetes">Install Portainer On Kubernetes<a class="headerlink" href="#install-portainer-on-kubernetes" title="Permanent link">&para;</a></h2>
+<p>Installation documantation: <a href="https://docs.portainer.io/v/ce-2.9/start/install/server/kubernetes/baremetal">https://docs.portainer.io/v/ce-2.9/start/install/server/kubernetes/baremetal</a></p>
+<p>Before you install Portainer on the top of your Kubernetes cluster you have to deploy one persistent storage provider.</p>
+<h3 id="persistent-storage">Persistent Storage<a class="headerlink" href="#persistent-storage" title="Permanent link">&para;</a></h3>
+<p>In this article I don't want to bother too much with this topic, therefore I chose a minimal installation of OpenEBS. </p>
+<p>Link: <a href="https://docs.openebs.io/docs/next/uglocalpv-hostpath.html">https://docs.openebs.io/docs/next/uglocalpv-hostpath.html</a></p>
+<p>Deploy the operator:</p>
+<pre><code class="language-bash">kubectl apply -f https://openebs.github.io/charts/openebs-operator-lite.yaml
+</code></pre>
+<p>Download the StorageClass manifest:</p>
+<pre><code class="language-bash">wget https://openebs.github.io/charts/openebs-lite-sc.yaml
+</code></pre>
+<p>And remove the second StorageClass (openebs-device). Or you can use this snippet:</p>
+<pre><code class="language-bash">
+cat &lt;&lt;EOF&gt;openebs-lite-sc.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-hostpath
+  annotations:
+    openebs.io/cas-type: local
+    cas.openebs.io/config: |
+      #hostpath type will create a PV by
+      # creating a sub-directory under the
+      # BASEPATH provided below.
+      - name: StorageType
+        value: &quot;hostpath&quot;
+      #Specify the location (directory) where
+      # where PV(volume) data will be saved.
+      # A sub-directory with pv-name will be
+      # created. When the volume is deleted,
+      # the PV sub-directory will be deleted.
+      #Default value is /var/openebs/local
+      - name: BasePath
+        value: &quot;/openebs/local/&quot;
+provisioner: openebs.io/local
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Delete
+EOF
+</code></pre>
+<p>Apply:</p>
+<pre><code class="language-bash">kubectl apply -f openebs-lite-sc.yaml
+</code></pre>
+<p>You can check if it is working:</p>
+<pre><code class="language-bash">kubectl apply -f https://openebs.github.io/charts/examples/local-hostpath/local-hostpath-pvc.yaml
+kubectl apply -f https://openebs.github.io/charts/examples/local-hostpath/local-hostpath-pod.yaml
+</code></pre>
+<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-3"><code class="language-bash">kubectl get pvc
+NAME                 STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
+local-hostpath-pvc   Bound    pvc-dda89e6e-43e6-4552-8985-9564b95f5e9a   5G         RWO            openebs-hostpath   27m</code></pre>
+
+<h4 id="default-storageclass">Default StorageClass<a class="headerlink" href="#default-storageclass" title="Permanent link">&para;</a></h4>
+<p>Portainer needs default Storage Class. But the <code>openebs-hostpath</code> is not annotated as default:</p>
+<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-3"><code class="language-bash">kubectl get sc
+NAME               PROVISIONER        RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+openebs-hostpath   openebs.io/local   Delete          WaitForFirstConsumer   false                  25m</code></pre>
+
+<p>Fix this:</p>
+<pre><code class="language-bash">kubectl patch storageclass openebs-hostpath -p '{&quot;metadata&quot;: {&quot;annotations&quot;:{&quot;storageclass.kubernetes.io/is-default-class&quot;:&quot;true&quot;}}}'
+</code></pre>
+<p>And check again:</p>
+<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-3"><code class="language-bash">kubectl get sc
+NAME                         PROVISIONER        RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+openebs-hostpath (default)   openebs.io/local   Delete          WaitForFirstConsumer   false                  27m</code></pre>
+
+<h4 id="deploy-portainer">Deploy Portainer<a class="headerlink" href="#deploy-portainer" title="Permanent link">&para;</a></h4>
+<pre><code class="language-bash">kubectl apply -n portainer -f https://raw.githubusercontent.com/portainer/k8s/master/deploy/manifests/portainer/portainer.yaml
+</code></pre>
+<p>Now we have to figure out on which port the Portainer is accessible (nodePort):</p>
+<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-3"><code class="language-bash">kubectl -n portainer  get svc
+NAME        TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)                                         AGE
+portainer   NodePort   10.22.142.7   <none>        9000:30777/TCP,9443:30779/TCP,30776:30776/TCP   2m31s </code></pre>
+
+<p>The winner is: 9443:<strong>30779</strong>/TCP</p>
+<p>Now you can access Portainer on every Kubernetes node using the port number 30779. (<code>http://172.16.1.214:30779</code>)</p>
+<h2 id="final-thoughts">Final Thoughts<a class="headerlink" href="#final-thoughts" title="Permanent link">&para;</a></h2>
+<p>I think Portainer can be a very helpful tool for everyone who whats to work with containers, but for managing Kubernetes cluster I think there are bertter software. I always like to see the Kubernetes objects ("Kinds") as they are. I like Kubernetes Dashboard much more than Portainer for managing my cluster, but everybody has different taste. I advise to try <a href="https://github.com/kubernetes/dashboard">Kubernetes Dashboard</a>, <a href="https://rancher.com/products/rancher/">Rancher</a>, Portainer, <a href="https://github.com/hashmapinc/k8dash">K8Sdash</a> and so on, and choose what you really liked.</p>
+<p>But, if you just now getting familiar to Containers I think Portainer can help you to understand how Networks/Volumes/Stack/Swarms/Images/etc work. Most people like to see things on a graphical interface not just the CLI, this is where the Portainer is great. But I think CLIs (kubectl, oc, docker-compose, docker) are the most powerfull tools, if you are willing to learn them. All the outputs can be piped to grep, sed, jq, etc, and you can write scripts to automate your daily work or process the outputs.</p>
+                
+              
+              
+                
+
+
+  <h2 id="__comments">Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>var script,disqus_config=function(){this.page.url="https://readthedocs.vinczejanos.info/Get_Started_With_Portainer/",this.page.identifier="Get_Started_With_Portainer/"};"undefined"==typeof DISQUS?((script=document.createElement("script")).async=!0,script.src="https://shortname-jvincze-test.disqus.com/embed.js",script.setAttribute("data-timestamp",Date.now()),document.body.appendChild(script)):DISQUS.reset({reload:!0,config:disqus_config})</script>
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <!-- Cookie Consent by https://www.CookieConsent.com -->
+<script type="text/javascript" src="//www.cookieconsent.com/releases/4.0.0/cookie-consent.js" charset="UTF-8"></script>
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({"notice_banner_type":"headline","consent_type":"express","palette":"light","language":"en","page_load_consent_levels":["strictly-necessary"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"website_name":"Blog"});
+});
+</script>
+
+<noscript>ePrivacy and GPDR Cookie Consent by <a href="https://www.CookieConsent.com/" rel="nofollow noopener">Cookie Consent</a></noscript>
+<!-- End Cookie Consent by https://www.CookieConsent.com -->
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tracking", "navigation.top", "search.suggest", "search.highlight", "search.suggest", "search.highlight"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.bc35569b.min.js"></script>
+      
+        <script src="../js/prism.js"></script>
+      
+    
+  </body>
+</html>
