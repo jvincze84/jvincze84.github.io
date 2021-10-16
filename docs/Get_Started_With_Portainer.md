@@ -484,7 +484,134 @@ When you are working on something for hours or days it become really important t
 You can create backup from your portainer instance. [(Setting / Backup configuration)](https://docs.portainer.io/v/ce-2.9/admin/settings#backup-portainer) But unfortunately scheduled backup available only for business users. Workaround could be saving the portainer data directory (`/opt/docker/portainer/data`).  
 Despite backup we still need track the modifications. 
 
-Portainer has a great feature: We can use a git repository for creating stacks. I absolutely recommend everybody to use Git repository to sotre the Stack (comopse) files. 
+Portainer has a great feature: We can use a git repository for creating stacks. I absolutely recommend everybody to use Git repository to store the Stack (comopse) files. 
+
+**Example:**
+
+![1634304270.jpg](assets/images/1634304270.jpg)
+
+!!! tip
+    You can use any Git based repository not just Github (eg.: Self hosted [Gitea](https://gitea.io/en-us/))  
+    If you repository protected with username and password, don't forget to enable "Authentication" and provide you credentials.
+
+## Install Portainer On Kubernetes
+
+Installation documantation: [https://docs.portainer.io/v/ce-2.9/start/install/server/kubernetes/baremetal](https://docs.portainer.io/v/ce-2.9/start/install/server/kubernetes/baremetal)
+
+Before you install Portainer on the top of your Kubernetes cluster you have to deploy one persistent storage provider.
+
+### Persistent Storage
+
+At this article I don't want to bother too much with this topic, therefore I chose a minimal installation of OpenEBS. 
+
+Link: [https://docs.openebs.io/docs/next/uglocalpv-hostpath.html](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html)
+
+Deploy the operator:
+
+````bash
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-lite.yaml
+````
+
+Download the StorageClass manifest:
+
+```bash
+wget https://openebs.github.io/charts/openebs-lite-sc.yaml
+```
+
+And remove the second StorageClass (openebs-device). Or you can use this snipplet:
+
+```bash
+
+cat <<EOF>openebs-lite-sc.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-hostpath
+  annotations:
+    openebs.io/cas-type: local
+    cas.openebs.io/config: |
+      #hostpath type will create a PV by
+      # creating a sub-directory under the
+      # BASEPATH provided below.
+      - name: StorageType
+        value: "hostpath"
+      #Specify the location (directory) where
+      # where PV(volume) data will be saved.
+      # A sub-directory with pv-name will be
+      # created. When the volume is deleted,
+      # the PV sub-directory will be deleted.
+      #Default value is /var/openebs/local
+      - name: BasePath
+        value: "/openebs/local/"
+provisioner: openebs.io/local
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Delete
+EOF
+```
+
+Apply:
+
+```bash
+kubectl apply -f openebs-lite-sc.yaml
+```
+
+You can check if it is working:
+
+```bash
+kubectl apply -f https://openebs.github.io/charts/examples/local-hostpath/local-hostpath-pvc.yaml
+kubectl apply -f https://openebs.github.io/charts/examples/local-hostpath/local-hostpath-pod.yaml
+```
+
+<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-3"><code class="language-bash">kubectl get pvc
+NAME                 STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
+local-hostpath-pvc   Bound    pvc-dda89e6e-43e6-4552-8985-9564b95f5e9a   5G         RWO            openebs-hostpath   27m</code></pre>
+
+
+#### Default StorageClass
+
+Portainer needs default Storage Class. But the `openebs-hostpath` is not annotated as default:
+
+<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-3"><code class="language-bash">kubectl get sc
+NAME               PROVISIONER        RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+openebs-hostpath   openebs.io/local   Delete          WaitForFirstConsumer   false                  25m</code></pre>
+
+
+Fix this:
+
+```bash
+kubectl patch storageclass openebs-hostpath -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```
+
+And check again:
+
+<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-3"><code class="language-bash">kubectl get sc
+NAME                         PROVISIONER        RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+openebs-hostpath (default)   openebs.io/local   Delete          WaitForFirstConsumer   false                  27m</code></pre>
+
+
+#### Deploy Portainer
+
+```bash
+kubectl apply -n portainer -f https://raw.githubusercontent.com/portainer/k8s/master/deploy/manifests/portainer/portainer.yaml
+```
+
+Now we have to figure out on which port the Portainer is accessible (nodePort):
+
+<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-3"><code class="language-bash">kubectl -n portainer  get svc
+NAME        TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)                                         AGE
+portainer   NodePort   10.22.142.7   <none>        9000:30777/TCP,9443:30779/TCP,30776:30776/TCP   2m31s </code></pre>
+
+The winner is: 9443:**30779**/TCP
+
+Now you can access Portainer on every Kubernetes node using the port number 30779. (`http://172.16.1.214:30779`)
+
+## Final Thoughts
+
+I think Portainer can be a very helful tool for everyone who whats to work with containers, but for managing Kubernetes cluster I think there are bertter softwares. I always like to see the Kubernetes objects ("Kinds") as they are. I like Kubernetes Dashboard much more than Portainer for managing my cluster, but everybody has different taste. I advise to try [Kubernetes Dashboard](https://github.com/kubernetes/dashboard), [Rancher](https://rancher.com/products/rancher/), Portainer, [K8Sdash](https://github.com/hashmapinc/k8dash) and so on, and choose what you really liked.
+
+But, if you just now getting familiar to Containers I think Portainer can help you to understand how Networks/Volumes/Stack/Swarms/Images/etc work. Most people like to see things on a graphical interface not just the CLI, this is where the Portainer is great. But I think CLIs (kubectl, oc, docker-compose, docker) are the most powerfull tools, if you are willing to learn them. All the outputs can be piped to grep, sed, jq, etc, and you can write scripts to automate your daily work or process the outputs.
+
+
 
 
 
