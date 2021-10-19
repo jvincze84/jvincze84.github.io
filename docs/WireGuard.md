@@ -209,16 +209,42 @@ PresharedKey = Shared Key23
 
 One out of two peers have to know where to find the other. 
 
-| Peer1 Know Peer2 IP adddress     | Peer2 Know Peer1 IP adddress | Comment  |
-| --- -----------------------------| ---------------------------- |----------|
-| yes                              | yes                          | Best Situation. PersistentKeepalive is not needed. |
-| yes                              | no                           | Good Situation. PersistentKeepalive should be set on Peer1. |
-| no                               | yes                          | Good Situation. PersistentKeepalive should be set on Peer2. |
-| no                               | no                           | Worst Situation. No Connection could be made.  |
+|ID| Peer1 Know Peer2 IP adddress     | Peer2 Know Peer1 IP adddress | Comment  |
+|--|---- -----------------------------| ---------------------------- |----------|
+|1 | yes                              | yes                          | Best Situation. PersistentKeepalive is not needed. |
+|2 | yes                              | no                           | Good Situation. PersistentKeepalive should be set on Peer1. |
+|3 | no                               | yes                          | Good Situation. PersistentKeepalive should be set on Peer2. |
+|4 | no                               | no                           | Worst Situation. No Connection could be made.  |
+
+* First Situation
+
+This the best scenario. Both clients have its own static public ip address. You can configure the Endpoint each side to point each other.
+
+* Second And Third Situation
+
+You have at least one peer - the server(s) - with static public IP address, and one or more clients. The Endpoint configuration on all clients the same, points to the server' IP address and port.  
+On the server side you should not use any Endpoint declaration for the Clients.
+
+* Worst Situation
+
+In this scenario all of your peers are behind NAT or CNG Nat. Example of 2 peers:
+
+The first peer is behind NAT in your home (private) network. You have port forwarding, firewall and **dynamic DNS** set up.  
+The second peer is your mobile phone with mobile internet.
+
+In your configuration of the first peer you can not specify anything as Endpoint, since you don't know the always actual ip address of you mobile phone.  
+In the configuration of your mobile client you can specify your DynDNS host name (eg.: test-wg.duckdns.org).  
+
+The problem here: If your public IP address (to which the DynDns provider points to) changes you have to restart the Wireguard client on your mobile phone. If you can live together with this limitation Wireguard will work fine in this kind of setup.
+
+BUT! If the first peer behind CGN Nat, you don't have any option to get Wireguard works. If you can not specify at least one Enpoint, Wireguard just won't work.
+
+If you want to read about how Tailscale solve this kind of issue click on this link: [https://tailscale.com/blog/how-nat-traversal-works/](https://tailscale.com/blog/how-nat-traversal-works/)
 
 
 
-Direct Connection Matrix:
+
+**Direct Connection Matrix:**
 
 | Connect FROM / TO            |  Server Peer (91.12.21.142)                                   | Peer2 (inside priv net)      | Peer3 (inside priv net)    | 
 |-                             |-                                                              |-                             | -                          |
@@ -233,23 +259,11 @@ Direct Connection Matrix:
     - In the clients configuration we specify where to find the Server (`EndPoint`) and   `PersistentKeepalive` to update its ip address periodically.
 
 !!! info
-    So the mentioned `EndPoint` and `PersistentKeepalive` setting go to the clients config not to the server's one.
+    The mentioned `EndPoint` and `PersistentKeepalive` settings go to the clients config not to the server's one.
 
-As we discussed earlier general peers may be behind CGN NAT, or inside your home network, or even could be your mobile phone with mobile internet connection. These peers don't have static, public IP addresses. Of course you can open your port on your firewall and set up NAT, use dynamic DNS, etc., but Wireguard check DNS record only when it starts. Every time your router gets a new public ip address you should trigger Wireguard to restart.  
-This situation could not be solved easily, and this is where Tailscale comes to the picture. If all of your peers are behind NAT you should use Tailscale instead of Wireguard. You probably won't find any other good and stable solution. 
+As we discussed earlier general peers may be behind CGN NAT, or inside your home network, or even could be your mobile phone with mobile internet connection. These peers don't have static, public IP addresses. Of course you can open port on your firewall and set up NAT, use dynamic DNS, etc., but **Wireguard check DNS record only when it starts**. Every time your router gets a new public ip address you should trigger Wireguard restart.  
+This situation could not be  solved easily, and this is where Tailscale comes to the picture. If all of your peers are behind NAT you should use Tailscale instead of Wireguard. You probably won't find any other good and **stable** solution. 
 
-It is not likely that all of your peers behind nats get new IP address at the same time, but imagine the situation you have three peers and one of them gets a new IP address. Two things will happen:
-
-* The other peers will look for this client on the old IP address (because of the initial DNS query)
-* The peer with the new IP address will find the other peers, since ip addresses of them did not changed. 
-
-It sound good, isn't it? Yes, but we have some problem:
-
-* `PersistentKeepalive` should be set up on all dynamic clients. All clients look for the others on the ip address was resolved from Endpoint at startup. 
-* Although the clients with new ip address will update it's ip address on all clients, the other clients will look it on its old IP address. 
-* This easily leads to unstable connection. 
-* The main problem here is the initial DNS query. 
-* You may periodically restart all of your clients but this is really a bad idea, connections will be interrupted between the clients.
 
 ### Summarize
 
@@ -322,7 +336,171 @@ Read more:
 * [https://stackoverflow.com/questions/65444747/what-is-the-difference-between-endpoint-and-allowedips-fields-in-wireguard-confi](https://stackoverflow.com/questions/65444747/what-is-the-difference-between-endpoint-and-allowedips-fields-in-wireguard-confi)
 * [https://www.procustodibus.com/blog/2021/01/wireguard-endpoints-and-ip-addresses/](https://www.procustodibus.com/blog/2021/01/wireguard-endpoints-and-ip-addresses/)
 
+
+## Topology Examples
+
+### WireGuard Server
+
+![WG-Server-Diagram.jpg](assets/images/WG-Server-Diagram.jpg){ width="740" }
+
+* Match the colors: Config and the element have the same color. Example green peer config text goes to the green client.
+* The "Cloud" pictogram means the public Internet.
+* VPN and physical connections are separately shown in the pictures. VPN connections are indicated by dashed lines.
+* The WireGuard server sitting on a VPS. This VPS has static, public IP address.
+* All (4) peers connect to this WireGuard Server.
+    - WireGuard Server don't have EndPoint configurations to the peers, since the IP addresses are not known of the peers. Therefore `PersistentKeepAlive` is not necessary.
+* Peers have `PersistentKeepAlive` set to 25 seconds. This means all peer update its EndPoint on the ServerSide.
+* Peer configurations between Client1 and Client3 have no `PersistentKeepAlive`  set up, because they know each other IP addresses. 
+* Client1 and Client3 have direct VPN connection to each other.
+* Client1 has  peer configured:
+    - Connection to the server
+    - Connection to Client3
+* Client3 has  peer configured
+    - Connection to the server
+    - Connection to Client1
+* Client2 has one peer configured, to the Wireguard Server.
+* "Your mobile phone" has only one peer configured, to the WireGuard server. 
+    - The mobile cient access other peers over the WireGuard server.
+    - Mobile clients can access the others on ther VPN IP address (10.10.0.0/24)
+* If the WireGuard server fails your mobule cient lose connection to all peers. Only Client1 and Client3 can access each other without the server, over VPN.
+* Even the connection between Client2 and Client3 or Client2 and Client1 goes through the server.
+* This setup works even when your private home network is behind CGN NAT.
+
+Disatvantages:
+
+* You need a server on the public internet (VPS). There are a lot of cheap VPS provider, so if you willing to pay for a VPS you can easily find one even under $5. (Be carefully, most VPS provider limit the bandwidth.)
+
+!!! tip
+    Connection could work without `PersistentKeepAlive` as well. BUT, the tunnel will only be establish after the client send at least one package to the other peer.
+
+### Dynamic DNS
+
+![WG-DynDNS.jpg](assets/images/WG-DynDNS.jpg){ width="740" }
+
+* Network Address Translation is set on your home router
+    - Incomming connection to 55870 goes to Client1
+    - Incomming connection to 55871 goes to Client3
+* You must configure a Duckdns client to update the ip address of test-wg.duckdns.org.
+* The mobile clint has (peer) configuration to Client1 and Client3.
+* Client1 and Client3 have direct peer configuration. 
+* `PersistentKeepalive` and `Endpoint` must set on the mobile client. Mobile client knows where to find the other peers, but the other clients don't know the IP address of the mobile client.
+
+Disatvantages:
+
+* If your public IP address changes you have to manually restart your mobile WG lient.
+* You have to configure NAT and DynDNS provider.
+* Won't work if you are behind CGN NAT.
+
+### Wireguard Gateway
+
+![WG-Gateway.jpg](assets/images/WG-Gateway.jpg){ width="740" }
+
+* Moblie client can access the entire private home network through  the VPN gateway.
+    - This means that traffic from the mobile client to the `172.16.0.0/22` first goes to the WG Gateway over the VPN tunnel. After the `iptables` rule (masquerade) applied the package reaches the target machine via the physical home network. 
+    - Flow: `Mobile Client (wg:10.10.0.13) --> (wg0:10.10.0.254) Wireguard Gateway (eth0:172.16.0.254) --> (eth0:172.16.0.22) Machine `
+* Similar to the previous scenario, except you don't need to install WG on all your internal device which you want to access. 
+ 
+
+   
+Disatvantages:
+
+* All of them which is included in the previous scenario.
+* You should carefully set up iptables. In this example the entire home network is open to the mobile client.
+* Machines inside your home network and without WireGuard don't access the VPN network without extra configuration.
+    - This means you have to configure the routing table in your router to send traffic to the VPN gateway. 
+    - Or add route to the routing table of all machines from where you want to access VPN ip addresses.
+    - Extra iptalbes rules also have to be added to the VPN gateway.
+
+
+
+
 ## Generate Peer Config Using Bash Script
+
+First let see the script:
+
+<pre class="line-numbers" data-src="/files/wg-sciprt.sh"><code class="language-bash"></code></pre>
+
+### Configuration
+
+* ==This script generate only the clients configurations, the server config must be manually created.==
+* Put this script to `/etc/wireguard/clients` on the VPN server and run it from this directory (`./script-name.sh`). 
+* Modify **line 3** to change your VPN IP address range. Only `/24` is supported! 
+* Initialize the first client IP address by running `echo -n 2 >/etc/wireguard/clients/ip.txt` command.
+* Change **Line 14 and 15** to set up the default IP address of the VPN server.
+* Optional settings:
+    - **Line 23** (Interface/Address): You can change the subnet bits (default: `/32`).
+    - **Line 25** : Change the listen port of the client, if you don't like the `51820`.
+
+!!! caution
+    Do not forget to enable Linux IP forwarding! Check: `cat /proc/sys/net/ipv4/ip_forward`  
+    Enable: `sysctl -w net.ipv4.ip_forward=1`  
+    Apply the change: `sysctl -p`
+
+    
+
+### Generate The Server Config
+
+```bash
+cat <<EOF>/tmp/wg0.conf
+[Interface]
+Address = 10.8.0.2/32
+ListenPort = 51820
+PrivateKey = $( wg genkey )
+DNS = 1.1.1.1
+EOF
+```
+
+Copy `wg0.conf` to the default config directory.
+
+```bash
+cp /tmp/wg0.conf /etc/wireguard
+```
+### Generate Your First Peer
+
+<pre class="command-line" data-user="root" data-host="dockerhost" data-output="5-32"><code class="language-bash">cd /etc/wireguard/clients
+./generate.sh 
+Config Name (peername): test-peer01
+Endpoint (leave blank for 23.88.60.51:51820): 
+
+# Here comes the QR Code
+
+==================== wg0 config change: ====================
+
+[Peer] # Config File: test-peer01.conf
+PublicKey = ob1**********QqyiwM8YxQv/1JHqP+pN7lK/QSegxc=
+PresharedKey = ICU35s/KULp3j8iP**********Nn6TLvrvFaefKez68=
+PersistentKeepalive = 25
+AllowedIPs = 10.8.0.28/32
+
+==================== Client Config ====================
+#:ob1**********QqyiwM8YxQv/1JHqP+pN7lK/QSegxc=,10.8.0.28,test-peer01
+[Interface]
+Address = 10.8.0.28/32
+ListenPort = 51820
+PrivateKey = iDtl*********t8pKVxWeVGlcG3h27/w/stjHvUg1o=
+#DNS = 1.1.1.1
+
+[Peer]
+PublicKey = qanM0i7p**********E/cvw0LDvN0UdW9VaxuBfRIn4=
+PresharedKey = ICU35s/KULp3j8iP**********Nn6TLvrvFaefKez68=
+EndPoint=23.88.60.51:51820
+PersistentKeepalive = 25
+AllowedIPs = 10.8.0.0/24
+
+Run command to reload Wireguard: 
+wg syncconf wg0 <(wg-quick strip wg0)</code></pre>
+
+
+* The script will generate QR code for mobile client, and the config file: `test-peer01.conf`
+    - You should use the generated config file or copy-paste from the script output.
+    - If you want to use mobile device (android or ios), use the generated QR code. You can regenerate this code with `qrencode -t ansiutf8 <test-peer01.conf` command.
+* The script doesn't automatically update the server `wg0.conf` file.
+    - You have to manually add the "wg0 config change:" section to the server config (`wg0.conf`).
+    - It you want to apply the changes without interrupt the existing connection run the `wg syncconf wg0 <(wg-quick strip wg0)` command.
+    
+
+
+
 
 
 
