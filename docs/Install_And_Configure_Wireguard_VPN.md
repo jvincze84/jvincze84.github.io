@@ -28,7 +28,7 @@ Official Web Page: [https://www.wireguard.com/install/](https://www.wireguard.co
 
 The install process is the same as Server or Client, but WireGuard is a decentralized VPN solution so there is no classic Server-Client terminology as in case of example OpenVPN. 
 
-I have VPS server with static and public IP address. This machine will be the "Server". Unfortunately lack of at least one static ip address makes the situation complicated, and there is no overall (magic) solution. So later in this article it is **assumed that you have at least one public, static ip address**. I'm going to highlight how can you partially solve the lack of the public ip, but all everything is only Workaround and solve the problems just partially.
+I have VPS server with static and public IP address. This machine will be the "Server". Unfortunately lack of at least one static ip address makes the situation complicated, and there is no overall (magic) solution. So later in this article it is **assumed that you have at least one public, static ip address**. I'm going to highlight how can you partially solve the lack of the public ip, but everything is only Workaround and solve the problems only partially.
 
 Install Wireguard:
 
@@ -79,7 +79,7 @@ systemctl start wg-quick@wg0
 
 * Check The Interface
 
-<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-8"><code class="language-bash">ifconfig wg0
+<pre class="command-line" data-user="root" data-host="wghost" data-output="2-8"><code class="language-bash">ifconfig wg0
 wg0: flags=209<UP,POINTOPOINT,RUNNING,NOARP>  mtu 1420
         inet 10.9.0.1  netmask 255.255.255.255  destination 10.9.0.1
         unspec 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  txqueuelen 1000  (UNSPEC)
@@ -93,8 +93,7 @@ wg0: flags=209<UP,POINTOPOINT,RUNNING,NOARP>  mtu 1420
 
 ### Collect Things We Need
 
-```
-# Private Key (Client)
+<pre class="command-line" data-user="root" data-host="wghost" data-output="1,3,4,5,7,8,9,11,12,13,15"><code class="language-bash"># Private Key (Client)
 wg genkey
 iEypOx3Xt5HE++e5I5udO8oJ+bArSoEXqK3XvuvFeXo=
 
@@ -108,8 +107,8 @@ TSXemmthLlXp8gsLSTfcmqgjolvYWmppNhIUeppg/CU=
 
 # Preshared Key
 wg genpsk
-Samqdyf9gVcfEUPCS52I1hJCLMlXAmHoitk1l5y9UO0=
-```
+Samqdyf9gVcfEUPCS52I1hJCLMlXAmHoitk1l5y9UO0=</code></pre>
+
 
 Peer Config File:
 
@@ -156,7 +155,7 @@ wg syncconf wg0 <(wg-quick strip wg0)
 
 At fist sight it could be confusing, but if you look closer I hope will understand the configs.
 
-* **PrivateKey**: Should never shared. Unique across all peers and appear only in `[interface` section.
+* **PrivateKey**: Should never shared. Unique across all peers and appear only in `[interface]` section.
 * **PublicKey**: Generated from `PrivateKey`. 
     - Should shared across peers. 
     - Peer1 gets the PublicKey of Peer2, and vice versa, 
@@ -218,11 +217,11 @@ One out of two peers have to know where to find the other.
 
 * First Situation
 
-This the best scenario. Both clients have its own static public ip address. You can configure the Endpoint each side to point each other.
+This the best scenario. Both clients have its own static ~~public~~ ip address. You can configure the Endpoint each side to point each other.
 
 * Second And Third Situation
 
-You have at least one peer - the server(s) - with static public IP address, and one or more clients. The Endpoint configuration on all clients the same, points to the server' IP address and port.  
+You have at least one peer - the server(s) - with static public IP address, and one or more clients. The Endpoint configuration on all clients the same and points to the server' IP address and port.  
 On the server side you should not use any Endpoint declaration for the Clients.
 
 * Worst Situation
@@ -352,18 +351,18 @@ Read more:
 * Peers have `PersistentKeepAlive` set to 25 seconds. This means all peer update its EndPoint on the ServerSide.
 * Peer configurations between Client1 and Client3 have no `PersistentKeepAlive`  set up, because they know each other IP addresses. 
 * Client1 and Client3 have direct VPN connection to each other.
-* Client1 has  peer configured:
+* Client1 has 2 peer configured:
     - Connection to the server
     - Connection to Client3
-* Client3 has  peer configured
+* Client3 has 2 peer configured
     - Connection to the server
     - Connection to Client1
-* Client2 has one peer configured, to the Wireguard Server.
+* Client2 has one peer configured: to the Wireguard Server.
 * "Your mobile phone" has only one peer configured, to the WireGuard server. 
     - The mobile cient access other peers over the WireGuard server.
-    - Mobile clients can access the others on ther VPN IP address (10.10.0.0/24)
-* If the WireGuard server fails your mobule cient lose connection to all peers. Only Client1 and Client3 can access each other without the server, over VPN.
-* Even the connection between Client2 and Client3 or Client2 and Client1 goes through the server.
+    - Mobile clients can access the others on their VPN IP address (10.10.0.0/24)
+* If the WireGuard server fails your mobule cient lose connection to all peers. Only Client1 and Client3 can access each other over the VPN without the server.
+* The connection between Client2 and Client3 or Client2 and Client1 goes through the server.
 * This setup works even when your private home network is behind CGN NAT.
 
 Disatvantages:
@@ -383,11 +382,11 @@ Disatvantages:
 * You must configure a Duckdns client to update the ip address of test-wg.duckdns.org.
 * The mobile clint has (peer) configuration to Client1 and Client3.
 * Client1 and Client3 have direct peer configuration. 
-* `PersistentKeepalive` and `Endpoint` must set on the mobile client. Mobile client knows where to find the other peers, but the other clients don't know the IP address of the mobile client.
+* `Endpoint` must set on the mobile client. Mobile client knows where to find the other peers, but the other clients don't know the IP address of the mobile client. `PersistentKeepalive is optional but recommended.`
 
 Disatvantages:
 
-* If your public IP address changes you have to manually restart your mobile WG lient.
+* If your public IP address changes you have to manually restart your mobile WG Client.
 * You have to configure NAT and DynDNS provider.
 * Won't work if you are behind CGN NAT.
 
@@ -406,7 +405,7 @@ Disatvantages:
 
 * All of them which is included in the previous scenario.
 * You should carefully set up iptables. In this example the entire home network is open to the mobile client.
-* Machines inside your home network and without WireGuard don't access the VPN network without extra configuration.
+* Machines inside your home network without WireGuard don't access the VPN network without extra configuration.
     - This means you have to configure the routing table in your router to send traffic to the VPN gateway. 
     - Or add route to the routing table of all machines from where you want to access VPN ip addresses.
     - Extra iptalbes rules also have to be added to the VPN gateway.
@@ -457,10 +456,10 @@ cp /tmp/wg0.conf /etc/wireguard
 ```
 ### Generate Your First Peer
 
-<pre class="command-line" data-user="root" data-host="dockerhost" data-output="5-32"><code class="language-bash">cd /etc/wireguard/clients
+<pre class="command-line" data-user="root" data-host="wghost" data-output="5-32"><code class="language-bash">cd /etc/wireguard/clients
 ./generate.sh 
 Config Name (peername): test-peer01
-Endpoint (leave blank for 23.88.60.51:51820): 
+Endpoint (leave blank for 232.188.60.51:51820): 
 
 # Here comes the QR Code
 
@@ -498,6 +497,189 @@ wg syncconf wg0 <(wg-quick strip wg0)</code></pre>
     - You have to manually add the "wg0 config change:" section to the server config (`wg0.conf`).
     - It you want to apply the changes without interrupt the existing connection run the `wg syncconf wg0 <(wg-quick strip wg0)` command.
     
+This little script is suitable only for managing few nodes, and may help to understand how Wireguard works. Writing an overall configuration manager was not my goal. If you don't like my script never mind, there are a lot of alternatives out there:
+
+* [Wireguard-manager](https://github.com/complexorganizations/wireguard-manager)
+* [wg-gui](https://github.com/EmbarkStudios/wg-ui)
+* [subspace](https://github.com/subspacecloud/subspace)
+* [wg-manager](https://github.com/perara/wg-manager)
+* [mistborn](https://gitlab.com/cyber5k/mistborn)
+* Read more: [https://medium.com/swlh/web-uis-for-wireguard-that-make-configuration-easier-e104710fa7bd](https://medium.com/swlh/web-uis-for-wireguard-that-make-configuration-easier-e104710fa7bd)
+
+## Summary
+
+Maybe this article a bit long, and you get discouraged, because Wireguard looks so complicated, but it doesn't.  That's why I copy here a complete example with 3 peers. All peers are in the same private network, but if you get familiar with Wireguard and understand the configuration you can adopt these examples in your network.
+
+### Peer Interface Configs
+
+**Before you run these snippets don't forget to modify the followings:**
+
+* `Interface / Address` : The desired VPN IP address of the peers. You can change the subnet bit to `/32`.
+* `Interface / ListenPort` : (Optional) On which port should the Wireguard service listen
+* `Peer / EndPoint` : The actual IP address of the peer in the existing network. (If you have modified the port don't forget to match to it.)
+* `Peer /AllowedIPs` : Since all peer connect to each other you have to set AllowedIPS to the VPN address of the peers. If you set to other than `/32` all traffic to this subnet tries to go through the peer. 
+* `Interface / DNS` : You can delete these lines. 
+
+**Peer1**
+
+```bash
+cat <<EOF>/tmp/peer1-interface.conf
+[Interface]
+Address = 10.22.0.2/24
+ListenPort = 55321
+PrivateKey = $( wg genkey )
+DNS = 1.1.1.1
+
+EOF
+```
+
+**Peer2**
+
+```bash
+cat <<EOF>/tmp/peer2-interface.conf
+[Interface]
+Address = 10.22.0.3/24
+ListenPort = 55321
+PrivateKey = $( wg genkey )
+DNS = 1.1.1.1
+
+EOF
+```
+**Peer3**
+
+```bash
+cat <<EOF>/tmp/peer3-interface.conf
+[Interface]
+Address = 10.22.0.4/24
+ListenPort = 55321
+PrivateKey = $( wg genkey )
+DNS = 1.1.1.1
+
+EOF
+```
+
+### Peer Configs
+
+**Preshared Keys**
+
+```bash
+export PRESHARED_12=$( wg genpsk )
+export PRESHARED_13=$( wg genpsk )
+export PRESHARED_23=$( wg genpsk )
+```
+
+* `PRESHARED_12` --> Connection between peer 1 and 2
+* `PRESHARED_13` --> Connection between peer 1 and 3
+* `PRESHARED_23` --> Connection between peer 2 and 3
+
+!!! info
+    You can skip the usage of the pre-shared key. It adds extra security, but not mandatory.
+
+
+**Peer1**
+
+```bash
+export PUBLIC_KEY=$( cat /tmp/peer1-interface.conf | tr -d ' ' | grep -oP '(?<=PrivateKey=).*[^$]' | wg pubkey )
+cat <<EOF | tee -a /tmp/peer2-interface.conf
+# Connection to Peer1
+[Peer]
+PublicKey = $PUBLIC_KEY
+PresharedKey = $PRESHARED_12
+EndPoint=172.16.1.213:55321
+#PersistentKeepalive = 25
+AllowedIPs = 10.22.0.2/32
+
+EOF
+
+cat <<EOF | tee -a /tmp/peer3-interface.conf
+# Connection to Peer1
+[Peer]
+PublicKey = $PUBLIC_KEY
+PresharedKey = $PRESHARED_13
+EndPoint=172.16.1.213:55321
+#PersistentKeepalive = 25
+AllowedIPs = 10.22.0.2/32
+
+
+EOF
+```
+
+**Peer2**
+
+```bash
+export PUBLIC_KEY=$( cat /tmp/peer2-interface.conf | tr -d ' ' | grep -oP '(?<=PrivateKey=).*[^$]' | wg pubkey )
+cat <<EOF | tee -a /tmp/peer1-interface.conf 
+# Connection to Peer2
+[Peer]
+PublicKey = $PUBLIC_KEY
+PresharedKey = $PRESHARED_12
+EndPoint=172.17.0.1:55321
+#PersistentKeepalive = 25
+AllowedIPs = 10.22.0.3/32
+
+EOF
+
+cat <<EOF | tee -a /tmp/peer3-interface.conf
+# Connection to Peer2
+[Peer]
+PublicKey = $PUBLIC_KEY
+PresharedKey = $PRESHARED_23
+EndPoint=172.17.0.1:55321
+#PersistentKeepalive = 25
+AllowedIPs = 10.22.0.3/32
+
+EOF
+```
+
+**Peer3**
+
+```bash
+export PUBLIC_KEY=$( cat /tmp/peer3-interface.conf | tr -d ' ' | grep -oP '(?<=PrivateKey=).*[^$]' | wg pubkey )
+cat <<EOF | tee -a /tmp/peer1-interface.conf 
+# Connection to Peer3
+[Peer]
+PublicKey = $PUBLIC_KEY
+PresharedKey = $PRESHARED_13
+EndPoint=172.16.0.27:55321
+#PersistentKeepalive = 25
+AllowedIPs = 10.22.0.4/32
+
+EOF
+
+cat <<EOF | tee -a /tmp/peer2-interface.conf
+# Connection to Peer3
+[Peer]
+PublicKey = $PUBLIC_KEY
+PresharedKey = $PRESHARED_23
+EndPoint=172.16.0.27:55321
+#PersistentKeepalive = 25
+AllowedIPs = 10.22.0.4/32
+
+EOF
+```
+
+We have 3 files created:
+
+```plain
+-rw-r--r--  1 root root  578 Oct 19 20:01 peer1-interface.conf
+-rw-r--r--  1 root root  580 Oct 19 20:01 peer2-interface.conf
+-rw-r--r--  1 root root  580 Oct 19 20:01 peer3-interface.conf
+```
+
+* `peer1-interface.conf` goes to `/etc/wireguard/wg1.conf` on peer1
+* `peer2-interface.conf` goes to `/etc/wireguard/wg1.conf` on peer2
+* `peer3-interface.conf` goes to `/etc/wireguard/wg1.conf` on peer3
+
+**Run on all peers**
+
+```bash
+sysctl -w net.ipv4.ip_forward=1
+sysctl -p
+systemctl enable wg-quick@wg1
+systemctl start wg-quick@wg1
+```
+
+
 
 
 

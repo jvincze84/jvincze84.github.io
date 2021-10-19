@@ -54,7 +54,7 @@ markdown_extensions:
 
 
 nav:
-  - "WireGuard": 'WireGuard.md'
+  - "Install And Configure Wireguard VPN": 'Install_And_Configure_Wireguard_VPN.md'
   - "Get Started With Portainer": 'Get_Started_With_Portainer.md'
   - "Install Single Node Kubernetes Cluster": 'Install_Single_Node_Kubernetes_Cluster.md'
   - "How To Use MKDocs with Docker?": 'How_to_use_MKdocs.md'
