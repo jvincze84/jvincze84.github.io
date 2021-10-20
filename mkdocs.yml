@@ -1,5 +1,5 @@
 site_name: Vincze Janos Blog
-#repo_url: https://github.com/example/repository/
+repo_url: https://github.com/jvincze84/jvincze84.github.io
 site_url: https://readthedocs.vinczejanos.info
 
 
@@ -15,9 +15,9 @@ theme:
       - search.suggest
       - search.highlight
 ##      - navigation.instant
-      - search.suggest
       - search.highlight
 #      - toc.integrate
+      - header.autohide
     palette:
       - scheme: default
         primary: indigo
@@ -29,6 +29,7 @@ theme:
         toggle:
           icon: material/toggle-switch
           name: Switch to light mode
+
 
 markdown_extensions:
   - admonition
@@ -98,9 +99,12 @@ extra_css:
 extra_javascript:
   - js/prism.js
 
-#plugins:
-#  - search:
-#      indexing: 'full'
+plugins:
+  - git-revision-date-localized:
+      type: date
+  - git-revision-date
+  - search:
+      lang: en
 
 extra:
   disqus: shortname-jvincze-test

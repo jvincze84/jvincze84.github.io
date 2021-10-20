@@ -1,0 +1,1973 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="canonical" href="https://readthedocs.vinczejanos.info/Install_And_Configure_Wireguard_VPN/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
+    
+    
+      
+        <title>Install And Configure Wireguard VPN - Vincze Janos Blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.24c991ad.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../css/width.css">
+    
+      <link rel="stylesheet" href="../css/prism.css">
+    
+    
+      
+
+  
+
+
+  
+
+  
+
+
+  <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-3LZJ7L57GQ"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-3LZJ7L57GQ",{page_path:t.pathname})})})</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3LZJ7L57GQ"></script>
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#install-and-configure-wireguard-vpn" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Vincze Janos Blog" class="md-header__button md-logo" aria-label="Vincze Janos Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Vincze Janos Blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Install And Configure Wireguard VPN
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="light-green" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Vincze Janos Blog" class="md-nav__button md-logo" aria-label="Vincze Janos Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Vincze Janos Blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Install And Configure Wireguard VPN
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Install And Configure Wireguard VPN
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#preface" class="md-nav__link">
+    Preface
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-wireguard" class="md-nav__link">
+    Install Wireguard
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-the-server" class="md-nav__link">
+    Configure The Server
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-peer-client-config" class="md-nav__link">
+    Create Peer (Client) Config
+  </a>
+  
+    <nav class="md-nav" aria-label="Create Peer (Client) Config">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#collect-things-we-need" class="md-nav__link">
+    Collect Things We Need
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#peer-configs" class="md-nav__link">
+    Peer Configs
+  </a>
+  
+    <nav class="md-nav" aria-label="Peer Configs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#endpoint" class="md-nav__link">
+    EndPoint
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summarize" class="md-nav__link">
+    Summarize
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topology-examples" class="md-nav__link">
+    Topology Examples
+  </a>
+  
+    <nav class="md-nav" aria-label="Topology Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wireguard-server" class="md-nav__link">
+    WireGuard Server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-dns" class="md-nav__link">
+    Dynamic DNS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wireguard-gateway" class="md-nav__link">
+    Wireguard Gateway
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generate-peer-config-using-bash-script" class="md-nav__link">
+    Generate Peer Config Using Bash Script
+  </a>
+  
+    <nav class="md-nav" aria-label="Generate Peer Config Using Bash Script">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    Configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-the-server-config" class="md-nav__link">
+    Generate The Server Config
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-your-first-peer" class="md-nav__link">
+    Generate Your First Peer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+    <nav class="md-nav" aria-label="Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#peer-interface-configs" class="md-nav__link">
+    Peer Interface Configs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#peer-configs_1" class="md-nav__link">
+    Peer Configs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Get_Started_With_Portainer/" class="md-nav__link">
+        Get Started With Portainer
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Install_Single_Node_Kubernetes_Cluster/" class="md-nav__link">
+        Install Single Node Kubernetes Cluster
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../How_to_use_MKdocs/" class="md-nav__link">
+        How To Use MKDocs with Docker?
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Tips_And_Tricks/" class="md-nav__link">
+        Tips And Tricks
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Old Blog Conetent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Old Blog Conetent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Old Blog Conetent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/Collect_Network_Statistic_With_Telegraf_Vnstat/" class="md-nav__link">
+        Collect Network Statistic With Telegraf & VNSTAT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/Iptables_Examples/" class="md-nav__link">
+        Iptables Examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/Nokia_6120c_%28bb5%29_Forgotten_Security_Code/" class="md-nav__link">
+        Nokia 6120c (BB5) Forgotten Security Code
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/Sonoff_Relays_With_Openhab_And_Tasmota_Firmware/" class="md-nav__link">
+        Sonoff Relays With OpenHab And Tasmota Firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_5" type="checkbox" id="__nav_6_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_5">
+          Raspberry & Orange PI
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Raspberry & Orange PI" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_5">
+          <span class="md-nav__icon md-icon"></span>
+          Raspberry & Orange PI
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/Move_Root_File_System_To_Usb_Storage_%28rpi2_%26_Rpi3%29/" class="md-nav__link">
+        Move root file system to USB storage (RPI2 & RPI3)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/Raspberry_Pi_3_As_Wifi_Range_Extender/" class="md-nav__link">
+        Raspberry PI 3 As Wifi Range Extender
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/How_To_Install_Nodered_On_Raspberry_Pi/" class="md-nav__link">
+        How To Install NodeRED on Raspberry PI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/Compile_Go_Language_On_Raspberry_Pi/" class="md-nav__link">
+        Compile GO language on Raspberry PI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/Raspberry_Pi_2_As_Print_Server_Airprint/" class="md-nav__link">
+        Raspberry PI 2 as print server + AirPrint
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/Google_Cloud_Print_With_Orange_Pi_or_Rpi/" class="md-nav__link">
+        Google Cloud Print With Orange PI (or RPI)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/Install_Debian_Jessie_To_Orange_Pi_Plus_2/" class="md-nav__link">
+        Install Debian Jessie to Orange PI Plus 2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/Mount_Sd_Card_Image_partitioned_Image_Wo_Kpartx/" class="md-nav__link">
+        Mount SD card image (partitioned image) w/o kpartx
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/nodemcu/Install_Openalpr_On_Raspberry_Pi_3/" class="md-nav__link">
+        Install OpenALPR on Raspberry PI 3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/raspberry/Install_Openalpr_On_Raspberry_Pi_3_part_2/" class="md-nav__link">
+        Install OpenALPR on Raspberry PI 3 (Part 2)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_6" type="checkbox" id="__nav_6_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_6">
+          NodeMCU - LUA / ESP8266
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="NodeMCU - LUA / ESP8266" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_6">
+          <span class="md-nav__icon md-icon"></span>
+          NodeMCU - LUA / ESP8266
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/nodemcu/How_To_Unbrick_Esp8266_blinking_Blue_Led/" class="md-nav__link">
+        How To Unbrick ESP8266 (Blinking Blue Led)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/nodemcu/Very_Simple_Way_To_Send_Email_Using_Nodemcu_Firmware/" class="md-nav__link">
+        Very Simple Way to Send Email Using NodeMCU firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/nodemcu/Reliable_MQTT_conenction_with_NodeMCU/" class="md-nav__link">
+        Reliable MQTT conenction with NodeMCU
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/nodemcu/Reliable_Mqtt_Connection_With_Nodemcu_%28part_2%29/" class="md-nav__link">
+        Reliable MQTT connection with NodeMCU (part 2)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/nodemcu/How_To_Compile_Nodemcu_Firmware/" class="md-nav__link">
+        How to compile NodeMCU firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/nodemcu/Logging_Mqtt_Data_%28subscription%29_To_Mysql_With_Shell_Script/" class="md-nav__link">
+        Logging MQTT data (subscription) to MySQL with Shell Script
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_7" type="checkbox" id="__nav_6_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_7">
+          Linux Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Linux Tutorials" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_7">
+          <span class="md-nav__icon md-icon"></span>
+          Linux Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/linux/Install_%28compile%29_%26_Configure_Motion_Av_Tools/" class="md-nav__link">
+        Install (compile) & Configure motion + AV tools
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/linux/Create_Self_Signed_Certificate_For_Apache_Webserver/" class="md-nav__link">
+        Create Self Signed Certificate for Apache WebServer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/linux/Compile_Apache_Httpd_2.4.x_Php/" class="md-nav__link">
+        Compile Apache HTTPD 2.4.X & PHP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/linux/Install_Mps-youtube_Console_Based_Youtube_Player/" class="md-nav__link">
+        Install mps-youtube console based youtube player
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../old/linux/create_Your_Own_Dyndns_Service_With_Bind_named/" class="md-nav__link">
+        Create Your Own DynDns Service with Bind (Named)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#preface" class="md-nav__link">
+    Preface
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-wireguard" class="md-nav__link">
+    Install Wireguard
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-the-server" class="md-nav__link">
+    Configure The Server
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-peer-client-config" class="md-nav__link">
+    Create Peer (Client) Config
+  </a>
+  
+    <nav class="md-nav" aria-label="Create Peer (Client) Config">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#collect-things-we-need" class="md-nav__link">
+    Collect Things We Need
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#peer-configs" class="md-nav__link">
+    Peer Configs
+  </a>
+  
+    <nav class="md-nav" aria-label="Peer Configs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#endpoint" class="md-nav__link">
+    EndPoint
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summarize" class="md-nav__link">
+    Summarize
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topology-examples" class="md-nav__link">
+    Topology Examples
+  </a>
+  
+    <nav class="md-nav" aria-label="Topology Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wireguard-server" class="md-nav__link">
+    WireGuard Server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-dns" class="md-nav__link">
+    Dynamic DNS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wireguard-gateway" class="md-nav__link">
+    Wireguard Gateway
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generate-peer-config-using-bash-script" class="md-nav__link">
+    Generate Peer Config Using Bash Script
+  </a>
+  
+    <nav class="md-nav" aria-label="Generate Peer Config Using Bash Script">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    Configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-the-server-config" class="md-nav__link">
+    Generate The Server Config
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-your-first-peer" class="md-nav__link">
+    Generate Your First Peer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+    <nav class="md-nav" aria-label="Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#peer-interface-configs" class="md-nav__link">
+    Peer Interface Configs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#peer-configs_1" class="md-nav__link">
+    Peer Configs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="install-and-configure-wireguard-vpn">Install And Configure Wireguard VPN<a class="headerlink" href="#install-and-configure-wireguard-vpn" title="Permanent link">&para;</a></h1>
+<h2 id="preface">Preface<a class="headerlink" href="#preface" title="Permanent link">&para;</a></h2>
+<p>I think it is not necessary to emphasize how important you privacy on the public Internet. In the world of high speed internet more and more applications are running at your home, eg.: OpenHab, Plex, Private NAS, etc. People usually want to access these services outside the home network too. It is not recommended to publish these service directly on your public ip address:</p>
+<ul>
+<li>It is becoming more common to use <a href="https://en.wikipedia.org/wiki/Carrier-grade_NAT">CGN Nat</a> by many internet providers. This situation make it impossible to publish your service on Public IP address, because you won't have any.</li>
+<li>Everybody on the public Internet will have access to your private servers. Hacker can easily find your service and may steal your sensitive data.</li>
+<li>You have to make effort to configure NAT in your router.</li>
+<li>Usually consumer internet providers assign IP address dynamically. In this case you have to choose a dynamic DNS service. One of the best I think is <a href="https://www.duckdns.org">DudkDNS</a>, it is completely free for use. You need to update you ip address somehow (router, shell script, etc.). DuckDNS supports a lot of method to do this.</li>
+</ul>
+<p>Not all of above could be eliminated with Wireguard VPN:</p>
+<ul>
+<li>If you don't have static public ip address you still need NAT configuration and DynDNS service.</li>
+<li>With CGN Nat it is still impossible to get into your home network.</li>
+</ul>
+<p>If you are looking for a really zero-configuration VPN solution your best option may be <a href="https://tailscale.com">Tailscale</a>.  It can be easily installed on any popular platforms (Linux, Mac, Windows, Android or IOS).<br />
+If you are interested in how Tailscale solve the NAT and dynamic IP problems you should read this article: <a href="https://tailscale.com/blog/how-nat-traversal-works/">https://tailscale.com/blog/how-nat-traversal-works/</a>. And the best: it's completely free up to 20 devices. </p>
+<p>But this article is not about Tailscale, but Wireguard.</p>
+<h2 id="install-wireguard">Install Wireguard<a class="headerlink" href="#install-wireguard" title="Permanent link">&para;</a></h2>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p>WireGuard® is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography. It aims to be faster, simpler, leaner, and more useful than IPsec, while avoiding the massive headache. It intends to be considerably more performant than OpenVPN. WireGuard is designed as a general purpose VPN for running on embedded interfaces and super computers alike, fit for many different circumstances. Initially released for the Linux kernel, it is now cross-platform (Windows, macOS, BSD, iOS, Android) and widely deployable. It is currently under heavy development, but already it might be regarded as the most secure, easiest to use, and simplest VPN solution in the industry. </p>
+</div>
+<p>Official Web Page: <a href="https://www.wireguard.com/install/">https://www.wireguard.com/install/</a></p>
+<p>The install process is the same as Server or Client, but WireGuard is a decentralized VPN solution so there is no classic Server-Client terminology as in case of example OpenVPN. </p>
+<p>I have VPS server with static and public IP address. This machine will be the "Server". Unfortunately lack of at least one static ip address makes the situation complicated, and there is no overall (magic) solution. So later in this article it is <strong>assumed that you have at least one public, static ip address</strong>. I'm going to highlight how can you partially solve the lack of the public ip, but everything is only Workaround and solve the problems only partially.</p>
+<p>Install Wireguard:</p>
+<pre><code class="language-bash">apt-get install wireguard wireguard-tools qrencode
+</code></pre>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Users with Debian releases older than Bullseye should enable backports.</p>
+</div>
+<p>You may want to check the official install doc if you have another system than Debian based OS: <a href="https://www.wireguard.com/install/">https://www.wireguard.com/install/</a></p>
+<h2 id="configure-the-server">Configure The Server<a class="headerlink" href="#configure-the-server" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Private Key</li>
+</ul>
+<pre><code class="language-bash">export PRIVATE_KEY=$( wg genkey )
+</code></pre>
+<ul>
+<li>Public Key</li>
+</ul>
+<pre><code class="language-bash">export PUBLIC_KEY=$( echo $PRIVATE_KEY | wg pubkey )
+</code></pre>
+<p>Now you have to choose a public IP address range which never will overlap any of your existing network. Example: <code>10.9.0.0/24</code></p>
+<ul>
+<li>Create The Interface Configuration file <code>/etc/wireguard/wg0.conf</code></li>
+</ul>
+<pre><code class="language-bash">cat &lt;&lt;EOF&gt;/etc/wireguard/wg0.conf
+# PubKey: $PUBLIC_KEY
+[Interface]
+Address = 10.9.0.1/32
+ListenPort = 51820
+PrivateKey = $PRIVATE_KEY
+EOF
+</code></pre>
+<ul>
+<li>Start the VPN Server</li>
+</ul>
+<pre><code class="language-bash">systemctl enable wg-quick@wg0
+systemctl start wg-quick@wg0
+</code></pre>
+<ul>
+<li>Check The Interface</li>
+</ul>
+<pre class="command-line" data-user="root" data-host="wghost" data-output="2-8"><code class="language-bash">ifconfig wg0
+wg0: flags=209<UP,POINTOPOINT,RUNNING,NOARP>  mtu 1420
+        inet 10.9.0.1  netmask 255.255.255.255  destination 10.9.0.1
+        unspec 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  txqueuelen 1000  (UNSPEC)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0 </UP,POINTOPOINT,RUNNING,NOARP>
+</code></pre>
+
+<h2 id="create-peer-client-config">Create Peer (Client) Config<a class="headerlink" href="#create-peer-client-config" title="Permanent link">&para;</a></h2>
+<h3 id="collect-things-we-need">Collect Things We Need<a class="headerlink" href="#collect-things-we-need" title="Permanent link">&para;</a></h3>
+<pre class="command-line" data-user="root" data-host="wghost" data-output="1,3,4,5,7,8,9,11,12,13,15"><code class="language-bash"># Private Key (Client)
+wg genkey
+iEypOx3Xt5HE++e5I5udO8oJ+bArSoEXqK3XvuvFeXo=
+
+# Public Key (Client)
+echo "iEypOx3Xt5HE++e5I5udO8oJ+bArSoEXqK3XvuvFeXo=" | wg pubkey
+k6k5GnW3+JJSmzCqEQzkZyFyg7OFO3RhiXhSXur5tFI=
+
+# The Public Key Of the Server
+cat /etc/wireguard/wg0.conf | tr -d ' ' | grep -oP '(?<=PrivateKey=).*[^$]' | wg pubkey
+TSXemmthLlXp8gsLSTfcmqgjolvYWmppNhIUeppg/CU=
+
+# Preshared Key
+wg genpsk
+Samqdyf9gVcfEUPCS52I1hJCLMlXAmHoitk1l5y9UO0=</code></pre>
+
+<p>Peer Config File:</p>
+<pre><code class="language-config">[Interface]
+Address = 10.9.0.2/24
+ListenPort = 51820
+PrivateKey = iEypOx3Xt5HE++e5I5udO8oJ+bArSoEXqK3XvuvFeXo=
+
+[Peer]
+PublicKey = TSXemmthLlXp8gsLSTfcmqgjolvYWmppNhIUeppg/CU=
+PresharedKey = Samqdyf9gVcfEUPCS52I1hJCLMlXAmHoitk1l5y9UO0=
+EndPoint=172.16.1.214:51820
+PersistentKeepalive = 25
+AllowedIPs = 10.9.0.0/24
+</code></pre>
+<p>This file should be saved on your client (<code>/etc/wireguard/wg0.conf</code>).<br />
+Or save it to a file (<code>01.conf</code>) and generate QR code for you Android or IOS client:</p>
+<pre><code class="language-bash">qrencode -t ansiutf8 &lt;01.conf
+</code></pre>
+<p>Before you start using your client you need to update your Wireguard Server. Add these lines:</p>
+<pre><code class="language-conf">cat &lt;&lt;EOF&gt;&gt;/etc/wireguard/wg0.conf
+
+[Peer]
+PublicKey = k6k5GnW3+JJSmzCqEQzkZyFyg7OFO3RhiXhSXur5tFI=
+PresharedKey = Samqdyf9gVcfEUPCS52I1hJCLMlXAmHoitk1l5y9UO0=
+PersistentKeepalive = 25
+AllowedIPs = 10.9.0.2/32
+
+EOF
+</code></pre>
+<ul>
+<li>Reload The Server Config (Without Interrupting Connections)</li>
+</ul>
+<pre><code class="language-bash">wg syncconf wg0 &lt;(wg-quick strip wg0)
+</code></pre>
+<h3 id="peer-configs">Peer Configs<a class="headerlink" href="#peer-configs" title="Permanent link">&para;</a></h3>
+<p>At fist sight it could be confusing, but if you look closer I hope will understand the configs.</p>
+<ul>
+<li><strong>PrivateKey</strong>: Should never shared. Unique across all peers and appear only in <code>[interface]</code> section.</li>
+<li><strong>PublicKey</strong>: Generated from <code>PrivateKey</code>. <ul>
+<li>Should shared across peers. </li>
+<li>Peer1 gets the PublicKey of Peer2, and vice versa, </li>
+<li>Peer2 gets the PublicKey of Peer1.</li>
+</ul>
+</li>
+<li><strong>PresharedKey</strong>: Should be the same between two peers.<ul>
+<li>Peer1 and Peer2 use the same PresharedKey1, </li>
+<li>Peer2 and Peer3 use the same PresharedKey2, </li>
+<li>Peer1 and Peer3 use the same PresharedKey3.</li>
+<li>This assumes that all of these three peers connected each other (decentralized connection), and there will be three different PresharedKey.</li>
+</ul>
+</li>
+</ul>
+<p>I try to explain through the following schema of <code>[peer]</code> configs. Only The keys are mentioned. Interface configs are always unique, does not have common parts.</p>
+<p><strong>Peer1 Config</strong></p>
+<pre><code class="language-conf">[Peer]
+PublicKey = Public Key Of Peer 2 (echo [PRIVATE_KEY OF PEER2] | wg pubkey)
+PresharedKey = Shared Key12 
+
+[Peer]
+PublicKey = Public Key Of peer 3 (echo [PRIVATE_KEY OF PEER3] | wg pubkey)
+PresharedKey = Shared Key13
+</code></pre>
+<p><strong>Peer2 Config</strong></p>
+<pre><code class="language-conf">[Peer]
+PublicKey = Public Key Of Peer 1 (echo [PRIVATE_KEY OF PEER1] | wg pubkey)
+PresharedKey = Shared Key12 
+
+[Peer]
+PublicKey = Public Key Of peer 3 (echo [PRIVATE_KEY OF PEER3] | wg pubkey)
+PresharedKey = Shared Key23
+</code></pre>
+<p><strong>Peer3 Config</strong></p>
+<pre><code class="language-conf">[Peer]
+PublicKey = Public Key Of Peer 1 (echo [PRIVATE_KEY OF PEER1] | wg pubkey)
+PresharedKey = Shared Key13
+
+[Peer]
+PublicKey = Public Key Of peer 2 (echo [PRIVATE_KEY OF PEER2] | wg pubkey)
+PresharedKey = Shared Key23
+</code></pre>
+<h4 id="endpoint">EndPoint<a class="headerlink" href="#endpoint" title="Permanent link">&para;</a></h4>
+<p>One out of two peers have to know where to find the other. </p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Peer1 Know Peer2 IP adddress</th>
+<th>Peer2 Know Peer1 IP adddress</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>yes</td>
+<td>yes</td>
+<td>Best Situation. PersistentKeepalive is not needed.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>yes</td>
+<td>no</td>
+<td>Good Situation. PersistentKeepalive should be set on Peer1.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>no</td>
+<td>yes</td>
+<td>Good Situation. PersistentKeepalive should be set on Peer2.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>no</td>
+<td>no</td>
+<td>Worst Situation. No Connection could be made.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>First Situation</li>
+</ul>
+<p>This the best scenario. Both clients have its own static <del>public</del> ip address. You can configure the Endpoint each side to point each other.</p>
+<ul>
+<li>Second And Third Situation</li>
+</ul>
+<p>You have at least one peer - the server(s) - with static public IP address, and one or more clients. The Endpoint configuration on all clients the same and points to the server' IP address and port.<br />
+On the server side you should not use any Endpoint declaration for the Clients.</p>
+<ul>
+<li>Worst Situation</li>
+</ul>
+<p>In this scenario all of your peers are behind NAT or CNG Nat. Example of 2 peers:</p>
+<p>The first peer is behind NAT in your home (private) network. You have port forwarding, firewall and <strong>dynamic DNS</strong> set up.<br />
+The second peer is your mobile phone with mobile internet.</p>
+<p>In your configuration of the first peer you can not specify anything as Endpoint, since you don't know the always actual ip address of you mobile phone.<br />
+In the configuration of your mobile client you can specify your DynDNS host name (eg.: test-wg.duckdns.org).  </p>
+<p>The problem here: If your public IP address (to which the DynDns provider points to) changes you have to restart the Wireguard client on your mobile phone. If you can live together with this limitation Wireguard will work fine in this kind of setup.</p>
+<p>BUT! If the first peer behind CGN Nat, you don't have any option to get Wireguard works. If you can not specify at least one Enpoint, Wireguard just won't work.</p>
+<p>If you want to read about how Tailscale solve this kind of issue click on this link: <a href="https://tailscale.com/blog/how-nat-traversal-works/">https://tailscale.com/blog/how-nat-traversal-works/</a></p>
+<p><strong>Direct Connection Matrix:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Connect FROM \ TO</th>
+<th>Server Peer (91.12.21.142)</th>
+<th>Peer2 (inside priv net)</th>
+<th>Peer3 (inside priv net)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Server Peer (91.12.21.142)</td>
+<td>X</td>
+<td>Doesn't know peer2 address</td>
+<td>Doesn't know peer3 address</td>
+</tr>
+<tr>
+<td>Peer2 (inside priv net)</td>
+<td><code>EndPoint: 91.12.21.142:51820</code> <br><code>PersistentKeepalive = 25</code></td>
+<td>X</td>
+<td>No Ip addresses is known</td>
+</tr>
+<tr>
+<td>Peer3 (inside priv net)</td>
+<td><code>EndPoint: 91.12.21.142:51820</code> <br><code>PersistentKeepalive = 25</code></td>
+<td>No Ip addresses is known</td>
+<td>X</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Server Peer (91.12.21.142)</strong> Has Static Public IP address (91.12.21.142)<ul>
+<li>When you configure peers on the server side usually no <code>EndPoint</code> and nor <code>PersistentKeepalive</code> is set up.</li>
+</ul>
+</li>
+<li><strong>Peer2 (inside priv net)</strong> AND <strong>Peer3 (inside priv net)</strong> are behind NAT. (Home network or your phone/tablet with mobile internet)<ul>
+<li>In the clients configuration we specify where to find the Server (<code>EndPoint</code>) and   <code>PersistentKeepalive</code> to update its ip address periodically.</li>
+</ul>
+</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The mentioned <code>EndPoint</code> and <code>PersistentKeepalive</code> settings go to the clients config not to the server's one.</p>
+</div>
+<p>As we discussed earlier general peers may be behind CGN NAT, or inside your home network, or even could be your mobile phone with mobile internet connection. These peers don't have static, public IP addresses. Of course you can open port on your firewall and set up NAT, use dynamic DNS, etc., but <strong>Wireguard check DNS record only when it starts</strong>. Every time your router gets a new public ip address you should trigger Wireguard restart.<br />
+This situation could not be  solved easily, and this is where Tailscale comes to the picture. If all of your peers are behind NAT you should use Tailscale instead of Wireguard. You probably won't find any other good and <strong>stable</strong> solution. </p>
+<h3 id="summarize">Summarize<a class="headerlink" href="#summarize" title="Permanent link">&para;</a></h3>
+<p>Now we have a server and a client configuration:</p>
+<ul>
+<li>Server</li>
+</ul>
+<pre><code class="language-conf">[Interface]
+Address = 10.9.0.1/32
+ListenPort = 51820
+PrivateKey = oMQf0fLAvnIoiLr+z4zmOlETxA0eR/Z7oPHhXRpQoEY=
+
+
+[Peer]
+PublicKey = k6k5GnW3+JJSmzCqEQzkZyFyg7OFO3RhiXhSXur5tFI=
+PresharedKey = Samqdyf9gVcfEUPCS52I1hJCLMlXAmHoitk1l5y9UO0=
+PersistentKeepalive = 25
+AllowedIPs = 10.9.0.2/32
+</code></pre>
+<ul>
+<li>Client</li>
+</ul>
+<pre><code class="language-conf">[Interface]
+Address = 10.9.0.2/24
+ListenPort = 51820
+PrivateKey = iEypOx3Xt5HE++e5I5udO8oJ+bArSoEXqK3XvuvFeXo=
+
+[Peer]
+PublicKey = TSXemmthLlXp8gsLSTfcmqgjolvYWmppNhIUeppg/CU=
+PresharedKey = Samqdyf9gVcfEUPCS52I1hJCLMlXAmHoitk1l5y9UO0=
+EndPoint=172.16.1.214:51820
+PersistentKeepalive = 25
+AllowedIPs = 10.9.0.0/24
+</code></pre>
+<p>We haven't talk about two important things:</p>
+<ul>
+<li><strong><code>Interface</code> / <code>Address</code></strong></li>
+</ul>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p>The Address setting is the virtual address of the local WireGuard peer. It’s the IP address of the virtual network interface that WireGuard sets up for the peer;     and as such you can set it to whatever you want (whatever makes sense for the virtual WireGuard network you’re building).    </p>
+<p>Like with other network interfaces, the IP address for a WireGuard interface is defined with a network prefix, which tells the local host what other IP addresses     are available on the same virtual subnet as the interface. In the above example, this prefix is /32 (which generally is a safe default for a WireGuard interface).         If we set it to /24, that would indicate to the local host that other addresses in the same /24 block as the address itself (10.0.0.0 to 10.0.0.255) are routable     through the interface.</p>
+</div>
+<ul>
+<li><strong><code>Peer</code> / <code>AllowedIPs</code></strong></li>
+</ul>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p>Is the set of IP addresses the local host should route to the remote peer through the WireGuard tunnel. This setting tells the local host what goes in tunnel.</p>
+</div>
+<p>Example: <code>AllowedIPs = 10.8.0.0/24,192.168.100.0/24</code></p>
+<p>Basically this means that traffic to <code>10.8.0.0/24</code> and <code>192.168.100.0/24</code> is routed to the <code>wg0</code> interface (route command):</p>
+<pre><code class="language-plain">Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         _gateway        0.0.0.0         UG    100    0        0 eth0
+10.8.0.0        0.0.0.0         255.255.255.0   U     0      0        0 wg0
+....
+....
+192.168.100.0   0.0.0.0         255.255.255.0   U     0      0        0 wg0
+</code></pre>
+<p>Read more:</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/65444747/what-is-the-difference-between-endpoint-and-allowedips-fields-in-wireguard-confi">https://stackoverflow.com/questions/65444747/what-is-the-difference-between-endpoint-and-allowedips-fields-in-wireguard-confi</a></li>
+<li><a href="https://www.procustodibus.com/blog/2021/01/wireguard-endpoints-and-ip-addresses/">https://www.procustodibus.com/blog/2021/01/wireguard-endpoints-and-ip-addresses/</a></li>
+</ul>
+<h2 id="topology-examples">Topology Examples<a class="headerlink" href="#topology-examples" title="Permanent link">&para;</a></h2>
+<h3 id="wireguard-server">WireGuard Server<a class="headerlink" href="#wireguard-server" title="Permanent link">&para;</a></h3>
+<p><img alt="WG-Server-Diagram.jpg" src="../assets/images/WG-Server-Diagram.jpg" width="740" /></p>
+<ul>
+<li>Match the colors: Config and the element have the same color. Example green peer config text goes to the green client.</li>
+<li>The "Cloud" pictogram means the public Internet.</li>
+<li>VPN and physical connections are separately shown in the pictures. VPN connections are indicated by dashed lines.</li>
+<li>The WireGuard server sitting on a VPS. This VPS has static, public IP address.</li>
+<li>All (4) peers connect to this WireGuard Server.<ul>
+<li>WireGuard Server don't have EndPoint configurations to the peers, since the IP addresses are not known of the peers. Therefore <code>PersistentKeepAlive</code> is not necessary.</li>
+</ul>
+</li>
+<li>Peers have <code>PersistentKeepAlive</code> set to 25 seconds. This means all peer update its EndPoint on the ServerSide.</li>
+<li>Peer configurations between Client1 and Client3 have no <code>PersistentKeepAlive</code>  set up, because they know each other IP addresses. </li>
+<li>Client1 and Client3 have direct VPN connection to each other.</li>
+<li>Client1 has 2 peer configured:<ul>
+<li>Connection to the server</li>
+<li>Connection to Client3</li>
+</ul>
+</li>
+<li>Client3 has 2 peer configured<ul>
+<li>Connection to the server</li>
+<li>Connection to Client1</li>
+</ul>
+</li>
+<li>Client2 has one peer configured: to the Wireguard Server.</li>
+<li>"Your mobile phone" has only one peer configured, to the WireGuard server. <ul>
+<li>The mobile cient access other peers over the WireGuard server.</li>
+<li>Mobile clients can access the others on their VPN IP address (10.10.0.0/24)</li>
+</ul>
+</li>
+<li>If the WireGuard server fails your mobule cient lose connection to all peers. Only Client1 and Client3 can access each other over the VPN without the server.</li>
+<li>The connection between Client2 and Client3 or Client2 and Client1 goes through the server.</li>
+<li>This setup works even when your private home network is behind CGN NAT.</li>
+</ul>
+<p>Disatvantages:</p>
+<ul>
+<li>You need a server on the public internet (VPS). There are a lot of cheap VPS provider, so if you willing to pay for a VPS you can easily find one even under $5. (Be carefully, most VPS provider limit the bandwidth.)</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Connection could work without <code>PersistentKeepAlive</code> as well. BUT, the tunnel will only be establish after the client send at least one package to the other peer.</p>
+</div>
+<h3 id="dynamic-dns">Dynamic DNS<a class="headerlink" href="#dynamic-dns" title="Permanent link">&para;</a></h3>
+<p><img alt="WG-DynDNS.jpg" src="../assets/images/WG-DynDNS.jpg" width="740" /></p>
+<ul>
+<li>Network Address Translation is set on your home router<ul>
+<li>Incomming connection to 55870 goes to Client1</li>
+<li>Incomming connection to 55871 goes to Client3</li>
+</ul>
+</li>
+<li>You must configure a Duckdns client to update the ip address of test-wg.duckdns.org.</li>
+<li>The mobile clint has (peer) configuration to Client1 and Client3.</li>
+<li>Client1 and Client3 have direct peer configuration. </li>
+<li><code>Endpoint</code> must set on the mobile client. Mobile client knows where to find the other peers, but the other clients don't know the IP address of the mobile client. <code>PersistentKeepalive is optional but recommended.</code></li>
+</ul>
+<p>Disatvantages:</p>
+<ul>
+<li>If your public IP address changes you have to manually restart your mobile WG Client.</li>
+<li>You have to configure NAT and DynDNS provider.</li>
+<li>Won't work if you are behind CGN NAT.</li>
+</ul>
+<h3 id="wireguard-gateway">Wireguard Gateway<a class="headerlink" href="#wireguard-gateway" title="Permanent link">&para;</a></h3>
+<p><img alt="WG-Gateway.jpg" src="../assets/images/WG-Gateway.jpg" width="740" /></p>
+<ul>
+<li>Moblie client can access the entire private home network through  the VPN gateway.<ul>
+<li>This means that traffic from the mobile client to the <code>172.16.0.0/22</code> first goes to the WG Gateway over the VPN tunnel. After the <code>iptables</code> rule (masquerade) applied the package reaches the target machine via the physical home network. </li>
+<li>Flow: <code>Mobile Client (wg:10.10.0.13) --&gt; (wg0:10.10.0.254) Wireguard Gateway (eth0:172.16.0.254) --&gt; (eth0:172.16.0.22) Machine</code></li>
+</ul>
+</li>
+<li>Similar to the previous scenario, except you don't need to install WG on all your internal device which you want to access. </li>
+</ul>
+<p>Disatvantages:</p>
+<ul>
+<li>All of them which is included in the previous scenario.</li>
+<li>You should carefully set up iptables. In this example the entire home network is open to the mobile client.</li>
+<li>Machines inside your home network without WireGuard don't access the VPN network without extra configuration.<ul>
+<li>This means you have to configure the routing table in your router to send traffic to the VPN gateway. </li>
+<li>Or add route to the routing table of all machines from where you want to access VPN ip addresses.</li>
+<li>Extra iptalbes rules also have to be added to the VPN gateway.</li>
+</ul>
+</li>
+</ul>
+<h2 id="generate-peer-config-using-bash-script">Generate Peer Config Using Bash Script<a class="headerlink" href="#generate-peer-config-using-bash-script" title="Permanent link">&para;</a></h2>
+<p>First let see the script:</p>
+<pre class="line-numbers" data-src="/files/wg-sciprt.sh"><code class="language-bash"></code></pre>
+
+<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
+<ul>
+<li><mark>This script generate only the clients configurations, the server config must be manually created.</mark></li>
+<li>Put this script to <code>/etc/wireguard/clients</code> on the VPN server and run it from this directory (<code>./script-name.sh</code>). </li>
+<li>Modify <strong>line 3</strong> to change your VPN IP address range. Only <code>/24</code> is supported! </li>
+<li>Initialize the first client IP address by running <code>echo -n 2 &gt;/etc/wireguard/clients/ip.txt</code> command.</li>
+<li>Change <strong>Line 14 and 15</strong> to set up the default IP address of the VPN server.</li>
+<li>Optional settings:<ul>
+<li><strong>Line 23</strong> (Interface/Address): You can change the subnet bits (default: <code>/32</code>).</li>
+<li><strong>Line 25</strong> : Change the listen port of the client, if you don't like the <code>51820</code>.</li>
+</ul>
+</li>
+</ul>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Do not forget to enable Linux IP forwarding! Check: <code>cat /proc/sys/net/ipv4/ip_forward</code><br />
+Enable: <code>sysctl -w net.ipv4.ip_forward=1</code><br />
+Apply the change: <code>sysctl -p</code></p>
+</div>
+<h3 id="generate-the-server-config">Generate The Server Config<a class="headerlink" href="#generate-the-server-config" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">cat &lt;&lt;EOF&gt;/tmp/wg0.conf
+[Interface]
+Address = 10.8.0.2/32
+ListenPort = 51820
+PrivateKey = $( wg genkey )
+DNS = 1.1.1.1
+EOF
+</code></pre>
+<p>Copy <code>wg0.conf</code> to the default config directory.</p>
+<pre><code class="language-bash">cp /tmp/wg0.conf /etc/wireguard
+</code></pre>
+<h3 id="generate-your-first-peer">Generate Your First Peer<a class="headerlink" href="#generate-your-first-peer" title="Permanent link">&para;</a></h3>
+<pre class="command-line" data-user="root" data-host="wghost" data-output="5-32"><code class="language-bash">cd /etc/wireguard/clients
+./generate.sh 
+Config Name (peername): test-peer01
+Endpoint (leave blank for 232.188.60.51:51820): 
+
+# Here comes the QR Code
+
+==================== wg0 config change: ====================
+
+[Peer] # Config File: test-peer01.conf
+PublicKey = ob1**********QqyiwM8YxQv/1JHqP+pN7lK/QSegxc=
+PresharedKey = ICU35s/KULp3j8iP**********Nn6TLvrvFaefKez68=
+PersistentKeepalive = 25
+AllowedIPs = 10.8.0.28/32
+
+==================== Client Config ====================
+#:ob1**********QqyiwM8YxQv/1JHqP+pN7lK/QSegxc=,10.8.0.28,test-peer01
+[Interface]
+Address = 10.8.0.28/32
+ListenPort = 51820
+PrivateKey = iDtl*********t8pKVxWeVGlcG3h27/w/stjHvUg1o=
+#DNS = 1.1.1.1
+
+[Peer]
+PublicKey = qanM0i7p**********E/cvw0LDvN0UdW9VaxuBfRIn4=
+PresharedKey = ICU35s/KULp3j8iP**********Nn6TLvrvFaefKez68=
+EndPoint=23.88.60.51:51820
+PersistentKeepalive = 25
+AllowedIPs = 10.8.0.0/24
+
+Run command to reload Wireguard: 
+wg syncconf wg0 <(wg-quick strip wg0)</code></pre>
+
+<ul>
+<li>The script will generate QR code for mobile client, and the config file: <code>test-peer01.conf</code><ul>
+<li>You should use the generated config file or copy-paste from the script output.</li>
+<li>If you want to use mobile device (android or ios), use the generated QR code. You can regenerate this code with <code>qrencode -t ansiutf8 &lt;test-peer01.conf</code> command.</li>
+</ul>
+</li>
+<li>The script doesn't automatically update the server <code>wg0.conf</code> file.<ul>
+<li>You have to manually add the "wg0 config change:" section to the server config (<code>wg0.conf</code>).</li>
+<li>It you want to apply the changes without interrupt the existing connection run the <code>wg syncconf wg0 &lt;(wg-quick strip wg0)</code> command.</li>
+</ul>
+</li>
+</ul>
+<p>This little script is suitable only for managing few nodes, and may help to understand how Wireguard works. Writing an overall configuration manager was not my goal. If you don't like my script never mind, there are a lot of alternatives out there:</p>
+<ul>
+<li><a href="https://github.com/complexorganizations/wireguard-manager">Wireguard-manager</a></li>
+<li><a href="https://github.com/EmbarkStudios/wg-ui">wg-gui</a></li>
+<li><a href="https://github.com/subspacecloud/subspace">subspace</a></li>
+<li><a href="https://github.com/perara/wg-manager">wg-manager</a></li>
+<li><a href="https://gitlab.com/cyber5k/mistborn">mistborn</a></li>
+<li>Read more: <a href="https://medium.com/swlh/web-uis-for-wireguard-that-make-configuration-easier-e104710fa7bd">https://medium.com/swlh/web-uis-for-wireguard-that-make-configuration-easier-e104710fa7bd</a></li>
+</ul>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<p>Maybe this article a bit long, and you get discouraged, because Wireguard looks so complicated, but it doesn't.  That's why I copy here a complete example with 3 peers. All peers are in the same private network, but if you get familiar with Wireguard and understand the configuration you can adopt these examples in your network.</p>
+<h3 id="peer-interface-configs">Peer Interface Configs<a class="headerlink" href="#peer-interface-configs" title="Permanent link">&para;</a></h3>
+<p><strong>Before you run these snippets don't forget to modify the followings:</strong></p>
+<ul>
+<li><code>Interface / Address</code> : The desired VPN IP address of the peers. You can change the subnet bit to <code>/32</code>.</li>
+<li><code>Interface / ListenPort</code> : (Optional) On which port should the Wireguard service listen</li>
+<li><code>Peer / EndPoint</code> : The actual IP address of the peer in the existing network. (If you have modified the port don't forget to match to it.)</li>
+<li><code>Peer /AllowedIPs</code> : Since all peer connect to each other you have to set AllowedIPS to the VPN address of the peers. If you set to other than <code>/32</code> all traffic to this subnet tries to go through the peer. </li>
+<li><code>Interface / DNS</code> : You can delete these lines. </li>
+</ul>
+<p><strong>Peer1</strong></p>
+<pre><code class="language-bash">cat &lt;&lt;EOF&gt;/tmp/peer1-interface.conf
+[Interface]
+Address = 10.22.0.2/24
+ListenPort = 55321
+PrivateKey = $( wg genkey )
+DNS = 1.1.1.1
+
+EOF
+</code></pre>
+<p><strong>Peer2</strong></p>
+<pre><code class="language-bash">cat &lt;&lt;EOF&gt;/tmp/peer2-interface.conf
+[Interface]
+Address = 10.22.0.3/24
+ListenPort = 55321
+PrivateKey = $( wg genkey )
+DNS = 1.1.1.1
+
+EOF
+</code></pre>
+<p><strong>Peer3</strong></p>
+<pre><code class="language-bash">cat &lt;&lt;EOF&gt;/tmp/peer3-interface.conf
+[Interface]
+Address = 10.22.0.4/24
+ListenPort = 55321
+PrivateKey = $( wg genkey )
+DNS = 1.1.1.1
+
+EOF
+</code></pre>
+<h3 id="peer-configs_1">Peer Configs<a class="headerlink" href="#peer-configs_1" title="Permanent link">&para;</a></h3>
+<p><strong>Preshared Keys</strong></p>
+<pre><code class="language-bash">export PRESHARED_12=$( wg genpsk )
+export PRESHARED_13=$( wg genpsk )
+export PRESHARED_23=$( wg genpsk )
+</code></pre>
+<ul>
+<li><code>PRESHARED_12</code> --&gt; Connection between peer 1 and 2</li>
+<li><code>PRESHARED_13</code> --&gt; Connection between peer 1 and 3</li>
+<li><code>PRESHARED_23</code> --&gt; Connection between peer 2 and 3</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>FROM   \  TO</th>
+<th>Peer1</th>
+<th>Peer2</th>
+<th>Peer3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Peer1</td>
+<td>X</td>
+<td>PRESHARED_12</td>
+<td>PRESHARED_13</td>
+</tr>
+<tr>
+<td>Peer2</td>
+<td>PRESHARED_12</td>
+<td>X</td>
+<td>PRESHARED_23</td>
+</tr>
+<tr>
+<td>Peer3</td>
+<td>PRESHARED_13</td>
+<td>PRESHARED_23</td>
+<td>X</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Endpoints</strong></p>
+<table>
+<thead>
+<tr>
+<th>FROM   \  TO</th>
+<th>Peer1</th>
+<th>Peer2</th>
+<th>Peer3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Peer1</td>
+<td>X</td>
+<td>172.17.0.1:55321</td>
+<td>172.16.0.27:55321</td>
+</tr>
+<tr>
+<td>Peer2</td>
+<td>172.16.1.213:55321</td>
+<td>X</td>
+<td>172.16.0.27:55321</td>
+</tr>
+<tr>
+<td>Peer3</td>
+<td>172.16.1.213:55321</td>
+<td>172.17.0.1:55321</td>
+<td>X</td>
+</tr>
+</tbody>
+</table>
+<p><strong>AllowedIPs</strong></p>
+<table>
+<thead>
+<tr>
+<th>FROM   \  TO</th>
+<th>Peer1</th>
+<th>Peer2</th>
+<th>Peer3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Peer1</td>
+<td>X</td>
+<td>10.22.0.3/32</td>
+<td>10.22.0.4/32</td>
+</tr>
+<tr>
+<td>Peer2</td>
+<td>10.22.0.2/32</td>
+<td>X</td>
+<td>10.22.0.4/32</td>
+</tr>
+<tr>
+<td>Peer3</td>
+<td>10.22.0.2/32</td>
+<td>10.22.0.2/32</td>
+<td>X</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>You can skip the usage of the pre-shared key. It adds extra security, but not mandatory.</p>
+</div>
+<p><strong>Peer1</strong></p>
+<pre><code class="language-bash">export PUBLIC_KEY=$( cat /tmp/peer1-interface.conf | tr -d ' ' | grep -oP '(?&lt;=PrivateKey=).*[^$]' | wg pubkey )
+cat &lt;&lt;EOF | tee -a /tmp/peer2-interface.conf
+# Connection to Peer1
+[Peer]
+PublicKey = $PUBLIC_KEY
+PresharedKey = $PRESHARED_12
+EndPoint=172.16.1.213:55321
+#PersistentKeepalive = 25
+AllowedIPs = 10.22.0.2/32
+
+EOF
+
+cat &lt;&lt;EOF | tee -a /tmp/peer3-interface.conf
+# Connection to Peer1
+[Peer]
+PublicKey = $PUBLIC_KEY
+PresharedKey = $PRESHARED_13
+EndPoint=172.16.1.213:55321
+#PersistentKeepalive = 25
+AllowedIPs = 10.22.0.2/32
+
+
+EOF
+</code></pre>
+<p><strong>Peer2</strong></p>
+<pre><code class="language-bash">export PUBLIC_KEY=$( cat /tmp/peer2-interface.conf | tr -d ' ' | grep -oP '(?&lt;=PrivateKey=).*[^$]' | wg pubkey )
+cat &lt;&lt;EOF | tee -a /tmp/peer1-interface.conf 
+# Connection to Peer2
+[Peer]
+PublicKey = $PUBLIC_KEY
+PresharedKey = $PRESHARED_12
+EndPoint=172.17.0.1:55321
+#PersistentKeepalive = 25
+AllowedIPs = 10.22.0.3/32
+
+EOF
+
+cat &lt;&lt;EOF | tee -a /tmp/peer3-interface.conf
+# Connection to Peer2
+[Peer]
+PublicKey = $PUBLIC_KEY
+PresharedKey = $PRESHARED_23
+EndPoint=172.17.0.1:55321
+#PersistentKeepalive = 25
+AllowedIPs = 10.22.0.3/32
+
+EOF
+</code></pre>
+<p><strong>Peer3</strong></p>
+<pre><code class="language-bash">export PUBLIC_KEY=$( cat /tmp/peer3-interface.conf | tr -d ' ' | grep -oP '(?&lt;=PrivateKey=).*[^$]' | wg pubkey )
+cat &lt;&lt;EOF | tee -a /tmp/peer1-interface.conf 
+# Connection to Peer3
+[Peer]
+PublicKey = $PUBLIC_KEY
+PresharedKey = $PRESHARED_13
+EndPoint=172.16.0.27:55321
+#PersistentKeepalive = 25
+AllowedIPs = 10.22.0.4/32
+
+EOF
+
+cat &lt;&lt;EOF | tee -a /tmp/peer2-interface.conf
+# Connection to Peer3
+[Peer]
+PublicKey = $PUBLIC_KEY
+PresharedKey = $PRESHARED_23
+EndPoint=172.16.0.27:55321
+#PersistentKeepalive = 25
+AllowedIPs = 10.22.0.4/32
+
+EOF
+</code></pre>
+<p>We have 3 files created:</p>
+<pre><code class="language-plain">-rw-r--r--  1 root root  578 Oct 19 20:01 peer1-interface.conf
+-rw-r--r--  1 root root  580 Oct 19 20:01 peer2-interface.conf
+-rw-r--r--  1 root root  580 Oct 19 20:01 peer3-interface.conf
+</code></pre>
+<ul>
+<li><code>peer1-interface.conf</code> goes to <code>/etc/wireguard/wg1.conf</code> on peer1</li>
+<li><code>peer2-interface.conf</code> goes to <code>/etc/wireguard/wg1.conf</code> on peer2</li>
+<li><code>peer3-interface.conf</code> goes to <code>/etc/wireguard/wg1.conf</code> on peer3</li>
+</ul>
+<p><strong>Run on all peers</strong></p>
+<pre><code class="language-bash">sysctl -w net.ipv4.ip_forward=1
+sysctl -p
+systemctl enable wg-quick@wg1
+systemctl start wg-quick@wg1
+</code></pre>
+                
+              
+              
+                
+
+
+  <h2 id="__comments">Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>var script,disqus_config=function(){this.page.url="https://readthedocs.vinczejanos.info/Install_And_Configure_Wireguard_VPN/",this.page.identifier="Install_And_Configure_Wireguard_VPN/"};"undefined"==typeof DISQUS?((script=document.createElement("script")).async=!0,script.src="https://shortname-jvincze-test.disqus.com/embed.js",script.setAttribute("data-timestamp",Date.now()),document.body.appendChild(script)):DISQUS.reset({reload:!0,config:disqus_config})</script>
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <!-- Cookie Consent by https://www.CookieConsent.com -->
+<script type="text/javascript" src="//www.cookieconsent.com/releases/4.0.0/cookie-consent.js" charset="UTF-8"></script>
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({"notice_banner_type":"headline","consent_type":"express","palette":"light","language":"en","page_load_consent_levels":["strictly-necessary"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"website_name":"Blog"});
+});
+</script>
+
+<noscript>ePrivacy and GPDR Cookie Consent by <a href="https://www.CookieConsent.com/" rel="nofollow noopener">Cookie Consent</a></noscript>
+<!-- End Cookie Consent by https://www.CookieConsent.com -->
+
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tracking", "navigation.top", "search.suggest", "search.highlight", "search.suggest", "search.highlight"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.bc35569b.min.js"></script>
+      
+        <script src="../js/prism.js"></script>
+      
+    
+  </body>
+</html>
