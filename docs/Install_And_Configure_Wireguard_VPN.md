@@ -245,7 +245,7 @@ If you want to read about how Tailscale solve this kind of issue click on this l
 
 **Direct Connection Matrix:**
 
-| Connect FROM / TO            |  Server Peer (91.12.21.142)                                   | Peer2 (inside priv net)      | Peer3 (inside priv net)    | 
+| Connect FROM \\ TO           |  Server Peer (91.12.21.142)                                   | Peer2 (inside priv net)      | Peer3 (inside priv net)    | 
 |-                             |-                                                              |-                             | -                          |
 | Server Peer (91.12.21.142)   |             X                                                 | Doesn't know peer2 address   | Doesn't know peer3 address |
 | Peer2 (inside priv net)      | `EndPoint: 91.12.21.142:51820` <br>`PersistentKeepalive = 25` |            X                 | No Ip addresses is known   |
@@ -572,11 +572,36 @@ export PRESHARED_23=$( wg genpsk )
 * `PRESHARED_13` --> Connection between peer 1 and 3
 * `PRESHARED_23` --> Connection between peer 2 and 3
 
+| FROM   \\  TO   | Peer1           | Peer2           | Peer3           |
+|-----------------|-----------------|-----------------|-----------------|
+| Peer1           | X               | PRESHARED_12    | PRESHARED_13    |
+| Peer2           | PRESHARED_12    | X               | PRESHARED_23    |
+| Peer3           | PRESHARED_13    | PRESHARED_23    | X               |
+
+**Endpoints**
+
+| FROM   \\  TO   | Peer1            | Peer2            | Peer3             |
+|-----------------|------------------|------------------|-------------------|
+| Peer1           |X                 |172.17.0.1:55321  |172.16.0.27:55321  |
+| Peer2           |172.16.1.213:55321|X                 |172.16.0.27:55321  |
+| Peer3           |172.16.1.213:55321|172.17.0.1:55321  |X                  |
+
+
+**AllowedIPs**
+
+| FROM   \\  TO   | Peer1            | Peer2            | Peer3             |
+|-----------------|------------------|------------------|-------------------|
+| Peer1           |X                 |10.22.0.3/32      |10.22.0.4/32       |
+| Peer2           |10.22.0.2/32      |X                 |10.22.0.4/32       |
+| Peer3           |10.22.0.2/32      |10.22.0.2/32      |X                  |
+
+
 !!! info
     You can skip the usage of the pre-shared key. It adds extra security, but not mandatory.
 
 
 **Peer1**
+
 
 ```bash
 export PUBLIC_KEY=$( cat /tmp/peer1-interface.conf | tr -d ' ' | grep -oP '(?<=PrivateKey=).*[^$]' | wg pubkey )
@@ -605,6 +630,8 @@ EOF
 ```
 
 **Peer2**
+
+
 
 ```bash
 export PUBLIC_KEY=$( cat /tmp/peer2-interface.conf | tr -d ' ' | grep -oP '(?<=PrivateKey=).*[^$]' | wg pubkey )

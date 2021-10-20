@@ -19,16 +19,16 @@ theme:
       - search.highlight
 #      - toc.integrate
     palette:
-      - scheme: slate
+      - scheme: default
+        primary: indigo
+        toggle:
+          icon: material/toggle-switch-off-outline
+          name: Switch to dark mode
+      - scheme: slate 
+        primary: light green
         toggle:
           icon: material/toggle-switch
           name: Switch to light mode
-          primary: amber
-          accent: amber
-      - scheme: default
-        toggle:
-          icon: material/toggle-switch-off-outline
-          name: Switch to dark mod
 
 markdown_extensions:
   - admonition
