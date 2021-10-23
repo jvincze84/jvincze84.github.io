@@ -206,14 +206,16 @@ PresharedKey = Shared Key23
 
 #### EndPoint
 
-One out of two peers have to know where to find the other. 
+One out of two peers have to know where to find the other.
 
-|ID| Peer1 Know Peer2 IP adddress     | Peer2 Know Peer1 IP adddress | Comment  |
-|--|---- -----------------------------| ---------------------------- |----------|
-|1 | yes                              | yes                          | Best Situation. PersistentKeepalive is not needed. |
-|2 | yes                              | no                           | Good Situation. PersistentKeepalive should be set on Peer1. |
-|3 | no                               | yes                          | Good Situation. PersistentKeepalive should be set on Peer2. |
-|4 | no                               | no                           | Worst Situation. No Connection could be made.  |
+
+| ID | Peer1 Know Peer2 IP adddress     | Peer2 Know Peer1 IP adddress | Comment                                                     |
+|----|---- -----------------------------| ---------------------------- |-------------------------------------------------------------|
+| 1  | yes                              | yes                          | Best Situation. PersistentKeepalive is not needed.          |
+| 2  | yes                              | no                           | Good Situation. PersistentKeepalive should be set on Peer1. |
+| 3  | no                               | yes                          | Good Situation. PersistentKeepalive should be set on Peer2. |
+| 4  | no                               | no                           | Worst Situation. No Connection could be made.               |
+
 
 * First Situation
 
