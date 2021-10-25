@@ -32,7 +32,7 @@ I don't like to install various python packages on my computer, because sooner o
 I do know that "Material for MkDocs" have official Docker image, but I like to use Docker images was built by my own. Every time I build a new Docker image from scratch I learn something or make my knowledge deeper about Dockerfiles, so it's absolutely worth it.
 
 ### Dockerfile & Build
-<pre class="line-numbers language-docker" data-src="/files/Dockerfile"></pre>
+<pre class="line-numbers language-docker" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/Dockerfile"></pre>
 
 * `FROM python:3-alpine` --> Using the official python image.
 * `ARG USER=1001` --> Default user id. If you don't specify another when building the container (see below)

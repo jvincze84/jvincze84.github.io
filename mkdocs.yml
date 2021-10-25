@@ -55,6 +55,7 @@ markdown_extensions:
 
 
 nav:
+  - "Install Matrix Home Server": 'Install_Matrix_Home_Server.md'
   - "Install And Configure Wireguard VPN": 'Install_And_Configure_Wireguard_VPN.md'
   - "Get Started With Portainer": 'Get_Started_With_Portainer.md'
   - "Install Single Node Kubernetes Cluster": 'Install_Single_Node_Kubernetes_Cluster.md'

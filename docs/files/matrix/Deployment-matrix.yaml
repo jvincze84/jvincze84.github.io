@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: matrix
+  name: matrix
+  namespace: matrix
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      k8s-app: matrix
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        k8s-app: matrix
+      name: matrix
+    spec:
+      containers:
+      - env:
+        - name: SYNAPSE_CONFIG_DIR
+          value: /config
+        - name: SYNAPSE_CONFIG_PATH
+          value: /config/homeserver.yaml
+        image: matrixdotorg/synapse:latest
+        imagePullPolicy: Always
+        name: matrix
+        securityContext:
+          privileged: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /config/homeserver.yaml
+          name: matrix-cm
+          subPath: homeserver.yaml
+        - mountPath: /config/matrix-kub-test.duckdns.org.log.config
+          name: matrix-cm
+          subPath: matrix-kub-test.duckdns.org.log.config
+        - mountPath: /data
+          name: matrix-pv
+          subPath: matrix
+        - mountPath: /config/matrix-kub-test.duckdns.org.signing.key
+          name: matrix-key
+          subPath: matrix-kub-test.duckdns.org.signing.key
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 10
+      volumes:
+      - name: matrix-key
+        secret:
+          defaultMode: 420
+          items:
+          - key: matrix-kub-test.duckdns.org.signing.key
+            path: matrix-kub-test.duckdns.org.signing.key
+          secretName: matrix-key
+      - name: matrix-pv
+        persistentVolumeClaim:
+          claimName: matrix-storage
+      - name: matrix-cm
+        configMap:
+          name: matrix
+          defaultMode: 420
+          items:
+          - key: homeserver.yaml
+            path: homeserver.yaml
+          - key: matrix-kub-test.duckdns.org.log.config
+            path: matrix-kub-test.duckdns.org.log.config
+        

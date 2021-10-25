@@ -1,5 +1,4 @@
-# Install Matrix Home Server 
-sMessaging Server On Kubernetes
+# Install Matrix Home Server On Kubernetes
 
 ## Preface
 
@@ -227,7 +226,295 @@ This will create a minimal `Caddyfile` example. Actually this command does nothi
 
 **Edit this file**
 
-============================================================
+You Caddyfile should look like this:
+
+```conf
+matrix.vincze.work {
+  # Set this path to your site's directory.
+  root * /usr/share/caddy
+
+  # Enable the static file server.
+  file_server
+
+  # Another common task is to set up a reverse proxy:
+  reverse_proxy synapse-matrix:8008
+
+  # Or serve a PHP site through php-fpm:
+  # php_fastcgi localhost:9000
+}
+```
+### Start Everything
+
+We are ready to start the Matrix HomeServer. Save the `docker-compose.yaml` file if you haven't already do that, and run:
+
+```bash
+docker-compose up --detach
+```
+
+And wait for `up` condition:
+
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-6"><code class="language-bash">docker-compose ps
+      Name                    Command                  State                                            Ports                                      
+---------------------------------------------------------------------------------------------------------------------------------------------------
+matrix-postgres    docker-entrypoint.sh postgres    Up             5432/tcp                                                                        
+matrix-web-caddy   caddy run --config /etc/ca ...   Up             2019/tcp, 0.0.0.0:443->443/tcp,:::443->443/tcp, 0.0.0.0:80->80/tcp,:::80->80/tcp
+synapse-matrix     /start.py                        Up (healthy)   0.0.0.0:8008->8008/tcp,:::8008->8008/tcp, 8009/tcp, 8448/tcp</code></pre>
+
+**Check your matrix server:**
+
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2"><code class="language-bash">curl https://matrix.vincze.work/health
+OK</code></pre>
+
+**Browser Screenshot:**
+
+![DeepinScreenshot_select-area_20211023165557.png](assets/images/DeepinScreenshot_select-area_20211023165557.png)
+
+### Federation
+
+What does federated mean?
+
+!!! quote
+    Federation allows separate deployments of a communication service to communicate with each other - for instance a mail server run by Google federates with a mail server run by Microsoft when you send email from @gmail.com to @hotmail.com.
+    
+    interoperable clients may simply be running on the same deployment - whereas in federation the deployments themselves are exchanging data in a compatible manner.
+    
+    Matrix provides open federation - meaning that anyone on the internet can join into the Matrix ecosystem by deploying their own server.
+
+
+In order to the `federation` work you need to modify the `Caddyfile` and `docker-compose.yaml`.
+
+**`docker-compose.yaml`**
+
+```diff
+--- docker-compose.yaml 2021-10-23 16:31:16.567890416 +0200
++++ docker-compose.yaml-orig  2021-10-23 17:04:08.640359385 +0200
+@@ -31,6 +31,7 @@
+     ports:
+       - 80:80
+       - 443:443
++      - 8448:8448
+     networks:
+       - matrix
+   postgres:
+
+```
+
+**`Caddyfile`**
+
+```diff
+@@ -8,7 +8,7 @@
+ # this machine's public IP, then replace ":80" below with your
+ # domain name.
+ 
+-matrix.vincze.work {
++matrix.vincze.work:443 matrix.vincze.work:8448 {
+  # Set this path to your site's directory.
+  root * /usr/share/caddy
+ 
+@@ -24,4 +24,3 @@
+ 
+ # Refer to the Caddy docs for more information:
+ # https://caddyserver.com/docs/caddyfile
+```
+
+You can check if fedearation work or not: [https://federationtester.matrix.org](https://federationtester.matrix.org)
+
+**ScreenShot:**
+
+![DeepinScreenshot_select-area_20211023171814.png](assets/images/DeepinScreenshot_select-area_20211023171814.png)
+
+
+### Login
+
+We don't have any user, yet. We have three option for registering new users:
+
+1. Enable registration in the homeserver.yaml (`enable_registration: true`)
+2. Use the `registration_shared_secret`. 
+    - [https://matrix-org.github.io/synapse/latest/admin_api/register_api.html#shared-secret-registration]()
+3. Or use command line interface inside the container.
+
+I will show the third option:
+
+* Get Into the container
+
+```bash
+docker exec -it synapse-matrix /bin/bash
+```
+
+* Register new user
+
+```bash
+register_new_matrix_user -u jvincze -p Matrix1234 -a -c /config/homeserver.yaml http://localhost:8008
+```
+
+* Open [https://app.element.io/#/welcome](https://app.element.io/#/welcome) in your browser
+* Click on "Sign In"
+* Change the "Homeserver" URL
+
+![DeepinScreenshot_select-area_20211023174014.png](assets/images/DeepinScreenshot_select-area_20211023174014.png)
+
+* Enter your credentials 
+
+And we are done. We have a fully functional Matrix Homeserver. Of course there are a lot of configuration available in the `homesever.yaml`, and I recommend to go through this file at least once to get know the possibilities.
+
+We are going to deploy this minimal installation of Matrix to Kubernetes cluster in the next section.
+
+## Deploy To Kubernetes
+
+### Create the namespace
+
+```bash
+kubectl create ns matrix
+```
+
+### Prepare Matrix Configmap & Storage
+
+* Generate the config files
+
+```bash
+mkdir -p /tmp/matrix/config
+docker run -it --rm \
+    --mount type=bind,src=/tmp/matrix/config,dst=/config \
+    -e SYNAPSE_SERVER_NAME=matrix-kub-test.duckdns.org \
+    -e SYNAPSE_REPORT_STATS=yes \
+    -e SYNAPSE_CONFIG_DIR=/config \
+    -e SYNAPSE_CONFIG_PATH=/config/homeserver.yaml \
+    matrixdotorg/synapse:latest generate
+```
+
+* Create the Configmap
+
+```bash
+cd /tmp/matrix
+kubectl -n matrix create cm matrix \
+--from-file=homeserver.yaml=./config/homeserver.yaml \
+--from-file=matrix-kub-test.duckdns.org.log.config=./config/matrix-kub-test.duckdns.org.log.config
+
+kubectl -n matrix create secret generic matrix-key \
+--from-file config/matrix-kub-test.duckdns.org.signing.key
+
+```
+* Create Persistent Volume
+
+```yaml
+cat <<EOF>/tmp/matrix/matrix-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: matrix-storage
+  namespace: matrix
+spec:
+  storageClassName: openebs-hostpath
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+EOF
+```
+---
+
+```bash
+kubectl apply -f /tmp/matrix/matrix-pvc.yaml
+```
+
+### Deploy Matrix Homeserver
+
+First we deploy the Matrix homeserver without any configuration changes. Later we can update the `homeserver.yaml` in the Configmap.
+
+```yaml
+cat <<EOF>/tmp/matrix/matrix-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: matrix
+  name: matrix
+  namespace: matrix
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      k8s-app: matrix
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        k8s-app: matrix
+      name: matrix
+    spec:
+      containers:
+      - env:
+        - name: SYNAPSE_CONFIG_DIR
+          value: /config
+        - name: SYNAPSE_CONFIG_PATH
+          value: /config/homeserver.yaml
+        image: matrixdotorg/synapse:latest
+        imagePullPolicy: Always
+        name: matrix
+        securityContext:
+          privileged: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /config/homeserver.yaml
+          name: matrix-cm
+          subPath: homeserver.yaml
+        - mountPath: /config/matrix-kub-test.duckdns.org.log.config
+          name: matrix-cm
+          subPath: matrix-kub-test.duckdns.org.log.config
+        - mountPath: /data
+          name: matrix-pv
+          subPath: matrix
+        - mountPath: /config/matrix-kub-test.duckdns.org.signing.key
+          name: matrix-key
+          subPath: matrix-kub-test.duckdns.org.signing.key
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 10
+      volumes:
+      - name: matrix-key
+        secret:
+          defaultMode: 420
+          items:
+          - key: matrix-kub-test.duckdns.org.signing.key
+            path: matrix-kub-test.duckdns.org.signing.key
+          secretName: matrix-key
+      - name: matrix-pv
+        persistentVolumeClaim:
+          claimName: matrix-storage
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: homeserver.yaml
+            path: homeserver.yaml
+          - key: matrix-kub-test.duckdns.org.log.config
+            path: matrix-kub-test.duckdns.org.log.config
+          name: matrix
+        name: matrix-cm
+EOF
+```
+
+Additional information:
+
+
+
+
+
+
+
+https://matrix.vincze.work/_synapse/admin/v1/register
+
+
+
+
+
+
 
 
 
