@@ -9,21 +9,21 @@
       
       
       
-        <link rel="canonical" href="https://readthedocs.vinczejanos.info/">
+        <link rel="canonical" href="https://readthedocs.vinczejanos.info/Old%20Blog%20Contents/raspberry/Compile_Go_Language_On_Raspberry_Pi/">
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.4">
     
     
       
-        <title>Vincze Janos Blog</title>
+        <title>Compile Go Language On Raspberry Pi - Vincze Janos Blog</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.db9e7362.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.db9e7362.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.3f5d1f46.min.css">
         
       
     
@@ -38,9 +38,9 @@
     
     
     
-      <link rel="stylesheet" href="css/width.css">
+      <link rel="stylesheet" href="../../../css/width.css">
     
-      <link rel="stylesheet" href="css/prism.css">
+      <link rel="stylesheet" href="../../../css/prism.css">
     
     
       
@@ -72,7 +72,7 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="">
   
     
-    <script>function __prefix(e){return new URL(".",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
       <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#welcome-to-my-blog" class="md-skip">
+        <a href="#compile-go-language-on-raspberry-pi" class="md-skip">
           Skip to content
         </a>
       
@@ -95,7 +95,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Vincze Janos Blog" class="md-header__button md-logo" aria-label="Vincze Janos Blog" data-md-component="logo">
+    <a href="../../.." title="Vincze Janos Blog" class="md-header__button md-logo" aria-label="Vincze Janos Blog" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Welcome To My Blog
+              Compile Go Language On Raspberry Pi
             
           </span>
         </div>
@@ -219,7 +219,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Vincze Janos Blog" class="md-nav__button md-logo" aria-label="Vincze Janos Blog" data-md-component="logo">
+    <a href="../../.." title="Vincze Janos Blog" class="md-nav__button md-logo" aria-label="Vincze Janos Blog" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -249,65 +249,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Welcome To My Blog
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
         Welcome To My Blog
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#migrate-from-ghost-to-mkdocs" class="md-nav__link">
-    Migrate From Ghost To MKDocs
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#old-content" class="md-nav__link">
-    Old Content
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#new-articles" class="md-nav__link">
-    New Articles
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -320,7 +266,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Tips_And_Tricks/" class="md-nav__link">
+      <a href="../../../Tips_And_Tricks/" class="md-nav__link">
         Tips And Tricks
       </a>
     </li>
@@ -333,12 +279,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
       
       
@@ -361,7 +309,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/Collect_Network_Statistic_With_Telegraf_Vnstat/" class="md-nav__link">
+      <a href="../../Collect_Network_Statistic_With_Telegraf_Vnstat/" class="md-nav__link">
         Collect Network Statistic With Telegraf & VNSTAT
       </a>
     </li>
@@ -375,7 +323,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/Iptables_Examples/" class="md-nav__link">
+      <a href="../../Iptables_Examples/" class="md-nav__link">
         Iptables Examples
       </a>
     </li>
@@ -389,7 +337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/Nokia_6120c_%28bb5%29_Forgotten_Security_Code/" class="md-nav__link">
+      <a href="../../Nokia_6120c_%28bb5%29_Forgotten_Security_Code/" class="md-nav__link">
         Nokia 6120c (BB5) Forgotten Security Code
       </a>
     </li>
@@ -403,7 +351,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/Sonoff_Relays_With_Openhab_And_Tasmota_Firmware/" class="md-nav__link">
+      <a href="../../Sonoff_Relays_With_Openhab_And_Tasmota_Firmware/" class="md-nav__link">
         Sonoff Relays With OpenHab And Tasmota Firmware
       </a>
     </li>
@@ -443,7 +391,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/linux/Compile_Apache_Httpd_2.4.x_Php/" class="md-nav__link">
+      <a href="../../linux/Compile_Apache_Httpd_2.4.x_Php/" class="md-nav__link">
         Compile Apache HTTPD 2.4.X & PHP
       </a>
     </li>
@@ -457,7 +405,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/linux/Create_Self_Signed_Certificate_For_Apache_Webserver/" class="md-nav__link">
+      <a href="../../linux/Create_Self_Signed_Certificate_For_Apache_Webserver/" class="md-nav__link">
         Create Self Signed Certificate For Apache Webserver
       </a>
     </li>
@@ -471,7 +419,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/linux/Install_%28compile%29_%26_Configure_Motion_Av_Tools/" class="md-nav__link">
+      <a href="../../linux/Install_%28compile%29_%26_Configure_Motion_Av_Tools/" class="md-nav__link">
         Install (compile) & Configure Motion Av Tools
       </a>
     </li>
@@ -485,7 +433,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/linux/Install_Mps-youtube_Console_Based_Youtube_Player/" class="md-nav__link">
+      <a href="../../linux/Install_Mps-youtube_Console_Based_Youtube_Player/" class="md-nav__link">
         Install Mps youtube Console Based Youtube Player
       </a>
     </li>
@@ -499,7 +447,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/linux/create_Your_Own_Dyndns_Service_With_Bind_named/" class="md-nav__link">
+      <a href="../../linux/create_Your_Own_Dyndns_Service_With_Bind_named/" class="md-nav__link">
         create Your Own Dyndns Service With Bind named
       </a>
     </li>
@@ -546,7 +494,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/nodemcu/How_To_Compile_Nodemcu_Firmware/" class="md-nav__link">
+      <a href="../../nodemcu/How_To_Compile_Nodemcu_Firmware/" class="md-nav__link">
         How To Compile Nodemcu Firmware
       </a>
     </li>
@@ -560,7 +508,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/nodemcu/How_To_Unbrick_Esp8266_blinking_Blue_Led/" class="md-nav__link">
+      <a href="../../nodemcu/How_To_Unbrick_Esp8266_blinking_Blue_Led/" class="md-nav__link">
         How To Unbrick Esp8266 blinking Blue Led
       </a>
     </li>
@@ -574,7 +522,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/nodemcu/Install_Openalpr_On_Raspberry_Pi_3/" class="md-nav__link">
+      <a href="../../nodemcu/Install_Openalpr_On_Raspberry_Pi_3/" class="md-nav__link">
         Install OpenALPR on Raspberry PI 3
       </a>
     </li>
@@ -588,7 +536,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/nodemcu/Logging_Mqtt_Data_%28subscription%29_To_Mysql_With_Shell_Script/" class="md-nav__link">
+      <a href="../../nodemcu/Logging_Mqtt_Data_%28subscription%29_To_Mysql_With_Shell_Script/" class="md-nav__link">
         Logging Mqtt Data (subscription) To Mysql With Shell Script
       </a>
     </li>
@@ -602,7 +550,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/nodemcu/Reliable_MQTT_conenction_with_NodeMCU/" class="md-nav__link">
+      <a href="../../nodemcu/Reliable_MQTT_conenction_with_NodeMCU/" class="md-nav__link">
         Reliable MQTT conenction with NodeMCU
       </a>
     </li>
@@ -616,7 +564,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/nodemcu/Reliable_Mqtt_Connection_With_Nodemcu_%28part_2%29/" class="md-nav__link">
+      <a href="../../nodemcu/Reliable_Mqtt_Connection_With_Nodemcu_%28part_2%29/" class="md-nav__link">
         Reliable Mqtt Connection With Nodemcu (part 2)
       </a>
     </li>
@@ -630,7 +578,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/nodemcu/Very_Simple_Way_To_Send_Email_Using_Nodemcu_Firmware/" class="md-nav__link">
+      <a href="../../nodemcu/Very_Simple_Way_To_Send_Email_Using_Nodemcu_Firmware/" class="md-nav__link">
         Very Simple Way to Send Email Using NodeMCU firmware
       </a>
     </li>
@@ -649,12 +597,14 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" type="checkbox" id="__nav_3_7" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" type="checkbox" id="__nav_3_7" checked>
       
       
       
@@ -675,11 +625,65 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/raspberry/Compile_Go_Language_On_Raspberry_Pi/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Compile Go Language On Raspberry Pi
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Compile Go Language On Raspberry Pi
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-prerequirements" class="md-nav__link">
+    1. PreRequirements:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-install-from-source-using-git" class="md-nav__link">
+    2. Install from source using git
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-install-from-downloaded-source" class="md-nav__link">
+    3. Install from downloaded source
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -691,7 +695,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/raspberry/Google_Cloud_Print_With_Orange_Pi_or_Rpi/" class="md-nav__link">
+      <a href="../Google_Cloud_Print_With_Orange_Pi_or_Rpi/" class="md-nav__link">
         Google Cloud Print With Orange Pi or Rpi
       </a>
     </li>
@@ -705,7 +709,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/raspberry/How_To_Install_Nodered_On_Raspberry_Pi/" class="md-nav__link">
+      <a href="../How_To_Install_Nodered_On_Raspberry_Pi/" class="md-nav__link">
         How To Install Nodered On Raspberry Pi
       </a>
     </li>
@@ -719,7 +723,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/raspberry/Install_Debian_Jessie_To_Orange_Pi_Plus_2/" class="md-nav__link">
+      <a href="../Install_Debian_Jessie_To_Orange_Pi_Plus_2/" class="md-nav__link">
         Install Debian Jessie to Orange PI Plus 2
       </a>
     </li>
@@ -733,7 +737,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/raspberry/Install_Openalpr_On_Raspberry_Pi_3_part_2/" class="md-nav__link">
+      <a href="../Install_Openalpr_On_Raspberry_Pi_3_part_2/" class="md-nav__link">
         Install Openalpr On Raspberry Pi 3 part 2
       </a>
     </li>
@@ -747,7 +751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/raspberry/Mount_Sd_Card_Image_partitioned_Image_Wo_Kpartx/" class="md-nav__link">
+      <a href="../Mount_Sd_Card_Image_partitioned_Image_Wo_Kpartx/" class="md-nav__link">
         Mount SD card image (partitioned image) w/o kpartx
       </a>
     </li>
@@ -761,7 +765,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/raspberry/Move_Root_File_System_To_Usb_Storage_%28rpi2_%26_Rpi3%29/" class="md-nav__link">
+      <a href="../Move_Root_File_System_To_Usb_Storage_%28rpi2_%26_Rpi3%29/" class="md-nav__link">
         Move root file system to USB storage (RPI2 & RPI3)
       </a>
     </li>
@@ -775,7 +779,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/raspberry/Raspberry_Pi_2_As_Print_Server_Airprint/" class="md-nav__link">
+      <a href="../Raspberry_Pi_2_As_Print_Server_Airprint/" class="md-nav__link">
         Raspberry Pi 2 As Print Server Airprint
       </a>
     </li>
@@ -789,7 +793,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Old%20Blog%20Contents/raspberry/Raspberry_Pi_3_As_Wifi_Range_Extender/" class="md-nav__link">
+      <a href="../Raspberry_Pi_3_As_Wifi_Range_Extender/" class="md-nav__link">
         Raspberry Pi 3 As Wifi Range Extender
       </a>
     </li>
@@ -844,7 +848,7 @@
   
   
     <li class="md-nav__item">
-      <a href="blog/2021/10/27/Install_Matrix_Home_Server/" class="md-nav__link">
+      <a href="../../../blog/2021/10/27/Install_Matrix_Home_Server/" class="md-nav__link">
         Install Matrix Home Server On Kubernetes (2021/10/27)
       </a>
     </li>
@@ -858,7 +862,7 @@
   
   
     <li class="md-nav__item">
-      <a href="blog/2021/10/20/Install_And_Configure_Wireguard_VPN/" class="md-nav__link">
+      <a href="../../../blog/2021/10/20/Install_And_Configure_Wireguard_VPN/" class="md-nav__link">
         Install And Configure Wireguard VPN (2021/10/20)
       </a>
     </li>
@@ -872,7 +876,7 @@
   
   
     <li class="md-nav__item">
-      <a href="blog/2021/10/10/Get_Started_With_Portainer/" class="md-nav__link">
+      <a href="../../../blog/2021/10/10/Get_Started_With_Portainer/" class="md-nav__link">
         Get Started With Portainer (2021/10/10)
       </a>
     </li>
@@ -886,7 +890,7 @@
   
   
     <li class="md-nav__item">
-      <a href="blog/2021/10/01/How_to_use_MKdocs/" class="md-nav__link">
+      <a href="../../../blog/2021/10/01/How_to_use_MKdocs/" class="md-nav__link">
         How To Use MKDocs with Docker? (2021/10/01)
       </a>
     </li>
@@ -900,7 +904,7 @@
   
   
     <li class="md-nav__item">
-      <a href="blog/2021/09/25/Install_Single_Node_Kubernetes_Cluster/" class="md-nav__link">
+      <a href="../../../blog/2021/09/25/Install_Single_Node_Kubernetes_Cluster/" class="md-nav__link">
         Install A Single Node Kubernetes "Cluster" (2021/09/25)
       </a>
     </li>
@@ -940,22 +944,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#migrate-from-ghost-to-mkdocs" class="md-nav__link">
-    Migrate From Ghost To MKDocs
+  <a href="#1-prerequirements" class="md-nav__link">
+    1. PreRequirements:
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#old-content" class="md-nav__link">
-    Old Content
+  <a href="#2-install-from-source-using-git" class="md-nav__link">
+    2. Install from source using git
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#new-articles" class="md-nav__link">
-    New Articles
+  <a href="#3-install-from-downloaded-source" class="md-nav__link">
+    3. Install from downloaded source
   </a>
   
 </li>
@@ -972,256 +976,189 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/jvincze84/jvincze84.github.io/edit/master/docs/index.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/jvincze84/jvincze84.github.io/edit/master/docs/Old Blog Contents/raspberry/Compile_Go_Language_On_Raspberry_Pi.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="welcome-to-my-blog">Welcome To My Blog<a class="headerlink" href="#welcome-to-my-blog" title="Permanent link">&para;</a></h1>
-<p>This site is the newver version of <a href="https://blog.vinczejanos.info">https://blog.vinczejanos.info</a>.<br />
-All conent have been migrated to this new site.</p>
-<h2 id="migrate-from-ghost-to-mkdocs">Migrate From Ghost To MKDocs<a class="headerlink" href="#migrate-from-ghost-to-mkdocs" title="Permanent link">&para;</a></h2>
-<p>Maybe a bit strange that I use MKDocs for my Blog, but it was neccessary to replace my old Ghost site.<br />
-I really liked the Ghost platform when it was at 1.x version, but the new editor is not my taste, so I started to find a new platform.
-I need a simple and easy to use markdown based platform, so the widely used Joomla, Drupal, Wordpress could not come into the picture. And to be honest I don't need a complete CMS system for this little site.</p>
-<p>After some hours of researching I decided to use <a href="MKDocs">https://www.mkdocs.org</a> to migrate my conetnt into it.</p>
-<p>I know this is not a typical Blog platform, but after some hours I think it can fulfill all my needs.</p>
-<h2 id="old-content">Old Content<a class="headerlink" href="#old-content" title="Permanent link">&para;</a></h2>
-<p>All of old conents can be found here under the "<strong>Old Blog Conetent</strong>" menu.
-But please aware that these conents are relally old, and I keep them only for examples. 
-I think most of the tutorials could not be followed step by step, because a lot of things has been changed since these posts were written.</p>
-<h2 id="new-articles">New Articles<a class="headerlink" href="#new-articles" title="Permanent link">&para;</a></h2>
-<p>
-
-
-<style>
-    .md-typeset .blog-post:first-of-type h3 {
-        margin-top: 0;
-    }
-
-    .md-typeset .blog-post-title {
-        margin-bottom: 0;
-    }
-
-    .md-typeset .blog-post-extra {
-        color: var(--md-default-fg-color--light);
-    }
-
-    .md-typeset .blog-center {
-        text-align: center;
-    }
-
-    .md-typeset .blog-pagination {
-        display: inline-block;
-    }
-
-    .md-typeset .blog-pagination a {
-        color: var(--md-typeset-color);
-        float: left;
-        padding: .25em 1em;
-        text-decoration: none;
-        border-radius: 1em;
-        margin-left: .25em;
-        margin-right: .25em;
-        transition: all .15s ease-in-out;
-    }
-
-    .md-typeset .blog-pagination a.active {
-        background-color: var(--md-typeset-a-color);
-        color: white;
-        font-weight: bold;
-    }
-
-    .md-typeset .blog-pagination a:hover:not(.active) {
-        background-color: #dddddda1;
-    }
-
-    .md-typeset .blog-hidden {
-        display: none;
-    }
-</style>
-
-
-
-
-
-
-
-<div class="pages">
-    
-        
-        <div class="page" id="page1">
-
-            
-                
-                
-                
-                
-
-                
-                
-
-                
-                
-                    
-                
-                
-
-                
-
-                
-                    <div class="blog-post">
-                        <h3 class="blog-post-title">
-                            <a class="link" href="https://readthedocs.vinczejanos.info/blog/2021/09/25/Install_Single_Node_Kubernetes_Cluster/">Install A Single Node Kubernetes &#34;Cluster&#34; (2021/09/25)</a>
-                        </h3>
-                        <p class="blog-post-description">
-                            
-                        </p>
-                        <div class="blog-post-extra">
-                            Published at: 10/29/21, 12:06 PM
-                        </div>
-                        <hr />
-                    </div>
-                
-            
-                
-                
-                
-                
-
-                
-                
-
-                
-                
-                    
-                
-                
-
-                
-
-                
-                    <div class="blog-post">
-                        <h3 class="blog-post-title">
-                            <a class="link" href="https://readthedocs.vinczejanos.info/blog/2021/10/01/How_to_use_MKdocs/">How To Use MKDocs with Docker? (2021/10/01)</a>
-                        </h3>
-                        <p class="blog-post-description">
-                            
-                        </p>
-                        <div class="blog-post-extra">
-                            Published at: 10/29/21, 12:06 PM
-                        </div>
-                        <hr />
-                    </div>
-                
-            
-                
-                
-                
-                
-
-                
-                
-
-                
-                
-                    
-                
-                
-
-                
-
-                
-                    <div class="blog-post">
-                        <h3 class="blog-post-title">
-                            <a class="link" href="https://readthedocs.vinczejanos.info/blog/2021/10/10/Get_Started_With_Portainer/">Get Started With Portainer (2021/10/10)</a>
-                        </h3>
-                        <p class="blog-post-description">
-                            
-                        </p>
-                        <div class="blog-post-extra">
-                            Published at: 10/29/21, 12:06 PM
-                        </div>
-                        <hr />
-                    </div>
-                
-            
-                
-                
-                
-                
-
-                
-                
-
-                
-                
-                    
-                
-                
-
-                
-
-                
-                    <div class="blog-post">
-                        <h3 class="blog-post-title">
-                            <a class="link" href="https://readthedocs.vinczejanos.info/blog/2021/10/20/Install_And_Configure_Wireguard_VPN/">Install And Configure Wireguard VPN (2021/10/20)</a>
-                        </h3>
-                        <p class="blog-post-description">
-                            
-                        </p>
-                        <div class="blog-post-extra">
-                            Published at: 10/29/21, 12:06 PM
-                        </div>
-                        <hr />
-                    </div>
-                
-            
-                
-                
-                
-                
-
-                
-                
-
-                
-                
-                    
-                
-                
-
-                
-
-                
-                    <div class="blog-post">
-                        <h3 class="blog-post-title">
-                            <a class="link" href="https://readthedocs.vinczejanos.info/blog/2021/10/27/Install_Matrix_Home_Server/">Install Matrix Home Server On Kubernetes (2021/10/27)</a>
-                        </h3>
-                        <p class="blog-post-description">
-                            
-                        </p>
-                        <div class="blog-post-extra">
-                            Published at: 10/29/21, 12:06 PM
-                        </div>
-                        <hr />
-                    </div>
-                
-            
-        </div>
-    
+                <div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p><strong>This page has been updated a long time ago.</strong>  Information found here could be outdated and may lead to missconfiguration.<br />
+Some of the links and references may be broken or lead to non existing pages.<br />
+Please use this docs carefully. Most of the information here now is only for reference or example!</p>
 </div>
+<h1 id="compile-go-language-on-raspberry-pi">Compile GO language on Raspberry PI<a class="headerlink" href="#compile-go-language-on-raspberry-pi" title="Permanent link">&para;</a></h1>
+<p>There are many ways to install GO language, eg. you can compile from source or use the pre-compiled binaries.
+Here I want to show you how you can compile GO from source.</p>
+<h2 id="1-prerequirements">1. PreRequirements:<a class="headerlink" href="#1-prerequirements" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Raspberry PI 2 or 3</li>
+<li>Raspbian<br />
+I used this version: <code>Linux raspberrypi 4.4.13-v7+ #894 SMP Mon Jun 13 13:13:27 BST 2016 armv7l GNU/Linux</code>
+<code>2016-05-27-raspbian-jessie.zip</code> can be downloaded from the <a href="https://www.raspberrypi.org/downloads/">official RPI page</a>.</li>
+<li>gcc</li>
+<li>
+<p>And you check these links:  </p>
+<ul>
+<li><a href="https://golang.org/doc/install#requirements">System Requirements And Install</a>  </li>
+<li><a href="https://golang.org/doc/install/source">Installing Go from source</a> </li>
+<li><a href="https://go.googlesource.com/go">Official GO git repo</a>  </li>
+<li><a href="https://github.com/golang/go">GitHub repo</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="2-install-from-source-using-git">2. Install from source using git<a class="headerlink" href="#2-install-from-source-using-git" title="Permanent link">&para;</a></h2>
+<p>In order to install the latest <code>go</code> you have to install 1.4.x version first.
+I followed <a href="https://github.com/google/cloud-print-connector/wiki/Build-from-source">this</a> useful link. </p>
+<ul>
+<li>create a dedicated user: <code>gcp</code><br />
+<code>root@raspberrypi:~# useradd gcp</code></li>
+<li>I set the home dir to /opt/google-cloud-print</li>
+</ul>
+<pre><code class="language-bash">cat /etc/passwd|grep gcp
+gcp:x:1002:1002::/opt/google-cloud-print:/bin/bash
+</code></pre>
+<ul>
+<li>Clone the repository from GIT:<br />
+<code>git clone https://github.com/golang/go</code></li>
+<li>Rename and copy â€œgoâ€ directory for different versions:  </li>
+</ul>
+<pre><code class="language-command-line">mv go go1.4.3
+cp -r go1.4.3 go1.5.2
+cp -r go1.4.3 go1.6.3
+</code></pre>
+<ul>
+<li>Checkout the versions  </li>
+</ul>
+<pre><code class="language-command-line">cd go1.4.3/
+git checkout go1.4.3
+cd ..
 
-<div class="blog-center blog-hidden">
-    <div class="blog-pagination " id="blog-pagination">
-        
-            <a class="page-number" href="#blog-p1">1</a>
-        
-    </div>
-    
-        <div>Total <b>5</b> posts.</div>
-    
-</div></p>
+cd go1.5.2/
+git checkout go1.5.2
+cd ..
+
+cd go1.6.3/
+git checkout go1.6.3
+</code></pre>
+<p>As you can see I will compile 3 different versions: 1.4.3, 1.5.2 and the latest one: 1.6.3.</p>
+<ul>
+<li>First of all we will compile 1.4.3:</li>
+</ul>
+<pre><code>cd /opt/google-cloud-print/git/go1.4.3/src
+./all.bash
+</code></pre>
+<ul>
+<li>When the compilation is successfully finished, you have to set some system environments:</li>
+</ul>
+<pre><code class="language-bash">export GOROOT_BOOTSTRAP=/opt/google-cloud-print/git/go1.4.3
+export GOROOT=&quot;/opt/google-cloud-print/git/go1.4.3&quot;
+export GOROOT_BOOTSTRAP=&quot;$GOROOT&quot;
+export GOPATH=&quot;$GOROOT/src&quot;
+export PATH=&quot;$PATH:$GOROOT/bin&quot;
+</code></pre>
+<ul>
+<li>Next compile the newer versions.  I move forward with 1.6.x:</li>
+</ul>
+<pre><code>cd /opt/google-cloud-print/git/go1.6.3/src
+./all.bash
+</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can run into "not enough" memory issue while package is being tested, but despite the errors <code>go</code> will work properly.</p>
+</div>
+<p>If everything was fine you use different versions of GO, by exporting system environments.
+I created 3 files to manage different versions:</p>
+<p><strong><mark>setGoEnv1.4.3.sh</mark></strong></p>
+<pre><code class="language-bash">#!/bin/bash
+export GOROOT=&quot;/opt/google-cloud-print/git/go1.4.3&quot;
+export GOROOT_BOOTSTRAP=&quot;$GOROOT&quot;
+export GOPATH=&quot;$GOROOT/src&quot;
+export PATH=&quot;$PATH:$GOROOT/bin&quot;
+</code></pre>
+<p><strong><mark>setGoEnv1.5.2.sh</mark></strong></p>
+<pre><code class="language-bash">#!/bin/bash
+export GOROOT=&quot;/opt/google-cloud-print/git/go1.5.2&quot;
+export GOROOT_BOOTSTRAP=&quot;$GOROOT&quot;
+export GOPATH=&quot;$GOROOT/src&quot;
+export PATH=&quot;$PATH:$GOROOT/bin&quot;
+</code></pre>
+<p><strong><mark>setGoEnv1.6.3.sh</mark></strong></p>
+<pre><code class="language-bash">#!/bin/bash
+export GOROOT=&quot;/opt/google-cloud-print/git/go1.6.3&quot;
+export GOROOT_BOOTSTRAP=&quot;$GOROOT&quot;
+export GOPATH=&quot;$GOROOT/src&quot;
+export PATH=&quot;$PATH:$GOROOT/bin&quot;
+</code></pre>
+<ul>
+<li>The final step is to check if GO working correctly or not.<br />
+Directory Structure:</li>
+</ul>
+<pre><code class="language-bash">gcp@raspberrypi:~/git$ pwd
+/opt/google-cloud-print/git
+gcp@raspberrypi:~/git$ ls -al
+total 32
+drwxr-xr-x  5 gcp gcp 4096 Aug 11 14:35 .
+drwxr-xr-x  4 gcp gcp 4096 Aug 11 11:55 ..
+drwxr-xr-x 12 gcp gcp 4096 Aug 11 10:49 go1.4.3
+drwxr-xr-x 11 gcp gcp 4096 Aug 11 11:17 go1.5.2
+drwxr-xr-x 11 gcp gcp 4096 Aug 11 13:57 go1.6.3
+-rwxr-xr-x  1 gcp gcp  158 Aug 11 14:34 setGoEnv1.4.3.sh
+-rwxr-xr-x  1 gcp gcp  158 Aug 11 14:35 setGoEnv1.5.2.sh
+-rwxr-xr-x  1 gcp gcp  158 Aug 11 14:35 setGoEnv1.6.3.sh
+</code></pre>
+<p><strong>Check versions:</strong> </p>
+<pre><code class="language-bash">gcp@raspberrypi:~/git$ . setGoEnv1.5.2.sh
+gcp@raspberrypi:~/git$ go version
+go version go1.5.2 linux/arm
+</code></pre>
+<pre><code class="language-bash">gcp@raspberrypi:~/git$ source setGoEnv1.4.3.sh 
+gcp@raspberrypi:~/git$ go version
+go version go1.4.3 linux/arm
+</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please keep in mind that you have to log out from the current shell after using one of the installed go, because the scripts Iâ€™m using to set the environment which will concatenate the PATH after each run. For example you set the sysenv to use 1.4.3, the script will add <code>/opt/google-cloud-print/git/go1.4.3/bin/</code> directory to the PATH env.
+Or you have to remove the current go path from system <code>PATH</code> before sourceing another environment.</p>
+</div>
+<h2 id="3-install-from-downloaded-source">3. Install from downloaded source<a class="headerlink" href="#3-install-from-downloaded-source" title="Permanent link">&para;</a></h2>
+<p>You can download source code form the offical web page:
+<a href="https://golang.org/dl/">https://golang.org/dl/</a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As you can see there are precompiled binary file for ARM CPUs. But only for ARMv6! Be sure which type of CPU you are using before downloading GO. (Raspberry 2 has ARMv7 CPU!)
+The install steps are the same as in case of using GIT.
+Just for fun I will show you how easy to use these official source codes.</p>
+</div>
+<ul>
+<li>Download the source code of version 1.4.3.
+<img alt="Download" loading="lazy" src="/assets/img/2016-08-12_161725.jpg" /></li>
+</ul>
+<pre><code>gcp@raspberrypi:~/sources$ wget https://storage.googleapis.com/golang/go1.4.3.src.tar.gz
+--2016-08-12 16:19:08--  https://storage.googleapis.com/golang/go1.4.3.src.tar.gz
+Resolving storage.googleapis.com (storage.googleapis.com)... 216.58.208.48, 2a00:1450:4001:817::2010
+Connecting to storage.googleapis.com (storage.googleapis.com)|216.58.208.48|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 10875170 (10M) [application/octet-stream]
+Saving to: â€˜go1.4.3.src.tar.gz.1â€™
+
+go1.4.3.src.tar.gz.1                            100%[=======================================================================================================&gt;]  10.37M  5.26MB/s   in 2.0s   
+
+2016-08-12 16:19:10 (5.26 MB/s) - â€˜go1.4.3.src.tar.gz.1â€™ saved [10875170/10875170]
+</code></pre>
+<ul>
+<li>Extract</li>
+</ul>
+<pre><code>gcp@raspberrypi:~/sources$ tar xf go1.4.3.src.tar.gz 
+gcp@raspberrypi:~/sources$ mv go go1.4.3
+gcp@raspberrypi:~/sources$ 
+</code></pre>
+<ul>
+<li>Compile</li>
+</ul>
+<pre><code>gcp@raspberrypi:~/sources/go1.4.3/src$ ./all.bash 
+</code></pre>
+<p>After the compilation is done you can compile later versions of <code>go</code>. Don't forget to set system environments before compiling.</p>
                 
                   
                     
@@ -1241,6 +1178,10 @@ I think most of the tutorials could not be followed step by step, because a lot 
               
                 
 
+
+  <h2 id="__comments">Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>var script,disqus_config=function(){this.page.url="https://readthedocs.vinczejanos.info/Old%20Blog%20Contents/raspberry/Compile_Go_Language_On_Raspberry_Pi/",this.page.identifier="Old%20Blog%20Contents/raspberry/Compile_Go_Language_On_Raspberry_Pi/"};"undefined"==typeof DISQUS?((script=document.createElement("script")).async=!0,script.src="https://shortname-jvincze-test.disqus.com/embed.js",script.setAttribute("data-timestamp",Date.now()),document.body.appendChild(script)):DISQUS.reset({reload:!0,config:disqus_config})</script>
 
               
             </article>
@@ -1271,61 +1212,13 @@ cookieconsent.run({"notice_banner_type":"headline","consent_type":"express","pal
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tracking", "navigation.top", "search.suggest", "search.highlight", "search.highlight", "header.autohide"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tracking", "navigation.top", "search.suggest", "search.highlight", "search.highlight", "header.autohide"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.1e84347e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.1e84347e.min.js"></script>
       
-        <script src="js/prism.js"></script>
+        <script src="../../../js/prism.js"></script>
       
     
   </body>
-</html><script>var currentPage = 0
-const lastComponent = window.location.href.split("/").slice(-1).pop()
-
-if (lastComponent && lastComponent.slice(0, 7) == "#blog-p") {
-  const page = parseInt(lastComponent.slice(7))
-  if (page) {
-    currentPage = page - 1
-  }
-}
-
-var pagination = document.getElementById("blog-pagination");
-if (pagination) {
-  var links = pagination.getElementsByClassName("page-number");
-  if (links.length) {
-    for (var i = 0; i < links.length; i++) {
-      // Toggle pagination highlight
-      links[i].addEventListener("click", function () {
-        var current = pagination.getElementsByClassName("active");
-        if (current.length) {
-          current[0].className = current[0].className.replace(
-            " active", ""
-          );
-        }
-        this.className += " active";
-
-        // Togglg visibility of pages
-        const destPage = parseInt(this.textContent)
-        var pages = document.getElementsByClassName("page")
-        if (destPage && pages.length) {
-          for (var j = 0; j < pages.length; j++) {
-            const pageId = parseInt(pages[j].id.replace("page", ""))
-            if (pageId != destPage) {
-              // This is not the destination page
-              if (!pages[j].className.includes("blog-hidden")) {
-                pages[j].className += " blog-hidden"
-              }
-            } else {
-              // This is the destination page
-              pages[j].className = pages[j].className.replace(" blog-hidden", "")
-            }
-          }
-        }
-      });
-    }
-    links[currentPage].className += " active"
-    links[currentPage].click();
-  }
-}
-</script>
+</html>

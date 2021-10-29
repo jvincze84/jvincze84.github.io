@@ -1,0 +1,1729 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="canonical" href="https://readthedocs.vinczejanos.info/blog/2021/10/27/Install_Matrix_Home_Server/">
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.4">
+    
+    
+      
+        <title>Install Matrix Home Server On Kubernetes (2021/10/27) - Vincze Janos Blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.db9e7362.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../../../../css/width.css">
+    
+      <link rel="stylesheet" href="../../../../../css/prism.css">
+    
+    
+      
+
+  
+
+
+  
+
+  
+
+
+  <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-3LZJ7L57GQ"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-3LZJ7L57GQ",{page_path:t.pathname})})})</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3LZJ7L57GQ"></script>
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../../../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#install-matrix-home-server-on-kubernetes" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Vincze Janos Blog" class="md-header__button md-logo" aria-label="Vincze Janos Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Vincze Janos Blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Install Matrix Home Server On Kubernetes (2021/10/27)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="light-green" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/jvincze84/jvincze84.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Vincze Janos Blog" class="md-nav__button md-logo" aria-label="Vincze Janos Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Vincze Janos Blog
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/jvincze84/jvincze84.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        Welcome To My Blog
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Tips_And_Tricks/" class="md-nav__link">
+        Tips And Tricks
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Old Blog Contents
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Old Blog Contents" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Old Blog Contents
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/Collect_Network_Statistic_With_Telegraf_Vnstat/" class="md-nav__link">
+        Collect Network Statistic With Telegraf & VNSTAT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/Iptables_Examples/" class="md-nav__link">
+        Iptables Examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/Nokia_6120c_%28bb5%29_Forgotten_Security_Code/" class="md-nav__link">
+        Nokia 6120c (BB5) Forgotten Security Code
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/Sonoff_Relays_With_Openhab_And_Tasmota_Firmware/" class="md-nav__link">
+        Sonoff Relays With OpenHab And Tasmota Firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" type="checkbox" id="__nav_3_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_5">
+          Linux
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Linux" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_5">
+          <span class="md-nav__icon md-icon"></span>
+          Linux
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/linux/Compile_Apache_Httpd_2.4.x_Php/" class="md-nav__link">
+        Compile Apache HTTPD 2.4.X & PHP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/linux/Create_Self_Signed_Certificate_For_Apache_Webserver/" class="md-nav__link">
+        Create Self Signed Certificate For Apache Webserver
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/linux/Install_%28compile%29_%26_Configure_Motion_Av_Tools/" class="md-nav__link">
+        Install (compile) & Configure Motion Av Tools
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/linux/Install_Mps-youtube_Console_Based_Youtube_Player/" class="md-nav__link">
+        Install Mps youtube Console Based Youtube Player
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/linux/create_Your_Own_Dyndns_Service_With_Bind_named/" class="md-nav__link">
+        create Your Own Dyndns Service With Bind named
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" type="checkbox" id="__nav_3_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_6">
+          Nodemcu
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Nodemcu" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_6">
+          <span class="md-nav__icon md-icon"></span>
+          Nodemcu
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/nodemcu/How_To_Compile_Nodemcu_Firmware/" class="md-nav__link">
+        How To Compile Nodemcu Firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/nodemcu/How_To_Unbrick_Esp8266_blinking_Blue_Led/" class="md-nav__link">
+        How To Unbrick Esp8266 blinking Blue Led
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/nodemcu/Install_Openalpr_On_Raspberry_Pi_3/" class="md-nav__link">
+        Install OpenALPR on Raspberry PI 3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/nodemcu/Logging_Mqtt_Data_%28subscription%29_To_Mysql_With_Shell_Script/" class="md-nav__link">
+        Logging Mqtt Data (subscription) To Mysql With Shell Script
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/nodemcu/Reliable_MQTT_conenction_with_NodeMCU/" class="md-nav__link">
+        Reliable MQTT conenction with NodeMCU
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/nodemcu/Reliable_Mqtt_Connection_With_Nodemcu_%28part_2%29/" class="md-nav__link">
+        Reliable Mqtt Connection With Nodemcu (part 2)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/nodemcu/Very_Simple_Way_To_Send_Email_Using_Nodemcu_Firmware/" class="md-nav__link">
+        Very Simple Way to Send Email Using NodeMCU firmware
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" type="checkbox" id="__nav_3_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_7">
+          Raspberry
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Raspberry" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_7">
+          <span class="md-nav__icon md-icon"></span>
+          Raspberry
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/raspberry/Compile_Go_Language_On_Raspberry_Pi/" class="md-nav__link">
+        Compile Go Language On Raspberry Pi
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/raspberry/Google_Cloud_Print_With_Orange_Pi_or_Rpi/" class="md-nav__link">
+        Google Cloud Print With Orange Pi or Rpi
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/raspberry/How_To_Install_Nodered_On_Raspberry_Pi/" class="md-nav__link">
+        How To Install Nodered On Raspberry Pi
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/raspberry/Install_Debian_Jessie_To_Orange_Pi_Plus_2/" class="md-nav__link">
+        Install Debian Jessie to Orange PI Plus 2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/raspberry/Install_Openalpr_On_Raspberry_Pi_3_part_2/" class="md-nav__link">
+        Install Openalpr On Raspberry Pi 3 part 2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/raspberry/Mount_Sd_Card_Image_partitioned_Image_Wo_Kpartx/" class="md-nav__link">
+        Mount SD card image (partitioned image) w/o kpartx
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/raspberry/Move_Root_File_System_To_Usb_Storage_%28rpi2_%26_Rpi3%29/" class="md-nav__link">
+        Move root file system to USB storage (RPI2 & RPI3)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/raspberry/Raspberry_Pi_2_As_Print_Server_Airprint/" class="md-nav__link">
+        Raspberry Pi 2 As Print Server Airprint
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old%20Blog%20Contents/raspberry/Raspberry_Pi_3_As_Wifi_Range_Extender/" class="md-nav__link">
+        Raspberry Pi 3 As Wifi Range Extender
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Blog
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Blog" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Blog
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Install Matrix Home Server On Kubernetes (2021/10/27)
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Install Matrix Home Server On Kubernetes (2021/10/27)
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#preface" class="md-nav__link">
+    Preface
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-compose" class="md-nav__link">
+    Docker Compose
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker Compose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-the-matrix-config-file" class="md-nav__link">
+    Generate The Matrix Config File
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inititalize-the-database" class="md-nav__link">
+    Inititalize The Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edit-homeserveryaml" class="md-nav__link">
+    Edit homeserver.yaml
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inititalize-the-caddyfile" class="md-nav__link">
+    Inititalize The Caddyfile
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-everything" class="md-nav__link">
+    Start Everything
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#federation" class="md-nav__link">
+    Federation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#login" class="md-nav__link">
+    Login
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-to-kubernetes" class="md-nav__link">
+    Deploy To Kubernetes
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy To Kubernetes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-the-namespace" class="md-nav__link">
+    Create the namespace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prepare-matrix-configmap-storage" class="md-nav__link">
+    Prepare Matrix Configmap &amp; Storage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-matrix-homeserver" class="md-nav__link">
+    Deploy Matrix Homeserver
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-postgres-sql" class="md-nav__link">
+    Deploy Postgres SQL
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy Postgres SQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-the-persistentvolumeclaim" class="md-nav__link">
+    Create The PersistentVolumeClaim
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-secret" class="md-nav__link">
+    Create Secret
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    Deployment
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connect-matix-homeserver-to-postgres" class="md-nav__link">
+    Connect Matix Homeserver To Postgres
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../20/Install_And_Configure_Wireguard_VPN/" class="md-nav__link">
+        Install And Configure Wireguard VPN (2021/10/20)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10/Get_Started_With_Portainer/" class="md-nav__link">
+        Get Started With Portainer (2021/10/10)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/How_to_use_MKdocs/" class="md-nav__link">
+        How To Use MKDocs with Docker? (2021/10/01)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../09/25/Install_Single_Node_Kubernetes_Cluster/" class="md-nav__link">
+        Install A Single Node Kubernetes "Cluster" (2021/09/25)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#preface" class="md-nav__link">
+    Preface
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-compose" class="md-nav__link">
+    Docker Compose
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker Compose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-the-matrix-config-file" class="md-nav__link">
+    Generate The Matrix Config File
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inititalize-the-database" class="md-nav__link">
+    Inititalize The Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edit-homeserveryaml" class="md-nav__link">
+    Edit homeserver.yaml
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inititalize-the-caddyfile" class="md-nav__link">
+    Inititalize The Caddyfile
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-everything" class="md-nav__link">
+    Start Everything
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#federation" class="md-nav__link">
+    Federation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#login" class="md-nav__link">
+    Login
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-to-kubernetes" class="md-nav__link">
+    Deploy To Kubernetes
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy To Kubernetes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-the-namespace" class="md-nav__link">
+    Create the namespace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prepare-matrix-configmap-storage" class="md-nav__link">
+    Prepare Matrix Configmap &amp; Storage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-matrix-homeserver" class="md-nav__link">
+    Deploy Matrix Homeserver
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-postgres-sql" class="md-nav__link">
+    Deploy Postgres SQL
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy Postgres SQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-the-persistentvolumeclaim" class="md-nav__link">
+    Create The PersistentVolumeClaim
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-secret" class="md-nav__link">
+    Create Secret
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    Deployment
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connect-matix-homeserver-to-postgres" class="md-nav__link">
+    Connect Matix Homeserver To Postgres
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/jvincze84/jvincze84.github.io/edit/master/docs/blog/2021/10/27/Install_Matrix_Home_Server.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="install-matrix-home-server-on-kubernetes">Install Matrix Home Server On Kubernetes<a class="headerlink" href="#install-matrix-home-server-on-kubernetes" title="Permanent link">&para;</a></h1>
+<h2 id="preface">Preface<a class="headerlink" href="#preface" title="Permanent link">&para;</a></h2>
+<p><strong>What is Matrix?</strong></p>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p>Matrix is an open standard for interoperable, decentralised, real-time communication over IP. It can be used to power Instant Messaging, VoIP/WebRTC signalling, Internet of Things communication - or anywhere you need a standard HTTP API for publishing and subscribing to data whilst tracking the conversation history.</p>
+</div>
+<p>Link: <a href="https://matrix.org/faq/#what-is-matrix%3F">https://matrix.org/faq/#what-is-matrix%3F</a></p>
+<p>So we are about to install a private realtime messaging (Chat) server. It can be useful for you if you want to replace Whatsapp, Telegram, FB messanger, Viber, etc, or just want an own messaging server. Or if you don't trust in these services and want a serive which focus on your privacy. Another question is how your partners with whom you want to chat trust your server. </p>
+<p>I'm wondering if you have ever thought  about having an own messaging server. If the answer is yes, it's time to build one. I hope you will easily achieve  this with the help of this article.</p>
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
+<ul>
+<li>First and most important to have a valid domain name. If you don't have any you ca pick up one free from <a href="https://www.duckdns.org">DuckDNS</a></li>
+<li>Installed Kubernets cluster</li>
+<li>Public Internet access. </li>
+<li>At least 2 GB of free RAM. </li>
+</ul>
+<p>I assume you build this server for your family and frieds, and don't want to share with the whole World. For some tens of people you don't need to purchase  expensive server, but according to the number of attachments (file, pictures, videos,etc) you may need some hundreds of GB disk space.</p>
+<h2 id="docker-compose">Docker Compose<a class="headerlink" href="#docker-compose" title="Permanent link">&para;</a></h2>
+<p>Maybe the easies way to install everything all together is wiritng a Docker compose file. The compose file below can be used with <code>docker-compose</code> command or as Stack in <a href="https://www.portainer.io">Portainer</a>.  Later in this artcie we will use this compose file as reference for writing the Kubernetes manifest files (cm, deployment, sevice, pvc, etc).</p>
+<pre class="line-numbers" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/docker-compose.yaml"><code class="language-yaml"></code></pre>
+
+<p>You can see that we have 3 services:</p>
+<ul>
+<li><strong>matrix</strong> : The Matrix server</li>
+<li><strong>caddy</strong> : Web server for use as reverse proxy. <ul>
+<li>You can use any other web server you like (eg.: Apache httpd, Nginx)</li>
+<li>I chose Caddy because it is super easy to configure as reverse proxy and supports automtic SSL certificate genereation and maintance.</li>
+</ul>
+</li>
+<li><strong>postgres</strong> : Database engine.<ul>
+<li>You can skip this if you want to use the default sqlite engine, but it is not recommended for daily (production) use.</li>
+</ul>
+</li>
+</ul>
+<p>Before you <code>up</code> this compose file create the neccessary directories:</p>
+<pre><code class="language-bash">mkdir -p /opt/docker/matrix/config
+mkdir /opt/docker/matrix/data
+mkdir /opt/docker/matrix/caddy
+mkdir /opt/docker/matrix/caddy/srv
+mkdir /opt/docker/matrix/caddy/data
+mkdir /opt/docker/matrix/caddy/config
+mkdir /opt/docker/matrix/postgres
+</code></pre>
+<p>Matrix process run as <code>991</code> userID and groupID so we need to run <code>chown</code> command:</p>
+<pre><code class="language-bash">chown -R 991:991 /opt/docker/matrix
+</code></pre>
+<h3 id="generate-the-matrix-config-file">Generate The Matrix Config File<a class="headerlink" href="#generate-the-matrix-config-file" title="Permanent link">&para;</a></h3>
+<p>For generating the initial config files please follow these steps:</p>
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="6-23,26,28-32"><code class="language-bash">docker run -it --rm \
+    --mount type=bind,src=/opt/docker/matrix/config,dst=/data \
+    -e SYNAPSE_SERVER_NAME=matrix.vincze.work \
+    -e SYNAPSE_REPORT_STATS=yes \
+    matrixdotorg/synapse:latest generate
+Unable to find image 'matrixdotorg/synapse:latest' locally
+latest: Pulling from matrixdotorg/synapse
+7d63c13d9b9b: Pull complete
+7c9d54bd144b: Pull complete
+6c659176d5c8: Pull complete
+31bfadeaf52b: Pull complete
+b0be2954cd61: Pull complete
+24d50aa74e2c: Pull complete
+1816510873a0: Pull complete
+227c613c4a00: Pull complete
+097ac90fbed0: Pull complete
+Digest: sha256:2c74baa38d3241aaf4a059a7e7c01786ba51ac5fe6fcf473ede3eb148f9358ba
+Status: Downloaded newer image for matrixdotorg/synapse:latest
+Creating log config /data/matrix.vincze.work.log.config
+Generating config file /data/homeserver.yaml
+Generating signing key file /data/matrix.vincze.work.signing.key
+A config file has been generated in '/data/homeserver.yaml' for server name 'matrix.vincze.work'. Please review this file and customise it to your needs.
+
+cd /opt/docker/matrix
+mv ./config/matrix.vincze.work.signing.key ./config/matrix.vincze.work.log.config ./data
+
+find data/ config/
+data/
+data/matrix.vincze.work.signing.key
+data/matrix.vincze.work.log.config
+config/
+config/homeserver.yaml</code></pre>
+
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You have to change <code>SYNAPSE_SERVER_NAME</code> to point to your own domain.</p>
+</div>
+<h3 id="inititalize-the-database">Inititalize The Database<a class="headerlink" href="#inititalize-the-database" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Start the a postgres instance</li>
+</ul>
+<pre><code class="language-bash">docker run -d \
+--name postgres-init \
+--env POSTGRES_PASSWORD=rootpass \
+--env POSTGRES_USER=root \
+--env PGDATA=/data \
+--env TZ=Europe/Budapest \
+-v /opt/docker/matrix/postgres:/data \
+postgres:14.0-alpine
+</code></pre>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Use the same environment values as in the compose file!</p>
+</div>
+<p>You may want to check the logs:</p>
+<pre><code class="language-bash">docker logs postgres-init -f
+</code></pre>
+<p>You should see the following lines:</p>
+<pre><code class="language-log">PostgreSQL init process complete; ready for start up.
+
+2021-10-22 13:20:19.900 CEST [1] LOG:  starting PostgreSQL 14.0 on x86_64-pc-linux-musl, compiled by gcc (Alpine 10.3.1_git20210424) 10.3.1 20210424, 64-bit
+2021-10-22 13:20:19.900 CEST [1] LOG:  listening on IPv4 address &quot;0.0.0.0&quot;, port 5432
+2021-10-22 13:20:19.900 CEST [1] LOG:  listening on IPv6 address &quot;::&quot;, port 5432
+2021-10-22 13:20:19.974 CEST [1] LOG:  listening on Unix socket &quot;/var/run/postgresql/.s.PGSQL.5432&quot;
+2021-10-22 13:20:20.042 CEST [51] LOG:  database system was shut down at 2021-10-22 13:20:19 CEST
+2021-10-22 13:20:20.077 CEST [1] LOG:  database system is ready to accept connections
+</code></pre>
+<ul>
+<li>Get into the container and create the user and database</li>
+</ul>
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output=""><code class="language-bash">docker exec -it postgres-init /bin/bash
+createuser --pwprompt synapse_user
+Enter password for new role:
+Enter it again:
+createdb --encoding=UTF8 --locale=C --template=template0 --owner=synapse_user synapse
+exit</code></pre>
+
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>If you use another user than <code>root</code> (<code>POSTGRES_USER=root</code>) add <code>-U [USERNAME]</code> paramter at the and of the commands. <code>createuser --pwprompt synapse_user -U [USERNAME]</code></p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Note your provided password, you will need it when configuring Matrix!</p>
+</div>
+<ul>
+<li>Remove The Container</li>
+</ul>
+<pre><code class="language-bash">docker stop postgres-init
+docker rm postgres-init
+</code></pre>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>If something went wrong you can simply stop and remove the container and delete the content of the database directory. </p>
+<p><code>rm -rf /opt/docker/matrix/postgres/*</code></p>
+<p>And you can start over the init process of the database.</p>
+</div>
+<h3 id="edit-homeserveryaml">Edit <code>homeserver.yaml</code><a class="headerlink" href="#edit-homeserveryaml" title="Permanent link">&para;</a></h3>
+<pre><code class="language-diff">--- homeserver.yaml-org 2021-10-22 13:43:26.753645597 +0200
++++ homeserver.yaml     2021-10-22 13:45:27.948188284 +0200
+@@ -742,25 +742,25 @@
+ #
+ # Example Postgres configuration:
+ #
+-#database:
+-#  name: psycopg2
+-#  txn_limit: 10000
+-#  args:
+-#    user: synapse_user
+-#    password: synapse
+-#    database: synapse
+-#    host: localhost
+-#    port: 5432
+-#    cp_min: 5
+-#    cp_max: 10
++database:
++  name: psycopg2
++  txn_limit: 10000
++  args:
++    user: synapse_user
++    password: 12345678
++    database: synapse
++    host: matrix-postgres
++    port: 5432
++    cp_min: 5
++    cp_max: 10
+ #
+ # For more information on using Synapse with Postgres,
+ # see https://matrix-org.github.io/synapse/latest/postgres.html.
+ #
+-database:
+-  name: sqlite3
+-  args:
+-    database: /data/homeserver.db
++#database:
++#  name: sqlite3
++#  args:
++#    database: /data/homeserver.db
+
+
+ ## Logging ##
+</code></pre>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Don't forget to remove sqlite3 related lines as the example shows.</p>
+</div>
+<h3 id="inititalize-the-caddyfile">Inititalize The Caddyfile<a class="headerlink" href="#inititalize-the-caddyfile" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">cd /opt/docker/matrix/caddy
+docker  run -it  --entrypoint=/bin/sh  caddy:latest -c &quot;cat /etc/caddy/Caddyfile&quot;  &gt;Caddyfile
+</code></pre>
+<p>This will create a minimal <code>Caddyfile</code> example. Actually this command does nothing than copy the <code>Caddyfile</code> from the container to the directory where you are.</p>
+<p><strong>Edit this file</strong></p>
+<p>You Caddyfile should look like this:</p>
+<pre><code class="language-conf">matrix.vincze.work {
+  # Set this path to your site's directory.
+  root * /usr/share/caddy
+
+  # Enable the static file server.
+  file_server
+
+  # Another common task is to set up a reverse proxy:
+  reverse_proxy synapse-matrix:8008
+
+  # Or serve a PHP site through php-fpm:
+  # php_fastcgi localhost:9000
+}
+</code></pre>
+<h3 id="start-everything">Start Everything<a class="headerlink" href="#start-everything" title="Permanent link">&para;</a></h3>
+<p>We are ready to start the Matrix HomeServer. Save the <code>docker-compose.yaml</code> file if you haven't already do that, and run:</p>
+<pre><code class="language-bash">docker-compose up --detach
+</code></pre>
+<p>And wait for <code>up</code> condition:</p>
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-6"><code class="language-bash">docker-compose ps
+      Name                    Command                  State                                            Ports                                      
+---------------------------------------------------------------------------------------------------------------------------------------------------
+matrix-postgres    docker-entrypoint.sh postgres    Up             5432/tcp                                                                        
+matrix-web-caddy   caddy run --config /etc/ca ...   Up             2019/tcp, 0.0.0.0:443->443/tcp,:::443->443/tcp, 0.0.0.0:80->80/tcp,:::80->80/tcp
+synapse-matrix     /start.py                        Up (healthy)   0.0.0.0:8008->8008/tcp,:::8008->8008/tcp, 8009/tcp, 8448/tcp</code></pre>
+
+<p><strong>Check your matrix server:</strong></p>
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2"><code class="language-bash">curl https://matrix.vincze.work/health
+OK</code></pre>
+
+<p><strong>Browser Screenshot:</strong></p>
+<p><img alt="DeepinScreenshot_select-area_20211023165557.png" src="/assets/images/DeepinScreenshot_select-area_20211023165557.png" /></p>
+<h3 id="federation">Federation<a class="headerlink" href="#federation" title="Permanent link">&para;</a></h3>
+<p>What does federated mean?</p>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p>Federation allows separate deployments of a communication service to communicate with each other - for instance a mail server run by Google federates with a mail server run by Microsoft when you send email from @gmail.com to @hotmail.com.</p>
+<p>interoperable clients may simply be running on the same deployment - whereas in federation the deployments themselves are exchanging data in a compatible manner.</p>
+<p>Matrix provides open federation - meaning that anyone on the internet can join into the Matrix ecosystem by deploying their own server.</p>
+</div>
+<p>In order to the <code>federation</code> work you need to modify the <code>Caddyfile</code> and <code>docker-compose.yaml</code>.</p>
+<p><strong><code>docker-compose.yaml</code></strong></p>
+<pre><code class="language-diff">--- docker-compose.yaml 2021-10-23 16:31:16.567890416 +0200
++++ docker-compose.yaml-orig  2021-10-23 17:04:08.640359385 +0200
+@@ -31,6 +31,7 @@
+     ports:
+       - 80:80
+       - 443:443
++      - 8448:8448
+     networks:
+       - matrix
+   postgres:
+
+</code></pre>
+<p><strong><code>Caddyfile</code></strong></p>
+<pre><code class="language-diff">@@ -8,7 +8,7 @@
+ # this machine's public IP, then replace &quot;:80&quot; below with your
+ # domain name.
+
+-matrix.vincze.work {
++matrix.vincze.work:443 matrix.vincze.work:8448 {
+  # Set this path to your site's directory.
+  root * /usr/share/caddy
+
+@@ -24,4 +24,3 @@
+
+ # Refer to the Caddy docs for more information:
+ # https://caddyserver.com/docs/caddyfile
+</code></pre>
+<p>You can check if fedearation work or not: <a href="https://federationtester.matrix.org">https://federationtester.matrix.org</a></p>
+<p><strong>ScreenShot:</strong></p>
+<p><img alt="DeepinScreenshot_select-area_20211023171814.png" src="/assets/images/DeepinScreenshot_select-area_20211023171814.png" /></p>
+<h3 id="login">Login<a class="headerlink" href="#login" title="Permanent link">&para;</a></h3>
+<p>We don't have any user, yet. We have three option for registering new users:</p>
+<ol>
+<li>Enable registration in the homeserver.yaml (<code>enable_registration: true</code>)</li>
+<li>Use the <code>registration_shared_secret</code>. <ul>
+<li><a href="">https://matrix-org.github.io/synapse/latest/admin_api/register_api.html#shared-secret-registration</a></li>
+</ul>
+</li>
+<li>Or use command line interface inside the container.</li>
+</ol>
+<p>I will show the third option:</p>
+<ul>
+<li>Get Into the container</li>
+</ul>
+<pre><code class="language-bash">docker exec -it synapse-matrix /bin/bash
+</code></pre>
+<ul>
+<li>Register new user</li>
+</ul>
+<pre><code class="language-bash">register_new_matrix_user -u jvincze -p Matrix1234 -a -c /config/homeserver.yaml http://localhost:8008
+</code></pre>
+<ul>
+<li>Open <a href="https://app.element.io/#/welcome">https://app.element.io/#/welcome</a> in your browser</li>
+<li>Click on "Sign In"</li>
+<li>Change the "Homeserver" URL</li>
+</ul>
+<p><img alt="DeepinScreenshot_select-area_20211023174014.png" src="/assets/images/DeepinScreenshot_select-area_20211023174014.png" /></p>
+<ul>
+<li>Enter your credentials </li>
+</ul>
+<p>And we are done. We have a fully functional Matrix Homeserver. Of course there are a lot of configuration available in the <code>homesever.yaml</code>, and I recommend to go through this file at least once to get know the possibilities.</p>
+<p>We are going to deploy this minimal installation of Matrix to Kubernetes cluster in the next section.</p>
+<h2 id="deploy-to-kubernetes">Deploy To Kubernetes<a class="headerlink" href="#deploy-to-kubernetes" title="Permanent link">&para;</a></h2>
+<h3 id="create-the-namespace">Create the namespace<a class="headerlink" href="#create-the-namespace" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">kubectl create ns matrix
+</code></pre>
+<h3 id="prepare-matrix-configmap-storage">Prepare Matrix Configmap &amp; Storage<a class="headerlink" href="#prepare-matrix-configmap-storage" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Generate the config files</li>
+</ul>
+<pre><code class="language-bash">mkdir -p /tmp/matrix/config
+docker run -it --rm \
+    --mount type=bind,src=/tmp/matrix/config,dst=/config \
+    -e SYNAPSE_SERVER_NAME=matrix-kub-test.duckdns.org \
+    -e SYNAPSE_REPORT_STATS=yes \
+    -e SYNAPSE_CONFIG_DIR=/config \
+    -e SYNAPSE_CONFIG_PATH=/config/homeserver.yaml \
+    matrixdotorg/synapse:latest generate
+</code></pre>
+<ul>
+<li>Create the Configmap &amp; Secret</li>
+</ul>
+<pre><code class="language-bash">cd /tmp/matrix
+kubectl -n matrix create cm matrix \
+--from-file=homeserver.yaml=./config/homeserver.yaml \
+--from-file=matrix-kub-test.duckdns.org.log.config=./config/matrix-kub-test.duckdns.org.log.config
+
+kubectl -n matrix create secret generic matrix-key \
+--from-file config/matrix-kub-test.duckdns.org.signing.key
+
+</code></pre>
+<ul>
+<li>Create Persistent Volume</li>
+</ul>
+<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/PersistentVolumeClaim-matrix.yaml"></pre>
+
+<p><strong>Download &amp; Apply</strong></p>
+<pre><code class="language-bash">curl  -L -o /tmp/PersistentVolumeClaim-matrix.yaml \
+https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/PersistentVolumeClaim-matrix.yaml
+kubectl apply -f /tmp/matrix-pvc.yaml
+</code></pre>
+<h3 id="deploy-matrix-homeserver">Deploy Matrix Homeserver<a class="headerlink" href="#deploy-matrix-homeserver" title="Permanent link">&para;</a></h3>
+<p>First we deploy the Matrix homeserver without any configuration changes. Later we can update the <code>homeserver.yaml</code> in the Configmap.</p>
+<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Deployment-matrix.yaml"></pre>
+
+<p><strong>Download &amp; Apply</strong></p>
+<pre><code class="language-bash">curl  -L -o /tmp/Deployment-matrix.yaml \
+https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Deployment-matrix.yaml
+kubectl apply -f /tmp/Deployment-matrix.yaml
+</code></pre>
+<p><strong>Check The Deployment</strong></p>
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-3"><code class="language-bash">kubectl -n matrix get deployment
+NAME     READY   UP-TO-DATE   AVAILABLE   AGE
+matrix   1/1     1            1           3d1h </code></pre>
+
+<h3 id="deploy-postgres-sql">Deploy Postgres SQL<a class="headerlink" href="#deploy-postgres-sql" title="Permanent link">&para;</a></h3>
+<h4 id="create-the-persistentvolumeclaim">Create The <code>PersistentVolumeClaim</code><a class="headerlink" href="#create-the-persistentvolumeclaim" title="Permanent link">&para;</a></h4>
+<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/PersistentVolumeClaim-postgres.yaml"></pre>
+
+<p><strong>Download &amp; Apply</strong></p>
+<pre><code class="language-bash">curl -L -o /tmp/PersistentVolumeClaim-postgres.yaml \
+https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/PersistentVolumeClaim-postgres.yaml
+kubectl apply -f /tmp/PersistentVolumeClaim-postgres.yaml
+</code></pre>
+<h4 id="create-secret">Create Secret<a class="headerlink" href="#create-secret" title="Permanent link">&para;</a></h4>
+<pre><code class="language-bash">kubectl -n matrix create secret generic postgres-password --from-literal=pgpass=12345678
+</code></pre>
+<p>This password will be used in the <code>Deployment</code> as the password of the initial user (<code>POSTGRES_USER</code> = <code>matrix</code>).</p>
+<h4 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">&para;</a></h4>
+<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Deployment-postgres.yaml"></pre>
+
+<p><strong>Download &amp; Apply</strong></p>
+<pre><code class="language-bash">curl -L -o /tmp/PersistentVolumeClaim-postgres.yaml \
+https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Deployment-postgres.yaml
+kubectl apply -f /tmp/Deployment-postgres.yaml
+</code></pre>
+<p><strong>Check The Pod &amp; Logs</strong></p>
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-5,7-10,12-14"><code class="language-bash">kubectl -n matrix get deployment
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+matrix     1/1     1            1           3d2h
+postgres   1/1     1            1           6m15s
+
+kubectl -n matrix get pods
+NAME                        READY   STATUS    RESTARTS   AGE
+matrix-7658b9d5db-49kcc     1/1     Running   4          3d1h
+postgres-7698969f95-8c4jn   1/1     Running   0          3m1s
+
+kubectl -n matrix logs $(kubectl -n matrix get pods -o name | grep postgres ) | tail -n 3
+2021-10-26 18:41:34.085 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2021-10-26 18:41:34.170 UTC [64] LOG:  database system was shut down at 2021-10-26 18:41:33 UTC
+2021-10-26 18:41:34.216 UTC [1] LOG:  database system is ready to accept connections</code></pre>
+
+<h3 id="connect-matix-homeserver-to-postgres">Connect Matix Homeserver To Postgres<a class="headerlink" href="#connect-matix-homeserver-to-postgres" title="Permanent link">&para;</a></h3>
+<p>The environment variables here must be the same as in the <code>generate</code> command. 
+If you want to change these values you should modify the <code>homesever.yaml</code> firt.</p>
+<p>https://matrix.vincze.work/_synapse/admin/v1/register</p>
+<p>root@kube-test:/opt/docker/caddy-buiild# cat Dockerfile
+FROM caddy:2.4.5-builder-alpine AS builder</p>
+<p>RUN xcaddy build \
+    --with github.com/caddy-dns/duckdns</p>
+<p>FROM caddy:2.4.5-alpine</p>
+<p>COPY --from=builder /usr/bin/caddy /usr/bin/caddy</p>
+<p>root@kube-test:/opt/docker/matrix# cat caddy/Caddyfile
+*.matrix-kub-test.duckdns.org:443 {
+        # Set this path to your site's directory.
+        root * /usr/share/caddy</p>
+<pre><code>    # Enable the static file server.
+    file_server
+
+    # Another common task is to set up a reverse proxy:
+    # reverse_proxy localhost:8080
+
+    # Or serve a PHP site through php-fpm:
+    # php_fastcgi localhost:9000
+    tls {
+            dns duckdns bd1e84b5-e44a-4a43-b28e-06d3ec32d705 {
+             override_domain matrix-kub-test.duckdns.org
+          }
+    }
+</code></pre>
+<p>}</p>
+                
+                  
+                    
+
+<hr>
+<div class="md-source-date">
+  <small>
+    
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 29, 2021</span>
+      
+    
+  </small>
+</div>
+                  
+                
+              
+              
+                
+
+
+  <h2 id="__comments">Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>var script,disqus_config=function(){this.page.url="https://readthedocs.vinczejanos.info/blog/2021/10/27/Install_Matrix_Home_Server/",this.page.identifier="blog/2021/10/27/Install_Matrix_Home_Server/"};"undefined"==typeof DISQUS?((script=document.createElement("script")).async=!0,script.src="https://shortname-jvincze-test.disqus.com/embed.js",script.setAttribute("data-timestamp",Date.now()),document.body.appendChild(script)):DISQUS.reset({reload:!0,config:disqus_config})</script>
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <!-- Cookie Consent by https://www.CookieConsent.com -->
+<script type="text/javascript" src="//www.cookieconsent.com/releases/4.0.0/cookie-consent.js" charset="UTF-8"></script>
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({"notice_banner_type":"headline","consent_type":"express","palette":"light","language":"en","page_load_consent_levels":["strictly-necessary"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"website_name":"Blog"});
+});
+</script>
+
+<noscript>ePrivacy and GPDR Cookie Consent by <a href="https://www.CookieConsent.com/" rel="nofollow noopener">Cookie Consent</a></noscript>
+<!-- End Cookie Consent by https://www.CookieConsent.com -->
+
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.tracking", "navigation.top", "search.suggest", "search.highlight", "search.highlight", "header.autohide"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../../../assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.1e84347e.min.js"></script>
+      
+        <script src="../../../../../js/prism.js"></script>
+      
+    
+  </body>
+</html>

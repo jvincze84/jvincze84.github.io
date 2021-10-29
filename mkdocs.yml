@@ -8,7 +8,7 @@ theme:
     locale: en
     custom_dir: overrides
     features:
-      - navigation.tracking
+#      - navigation.expand
 #      - navigation.sections
 #      - navigation.expand
       - navigation.top
@@ -104,11 +104,12 @@ extra_javascript:
 plugins:
   - blogging:
       dirs: # The directories to be included
-        - blog  
+        - Blog  
       show_total: true
   - blog:
       text-align: "right"
       format: "(%Y/%m/%d)"
+      display-article-date: false
   - git-revision-date-localized:
       type: date
   - git-revision-date
@@ -120,3 +121,5 @@ extra:
   analytics:
     provider: google
     property: G-3LZJ7L57GQ
+
+

@@ -1,11 +1,16 @@
 # Welcome To My Blog
 
+## New Articles
+
+{{ blog_content }}
+
+
+
+## Migrate From Ghost To MKDocs
 
 
 This site is the newver version of [https://blog.vinczejanos.info](https://blog.vinczejanos.info).  
 All conent have been migrated to this new site.
-
-## Migrate From Ghost To MKDocs
 
 Maybe a bit strange that I use MKDocs for my Blog, but it was neccessary to replace my old Ghost site.  
 I really liked the Ghost platform when it was at 1.x version, but the new editor is not my taste, so I started to find a new platform.
@@ -17,11 +22,9 @@ I know this is not a typical Blog platform, but after some hours I think it can 
 
 ## Old Content
 
-All of old conents can be found here under the "**Old Blog Conetent**" menu.
-But please aware that these conents are relally old, and I keep them only for examples. 
+All of the old contents can be found here under the "**Old Blog Conetent**" menu.
+But please aware that these contents are really old, and I keep them only for examples. 
 I think most of the tutorials could not be followed step by step, because a lot of things has been changed since these posts were written.
 
 
-## New Articles
 
-{{ blog_content }}
