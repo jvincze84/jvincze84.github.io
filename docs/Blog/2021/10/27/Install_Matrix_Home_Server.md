@@ -472,17 +472,91 @@ NAME       READY   UP-TO-DATE   AVAILABLE   AGE
 matrix     1/1     1            1           3d2h
 postgres   1/1     1            1           6m15s
 
-kubectl -n matrix get pods
-NAME                        READY   STATUS    RESTARTS   AGE
-matrix-7658b9d5db-49kcc     1/1     Running   4          3d1h
-postgres-7698969f95-8c4jn   1/1     Running   0          3m1s
+kubectl -n matrix get pods -o wide
+NAME                        READY   STATUS    RESTARTS   AGE     IP          NODE                           NOMINATED NODE   READINESS GATES
+matrix-7658b9d5db-49kcc     1/1     Running   5          5d19h   10.32.0.3   kube-test.int.vinyosoft.info   <none>           <none>
+postgres-7698969f95-8c4jn   1/1     Running   1          2d18h   10.32.0.8   kube-test.int.vinyosoft.info   <none>           <none>
 
 kubectl -n matrix logs $(kubectl -n matrix get pods -o name | grep postgres ) | tail -n 3
 2021-10-26 18:41:34.085 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
 2021-10-26 18:41:34.170 UTC [64] LOG:  database system was shut down at 2021-10-26 18:41:33 UTC
 2021-10-26 18:41:34.216 UTC [1] LOG:  database system is ready to accept connections</code></pre>
 
+#### Service
+
+<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Service-postgres.yaml"></pre>
+
+```bash
+curl -L -o /tmp/Service-postgres.yaml \
+https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Service-postgres.yaml
+kubectl apply -f /tmp/Service-postgres.yaml
+```
+**Check The Service**
+
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-16"><code class="language-bash">kubectl -n matrix describe services postgres
+Name:              postgres
+Namespace:         matrix
+Labels:            k8s-app=postgres
+Annotations:       <none>
+Selector:          k8s-app=postgres
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                10.22.24.132
+IPs:               10.22.24.132
+Port:              postgres  5432/TCP
+TargetPort:        5432/TCP
+Endpoints:         10.32.0.8:5432
+Session Affinity:  None
+Events:            <none> </code></pre>
+
+Check if the IP address and port of `Endpoints` are matching the Postgres POD IP address and port.
+
 ### Connect Matix Homeserver To Postgres
+
+First we need to create a user and database for the homeserver, just like we did before in the compose section.
+
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2,3,8"><code class="language-bash">kubectl -n matrix exec -it postgres-7698969f95-8c4jn -- /bin/bash
+
+# Inside the container:
+createuser --pwprompt synapse_user -U matrix
+Enter password for new role:
+Enter it again:
+createdb --encoding=UTF8 --locale=C --template=template0 --owner=synapse_user synapse -U matrix  
+</code></pre>
+
+**Modify The Homeserver Configmap**
+
+```bash
+kubectl -n matrix edit cm matrix
+```
+
+* Lines To Remove
+
+```yaml
+    database:
+      name: sqlite3
+      args:
+        database: /data/homeserver.db
+```
+
+Lines To add:
+```yaml
+    database:
+      name: psycopg2
+      txn_limit: 10000
+      args:
+        user: synapse_user
+        password: 12345678
+        database: synapse
+        host: postgres.matrix.svc.cluster.local
+        port: 5432
+        cp_min: 5
+        cp_max: 10
+```
+
+
+
 
 
 
