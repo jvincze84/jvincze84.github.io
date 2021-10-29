@@ -120,21 +120,21 @@ We are now done with the installation.
 
 **Create an admin user**
 
-![AdminUser](assets/images/1634213236.jpg)
+![AdminUser](/assets/images/1634213236.jpg)
 
 **Select "GetStarted"**
 
-![GetStarted](assets/images/1634213308.jpg)
+![GetStarted](/assets/images/1634213308.jpg)
 
 **Click on the "local" machine**
 
-![Local](assets/images/1634213381.jpg)
+![Local](/assets/images/1634213381.jpg)
 
 ### Create New Docker Network
 
 By default there are three networks:
 
-![Local](assets/images/1634213626.jpg)
+![Local](/assets/images/1634213626.jpg)
 
 What you see is equialent to `docker network ls` command:
 
@@ -213,7 +213,7 @@ Click on the "Add network" button.
 * **Driver:** Bridge
 * IPV4 Network configuration
 
-![AddNet](assets/images/1634214165.jpg)
+![AddNet](/assets/images/1634214165.jpg)
 
 !!! info
   **IP range:** Can differ from the Subnet. The containers will automatically get IP address from this range. (DHCP) Must be smaller than the entire Subnet.
@@ -238,15 +238,15 @@ You can decide which method (portainer or cli) is best for you.
 
 This is the easies way in Portainer to deploy an application. Choose "App Templates" from the menu, and click on Docker "Registry":
 
-![DeployRegistry](assets/images/1634214698.jpg)
+![DeployRegistry](/assets/images/1634214698.jpg)
 
 And Fill Name and Network, then click on "Deploy the container":
 
-![DeployRegistry2](assets/images/1634214770.jpg)
+![DeployRegistry2](/assets/images/1634214770.jpg)
 
 Chheck the container:
 
-![DeployRegistry2](assets/images/1634214840.jpg)
+![DeployRegistry2](/assets/images/1634214840.jpg)
 
 You can click on it and see all the details. 
 
@@ -293,7 +293,7 @@ Docker HUB link: [https://hub.docker.com/r/joxit/docker-registry-ui](https://hub
 #### Name, Registry An Port Mapping
 
 
-![1634217920.jpg](assets/images/1634217920.jpg)
+![1634217920.jpg](/assets/images/1634217920.jpg)
 
 * **Name**: registriy-ui
 * **Registry**: DockerHub
@@ -314,7 +314,7 @@ Docker HUB link: [https://hub.docker.com/r/joxit/docker-registry-ui](https://hub
 
 Use the previusly defined network:
 
-![1634216142.jpg](assets/images/1634216142.jpg)
+![1634216142.jpg](/assets/images/1634216142.jpg)
 
 
 #### Environments
@@ -331,7 +331,7 @@ NGINX_PROXY_PASS_URL=http://registry:5000
 
 **Screenshot**
 
-![1634228818.jpg](assets/images/1634228818.jpg)
+![1634228818.jpg](/assets/images/1634228818.jpg)
 
 !!! warning
     **In the above screenshot the port number is wrong at `REGISTRY_URL`. The correct one is: `REGISTRY_URL=http://localhost:18081`**
@@ -341,7 +341,7 @@ NGINX_PROXY_PASS_URL=http://registry:5000
 Use the host on which you want to access your registry-ui. It should be the same as used in Docker port publishing (-p), or at portainer gui.
 Another example:
 
-![1634229389.jpg](assets/images/1634229389.jpg)
+![1634229389.jpg](/assets/images/1634229389.jpg)
 
 
 In this case the REGISTRY_URL should be `http://10.5.0.2:18081`.
@@ -389,7 +389,7 @@ If everything went good, the Registry-UI web should look like this:
 
 
 
-![1634230166.jpg](assets/images/1634230166.jpg)
+![1634230166.jpg](/assets/images/1634230166.jpg)
 
 
 ### Stack (compose)
@@ -451,17 +451,17 @@ networks:
 
 Copy and paste this yaml to your Portainer:
 
-![1634232029.jpg](assets/images/1634232029.jpg)
+![1634232029.jpg](/assets/images/1634232029.jpg)
 
 And Click "Deploy the stack" button.
 
 This Stack will create a network:
 
-![1634232209.jpg](assets/images/1634232209.jpg)
+![1634232209.jpg](/assets/images/1634232209.jpg)
 
 And the Stack will look like this:
 
-![1634232253.jpg](assets/images/1634232253.jpg)
+![1634232253.jpg](/assets/images/1634232253.jpg)
 
 
 This `yaml` file can be used on any Portainer instance or without Portainer using the `docker-compose` cli tool.
@@ -492,7 +492,7 @@ Portainer has a great feature: We can use a git repository for creating stacks. 
 
 **Example:**
 
-![1634304270.jpg](assets/images/1634304270.jpg)
+![1634304270.jpg](/assets/images/1634304270.jpg)
 
 !!! tip
     You can use any Git based repository not just Github (eg.: Self hosted [Gitea](https://gitea.io/en-us/))  

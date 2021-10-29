@@ -1,5 +1,7 @@
 # Welcome To My Blog
 
+
+
 This site is the newver version of [https://blog.vinczejanos.info](https://blog.vinczejanos.info).  
 All conent have been migrated to this new site.
 
@@ -13,12 +15,13 @@ After some hours of researching I decided to use [https://www.mkdocs.org](MKDocs
 
 I know this is not a typical Blog platform, but after some hours I think it can fulfill all my needs.
 
-## Old Content 
+## Old Content
 
 All of old conents can be found here under the "**Old Blog Conetent**" menu.
 But please aware that these conents are relally old, and I keep them only for examples. 
 I think most of the tutorials could not be followed step by step, because a lot of things has been changed since these posts were written.
 
 
+## New Articles
 
-
+{{ blog_content }}

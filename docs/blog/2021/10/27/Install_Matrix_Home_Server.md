@@ -382,7 +382,7 @@ docker run -it --rm \
     matrixdotorg/synapse:latest generate
 ```
 
-* Create the Configmap
+* Create the Configmap & Secret
 
 ```bash
 cd /tmp/matrix
@@ -396,111 +396,106 @@ kubectl -n matrix create secret generic matrix-key \
 ```
 * Create Persistent Volume
 
-```yaml
-cat <<EOF>/tmp/matrix/matrix-pvc.yaml
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: matrix-storage
-  namespace: matrix
-spec:
-  storageClassName: openebs-hostpath
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
-EOF
-```
----
+
+<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/PersistentVolumeClaim-matrix.yaml"></pre>
+
+**Download & Apply**
 
 ```bash
-kubectl apply -f /tmp/matrix/matrix-pvc.yaml
+curl  -L -o /tmp/PersistentVolumeClaim-matrix.yaml \
+https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/PersistentVolumeClaim-matrix.yaml
+kubectl apply -f /tmp/matrix-pvc.yaml
 ```
 
 ### Deploy Matrix Homeserver
 
 First we deploy the Matrix homeserver without any configuration changes. Later we can update the `homeserver.yaml` in the Configmap.
 
-```yaml
-cat <<EOF>/tmp/matrix/matrix-deployment.yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    k8s-app: matrix
-  name: matrix
-  namespace: matrix
-spec:
-  progressDeadlineSeconds: 600
-  replicas: 1
-  revisionHistoryLimit: 10
-  selector:
-    matchLabels:
-      k8s-app: matrix
-  strategy:
-    type: Recreate
-  template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        k8s-app: matrix
-      name: matrix
-    spec:
-      containers:
-      - env:
-        - name: SYNAPSE_CONFIG_DIR
-          value: /config
-        - name: SYNAPSE_CONFIG_PATH
-          value: /config/homeserver.yaml
-        image: matrixdotorg/synapse:latest
-        imagePullPolicy: Always
-        name: matrix
-        securityContext:
-          privileged: true
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-        volumeMounts:
-        - mountPath: /config/homeserver.yaml
-          name: matrix-cm
-          subPath: homeserver.yaml
-        - mountPath: /config/matrix-kub-test.duckdns.org.log.config
-          name: matrix-cm
-          subPath: matrix-kub-test.duckdns.org.log.config
-        - mountPath: /data
-          name: matrix-pv
-          subPath: matrix
-        - mountPath: /config/matrix-kub-test.duckdns.org.signing.key
-          name: matrix-key
-          subPath: matrix-kub-test.duckdns.org.signing.key
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      terminationGracePeriodSeconds: 10
-      volumes:
-      - name: matrix-key
-        secret:
-          defaultMode: 420
-          items:
-          - key: matrix-kub-test.duckdns.org.signing.key
-            path: matrix-kub-test.duckdns.org.signing.key
-          secretName: matrix-key
-      - name: matrix-pv
-        persistentVolumeClaim:
-          claimName: matrix-storage
-      - configMap:
-          defaultMode: 420
-          items:
-          - key: homeserver.yaml
-            path: homeserver.yaml
-          - key: matrix-kub-test.duckdns.org.log.config
-            path: matrix-kub-test.duckdns.org.log.config
-          name: matrix
-        name: matrix-cm
-EOF
+
+<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Deployment-matrix.yaml"></pre>
+
+
+**Download & Apply**
+
+```bash
+curl  -L -o /tmp/Deployment-matrix.yaml \
+https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Deployment-matrix.yaml
+kubectl apply -f /tmp/Deployment-matrix.yaml
 ```
 
-Additional information:
+**Check The Deployment**
+
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-3"><code class="language-bash">kubectl -n matrix get deployment
+NAME     READY   UP-TO-DATE   AVAILABLE   AGE
+matrix   1/1     1            1           3d1h </code></pre>
+
+### Deploy Postgres SQL
+
+#### Create The `PersistentVolumeClaim`
+
+<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/PersistentVolumeClaim-postgres.yaml"></pre>
+
+**Download & Apply**
+
+```bash
+curl -L -o /tmp/PersistentVolumeClaim-postgres.yaml \
+https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/PersistentVolumeClaim-postgres.yaml
+kubectl apply -f /tmp/PersistentVolumeClaim-postgres.yaml
+```
+
+#### Create Secret
+
+```bash
+kubectl -n matrix create secret generic postgres-password --from-literal=pgpass=12345678
+```
+
+This password will be used in the `Deployment` as the password of the initial user (`POSTGRES_USER` = `matrix`).
+
+
+#### Deployment
+
+
+<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Deployment-postgres.yaml"></pre>
+
+**Download & Apply**
+
+```bash
+curl -L -o /tmp/PersistentVolumeClaim-postgres.yaml \
+https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Deployment-postgres.yaml
+kubectl apply -f /tmp/Deployment-postgres.yaml
+```
+
+**Check The Pod & Logs**
+
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-5,7-10,12-14"><code class="language-bash">kubectl -n matrix get deployment
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+matrix     1/1     1            1           3d2h
+postgres   1/1     1            1           6m15s
+
+kubectl -n matrix get pods
+NAME                        READY   STATUS    RESTARTS   AGE
+matrix-7658b9d5db-49kcc     1/1     Running   4          3d1h
+postgres-7698969f95-8c4jn   1/1     Running   0          3m1s
+
+kubectl -n matrix logs $(kubectl -n matrix get pods -o name | grep postgres ) | tail -n 3
+2021-10-26 18:41:34.085 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2021-10-26 18:41:34.170 UTC [64] LOG:  database system was shut down at 2021-10-26 18:41:33 UTC
+2021-10-26 18:41:34.216 UTC [1] LOG:  database system is ready to accept connections</code></pre>
+
+### Connect Matix Homeserver To Postgres
+
+
+
+
+
+
+
+The environment variables here must be the same as in the `generate` command. 
+If you want to change these values you should modify the `homesever.yaml` firt.
+
+
+
+
 
 
 
