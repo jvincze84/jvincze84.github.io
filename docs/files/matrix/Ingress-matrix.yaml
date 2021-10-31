@@ -1,0 +1,17 @@
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+  name: matrix
+  namespace: matrix
+spec:
+  rules:
+  - host: matrix.k8s-test.loc
+    http:
+      paths:
+      - backend:
+          service:
+            name: matrix
+            port:
+              number: 8008
+        pathType: ImplementationSpecific
