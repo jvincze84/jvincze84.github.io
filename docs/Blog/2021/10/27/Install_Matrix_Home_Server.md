@@ -9,22 +9,22 @@
 
 Link: [https://matrix.org/faq/#what-is-matrix%3F](https://matrix.org/faq/#what-is-matrix%3F)
 
-So we are about to install a private realtime messaging (Chat) server. It can be useful for you if you want to replace Whatsapp, Telegram, FB messanger, Viber, etc, or just want an own messaging server. Or if you don't trust in these services and want a serive which focus on your privacy. Another question is how your partners with whom you want to chat trust your server. 
+So we are about to install a private real time messaging (Chat) server. It can be useful for you if you want to replace Whatsapp, Telegram, FB messenger, Viber, etc, or just want your own messaging server. Or if you don't trust in these services and want a service which focuses on your privacy. Another question is how your partners with whom you want to chat trust your server.
 
-I'm wondering if you have ever thought  about having an own messaging server. If the answer is yes, it's time to build one. I hope you will easily achieve  this with the help of this article.
+I'm wondering if you have ever thought  about having your own messaging server. If the answer is yes, it's time to build one. I hope you will easily achieve  this with the help of this article.
 
 ## Requirements
 
-* First and most important to have a valid domain name. If you don't have any you ca pick up one free from [DuckDNS](https://www.duckdns.org)
+* First and most important to have a valid domain name. If you don't have any you can pick up one free from [DuckDNS](https://www.duckdns.org)
 * Installed Kubernets cluster
 * Public Internet access. 
 * At least 2 GB of free RAM. 
 
-I assume you build this server for your family and frieds, and don't want to share with the whole World. For some tens of people you don't need to purchase  expensive server, but according to the number of attachments (file, pictures, videos,etc) you may need some hundreds of GB disk space.
+I assume you build this server for your family and friends, and don't want to share with the whole World. For some tens of people you don't need to purchase an expensive server, but according to the number of attachments (file, pictures, videos,etc) you may need some hundreds of GB disk space.
 
 ## Docker Compose
 
-Maybe the easies way to install everything all together is wiritng a Docker compose file. The compose file below can be used with `docker-compose` command or as Stack in [Portainer](https://www.portainer.io).  Later in this artcie we will use this compose file as reference for writing the Kubernetes manifest files (cm, deployment, sevice, pvc, etc).
+Maybe the easiest way to install everything all together is writing a Docker compose file. The compose file below can be used with `docker-compose` command or as Stack in [Portainer](https://www.portainer.io).  Later in this article we will use this compose file as reference for writing the Kubernetes manifest files (cm, deployment, sevice, pvc, etc).
 
 
 <pre class="line-numbers" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/docker-compose.yaml"><code class="language-yaml"></code></pre>
@@ -34,11 +34,11 @@ You can see that we have 3 services:
 * **matrix** : The Matrix server
 * **caddy** : Web server for use as reverse proxy. 
     - You can use any other web server you like (eg.: Apache httpd, Nginx)
-    - I chose Caddy because it is super easy to configure as reverse proxy and supports automtic SSL certificate genereation and maintance.
+    - I chose Caddy because it is super easy to configure as a reverse proxy and supports automatic SSL certificate generation and maintenance.
 * **postgres** : Database engine.
     - You can skip this if you want to use the default sqlite engine, but it is not recommended for daily (production) use.
 
-Before you `up` this compose file create the neccessary directories:
+Before you `up` this compose file create the necessary directories:
 
 ```bash
 mkdir -p /opt/docker/matrix/config
@@ -355,7 +355,7 @@ register_new_matrix_user -u jvincze -p Matrix1234 -a -c /config/homeserver.yaml 
 
 * Enter your credentials 
 
-And we are done. We have a fully functional Matrix Homeserver. Of course there are a lot of configuration available in the `homesever.yaml`, and I recommend to go through this file at least once to get know the possibilities.
+And we are done. We have a fully functional Matrix Homeserver. Of course there are a lot of configurations available in the `homesever.yaml`, and I recommend going through this file at least once to get to know the possibilities.
 
 We are going to deploy this minimal installation of Matrix to Kubernetes cluster in the next section.
 
@@ -423,11 +423,47 @@ https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/file
 kubectl apply -f /tmp/Deployment-matrix.yaml
 ```
 
+
+
 **Check The Deployment**
 
 <pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-3"><code class="language-bash">kubectl -n matrix get deployment
 NAME     READY   UP-TO-DATE   AVAILABLE   AGE
 matrix   1/1     1            1           3d1h </code></pre>
+
+#### Create Service
+
+<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Service-matrix.yaml"></pre>
+
+**Download & Apply**
+
+```bash
+curl  -L -o /tmp/Service-matrix.yaml \
+https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Service-matrix.yaml
+kubectl apply -f /tmp/Service-matrix.yaml
+```
+
+**Check The Service**
+
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-16"><code class="language-bash">kubectl -n matrix describe svc matrix
+Name:              matrix
+Namespace:         matrix
+Labels:            k8s-app=postgres
+Annotations:       <none>
+Selector:          k8s-app=matrix
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                10.22.84.86
+IPs:               10.22.84.86
+Port:              matrix  8008/TCP
+TargetPort:        8008/TCP
+Endpoints:         10.32.0.3:8008
+Session Affinity:  None
+Events:            <none> </code></pre>
+
+
+
 
 ### Deploy Postgres SQL
 
@@ -486,11 +522,14 @@ kubectl -n matrix logs $(kubectl -n matrix get pods -o name | grep postgres ) | 
 
 <pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Service-postgres.yaml"></pre>
 
+**Download & Apply**
+
 ```bash
 curl -L -o /tmp/Service-postgres.yaml \
 https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Service-postgres.yaml
 kubectl apply -f /tmp/Service-postgres.yaml
 ```
+
 **Check The Service**
 
 <pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-16"><code class="language-bash">kubectl -n matrix describe services postgres
@@ -514,18 +553,20 @@ Check if the IP address and port of `Endpoints` are matching the Postgres POD IP
 
 ### Connect Matix Homeserver To Postgres
 
+#### Prepare The Databse
+
 First we need to create a user and database for the homeserver, just like we did before in the compose section.
 
 <pre class="command-line" data-user="root" data-host="matrix-host" data-output="2,3,8"><code class="language-bash">kubectl -n matrix exec -it postgres-7698969f95-8c4jn -- /bin/bash
 
 # Inside the container:
 createuser --pwprompt synapse_user -U matrix
-Enter password for new role:
-Enter it again:
+Enter password for new role: 12345678
+Enter it again: 12345678
 createdb --encoding=UTF8 --locale=C --template=template0 --owner=synapse_user synapse -U matrix  
 </code></pre>
 
-**Modify The Homeserver Configmap**
+#### Modify The Homeserver Configmap
 
 ```bash
 kubectl -n matrix edit cm matrix
@@ -540,7 +581,8 @@ kubectl -n matrix edit cm matrix
         database: /data/homeserver.db
 ```
 
-Lines To add:
+* Lines To add:
+
 ```yaml
     database:
       name: psycopg2
@@ -555,6 +597,229 @@ Lines To add:
         cp_max: 10
 ```
 
+Basically we are done with set up the Homeserver. There is only one thing to do, somehow publish the homeserver to the Internet.
+
+### Ingress
+
+There are several options for accessing the Matrix Homeserver from the Internet. I don't know your architecture, but maybe you already have an Ingress Controller and a reverse proxy, etc...  
+I'll show some solutions:
+
+* My setup at home looks something like this: `*.mydomain.hu --> Apache WebServer (reverse proxy) --> Kubernetes Ingress`. 
+    * Wildcard certificate installed on the Apache WebSever.
+    * In this setup I need to create only an `Ingress` in Kubernets and the Homserver immediately becomes accessible. 
+    * I recommend using a separate reverse proxy for the incoming connection to Kubernetes. This reverse proxy could be Apache, Nginx, Caddy, etc. 
+* If you don't have separate reverse proxy:
+    * You can set up Homeserver to listen on a https port: `matrix.mydomain.hu --> Ingress SSL Pass-through --> Homeserver (https).` 
+    * Another way is to setup your `Ingress` to listen on https: `matrix.mydomain.hu --> Ingress (SSL) --> Homeserver (plain http)` If you chose this option take a look at this page: [https://kubernetes.github.io/ingress-nginx/user-guide/tls/#automated-certificate-management-with-cert-manager](https://kubernetes.github.io/ingress-nginx/user-guide/tls/#automated-certificate-management-with-cert-manager)  
+    * You can setup `Caddy` on the Kubernetes: `homeserver.mydomain.hu --> Ingress To Caddy (http) --> Caddy --> Homserver (service)`
+
+I can't write example for the all available scenario, but I want to post here a working, overall solution, thus I show two examples:
+
+#### Simple Ingress
+
+If you have already a working architecture you may need only an Ingress like this:
+
+
+<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Ingress-matrix.yaml"></pre>
+
+**Download & Apply**
+
+```bash
+curl -L -o /tmp/Ingress-matrix.yaml \
+https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Ingress-matrix.yaml
+kubectl apply -f /tmp/Ingress-matrix.yaml
+```
+
+**Check Ingress**
+
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-15"><code class="language-bash">kubectl -n matrix describe ingress matrix
+Name:             matrix
+Namespace:        matrix
+Address:          172.16.1.214
+Default backend:  default-http-backend:80 (<error: endpoints "default-http-backend" not found>)
+Rules:
+  Host                 Path  Backends
+  ----                 ----  --------
+  matrix.k8s-test.loc  
+                          matrix:8008 (10.32.0.3:8008)
+Annotations:           nginx.ingress.kubernetes.io/proxy-body-size: 110m
+Events:
+  Type    Reason  Age                From                      Message
+  ----    ------  ----               ----                      -------
+  Normal  Sync    24s (x3 over 17m)  nginx-ingress-controller  Scheduled for sync </code> </pre>
+
+
+**How Ingress - Service And Deployment Are Related?**
+
+If you want to know more about how these three things are related read the following article: [https://dwdraju.medium.com/how-deployment-service-ingress-are-related-in-their-manifest-a2e553cf0ffb](https://dwdraju.medium.com/how-deployment-service-ingress-are-related-in-their-manifest-a2e553cf0ffb)
+
+
+![deployment-service-ingress.png](/assets/images/deployment-service-ingress.png)
+
+In our case, this the flow:
+
+![DeepinScreenshot_select-area_20211031181702.png](/assets/images/DeepinScreenshot_select-area_20211031181702.png)
+
+
+#### Cert Manager
+
+First I wanted to write about `Caddy` here, but changed my mind. I think a much more suitable solution is using the [Cert Manager](https://cert-manager.io).  
+My first thought was to deploy `Caddy`, setup as reverse proxy for the Matrix `Service`, and create an `Ingress` for `Caddy`. This would have been similar to what we did in the compose file before. I don't think anybody wants to use Ingress and Caddy in this way. 
+
+Documentations:
+
+ * [https://cert-manager.io](https://cert-manager.io)
+ * [https://kubernetes.github.io/ingress-nginx/user-guide/tls/#automated-certificate-management-with-cert-manager](https://kubernetes.github.io/ingress-nginx/user-guide/tls/#automated-certificate-management-with-cert-manager)
+
+I'm using Nginx Ingrees Controller for this demo. I won't write here a step-by-step installation about the Ingress controller. If you need detailed documentation please consult the official site: [https://kubernetes.github.io/ingress-nginx/deploy/](https://kubernetes.github.io/ingress-nginx/deploy/), or see my single node Kubernetes installation article.
+ 
+**Install Cert Manager**
+
+Installing cert-manager is really simple, only one command:
+
+```bash
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.6.0/cert-manager.yaml
+```
+
+For more details visit the official documentation [here](https://cert-manager.io/docs/installation/kubectl/)
+
+**ClusterIssuer**
+
+We are going to create two `ClusterIssuer`: 
+
+1. Letsencrypt Staging
+
+```yaml
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    email: jvincze84@gmail.com
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-staging
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+```
+
+2. Letsencrypt Production
+
+```yaml
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    email: jvincze84@gmail.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    preferredChain: "ISRG Root X1"
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+```
+
+Check:
+
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-4"><code class="language-bash">kubectl get ClusterIssuer -o wide
+NAME                  READY   STATUS                                                 AGE
+letsencrypt-prod      True    The ACME account was registered with the ACME server   49s
+letsencrypt-staging   True    The ACME account was registered with the ACME server   5h31m </code></pre>
+
+
+**Create `Ingress`**
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/proxy-body-size: 110m
+  name: matrix
+  namespace: matrix
+spec:
+  rules:
+  - host: homeserver.matrix-kub-test.duckdns.org
+    http:
+      paths:
+      - backend:
+          service:
+            name: matrix
+            port:
+              number: 8008
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - homeserver.matrix-kub-test.duckdns.org
+    secretName: matrix-prod-ingress
+```
+
+That's all! :) If your Kubernetes Ingress accessible from the Internet on port 80 and 443 the certificate issued in some seconds. 
+
+**Checks**
+
+If something is not working as expected, there are some `resources` you should check.
+
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-7"><code class="language-bash">api-resources | grep cert-manager.io
+challenges                                     acme.cert-manager.io/v1                true         Challenge
+orders                                         acme.cert-manager.io/v1                true         Order
+certificaterequests               cr,crs       cert-manager.io/v1                     true         CertificateRequest
+certificates                      cert,certs   cert-manager.io/v1                     true         Certificate
+clusterissuers                                 cert-manager.io/v1                     false        ClusterIssuer
+issuers                                        cert-manager.io/v1                     true         Issuer </code></pre>
+
+First check `challenges`:
+
+
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-3"><code class="language-bash">kubectl -n matrix get challenges
+NAME                                              STATE     DOMAIN                                   AGE
+matrix-prod-ingress-gptxf-1059591821-1281697531   pending   homeserver.matrix-kub-test.duckdns.org   2m42s </code></pre>
+
+You can see that the `challenge` is in `pending` state. You can check what could be the problem with the following command:
+
+```bash
+kubectl -n matrix get challenges matrix-prod-ingress-gptxf-1059591821-1281697531 -o yaml
+```
+
+Example error message:
+
+```plain
+status:
+  presented: true
+  processing: true
+  reason: 'Waiting for HTTP-01 challenge propagation: failed to perform self check
+    GET request ''http://homeserver.matrix-kub-test.duckdns.org/.well-known/acme-challenge/lgUy6mCEhhbQ9n_v3w_C47cbVgc5Bfvoy6JW3oxrH1o'':
+    Get "http://homeserver.matrix-kub-test.duckdns.org/.well-known/acme-challenge/lgUy6mCEhhbQ9n_v3w_C47cbVgc5Bfvoy6JW3oxrH1o":
+    dial tcp 87.97.31.112:80: i/o timeout (Client.Timeout exceeded while awaiting
+    headers)'
+  state: pending
+```
+!!! info
+    Just for reference, in my case the problem was that hairpin NAT wasn't set up properly in my router. 
+
+Check `certificaterequests` and `certificates`
+
+<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-6"><code class="language-bash">kubectl -n matrix get crs,certs
+NAME                                                           APPROVED   DENIED   READY   ISSUER             REQUESTOR                                         AGE
+certificaterequest.cert-manager.io/matrix-prod-ingress-gptxf   True                True    letsencrypt-prod   system:serviceaccount:cert-manager:cert-manager   19m
+
+NAME                                              READY   SECRET                AGE
+certificate.cert-manager.io/matrix-prod-ingress   True    matrix-prod-ingress   19m </code></pre>
+
+Your certificate is stored in this `Secret`: `secretName: matrix-prod-ingress`
+
+## Final Thoughts
+
+I hope this article contains a lot of useful examples, use cases and help you to build your own Matrix Homeserver.  
+Of course there are any other options to deploy the Homeserver to Kubernetes, the way I showed here contains many useful examples on how to use docker-compose, service, ingress, cert-manager, configmap, secret, etc...
 
 
 
@@ -563,62 +828,6 @@ Lines To add:
 
 
 
-
-The environment variables here must be the same as in the `generate` command. 
-If you want to change these values you should modify the `homesever.yaml` firt.
-
-
-
-
-
-
-
-
-
-
-
-https://matrix.vincze.work/_synapse/admin/v1/register
-
-
-
-
-
-
-
-
-
-
-
-root@kube-test:/opt/docker/caddy-buiild# cat Dockerfile
-FROM caddy:2.4.5-builder-alpine AS builder
-
-RUN xcaddy build \
-    --with github.com/caddy-dns/duckdns
-
-
-FROM caddy:2.4.5-alpine
-
-COPY --from=builder /usr/bin/caddy /usr/bin/caddy
-
-root@kube-test:/opt/docker/matrix# cat caddy/Caddyfile
-*.matrix-kub-test.duckdns.org:443 {
-        # Set this path to your site's directory.
-        root * /usr/share/caddy
-
-        # Enable the static file server.
-        file_server
-
-        # Another common task is to set up a reverse proxy:
-        # reverse_proxy localhost:8080
-
-        # Or serve a PHP site through php-fpm:
-        # php_fastcgi localhost:9000
-        tls {
-                dns duckdns bd1e84b5-e44a-4a43-b28e-06d3ec32d705 {
-                 override_domain matrix-kub-test.duckdns.org
-              }
-        }
-}
 
 
 
