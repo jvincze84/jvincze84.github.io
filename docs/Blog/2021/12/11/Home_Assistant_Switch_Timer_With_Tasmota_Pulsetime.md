@@ -561,20 +561,3 @@ I do know that there are several other easier ways to achieve this functionality
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-https://performancemanager5.successfactors.eu/sf/jobreq?jobId=137378&company=vodafoneprP
-https://forms.office.com/Pages/ResponsePage.aspx?id=Oz8oaIeEhkyts6Uijxi4k9mVWG6G5QlJl3_2UDaThE1URVVRRDAwSVZQV1cxUklSMkxCVUtQRUs4VyQlQCNjPTEu
