@@ -1,0 +1,24 @@
+alias: Test - PulseTime - Change Time (Publish)
+description: ''
+trigger:
+  - platform: state
+    entity_id: input_number.number
+condition: []
+action:
+  - service: mqtt.publish
+    data:
+      topic: |
+        {{ states('input_text.pulsetimeactualmac') }}
+      payload: |
+        {% set timer = ( trigger.to_state.state |  int * 60  ) + 100  %}
+        {% if timer == 100 %}
+          0
+        {% else %}
+          {{ timer }}
+        {% endif %}
+mode: single
+variables:
+  topicmapper: |
+    { "light.sonoff": "00194AD7228",
+      "light.sonoff2": "00194AD7228"
+    }     
