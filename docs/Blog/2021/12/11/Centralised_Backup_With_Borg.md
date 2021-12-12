@@ -163,7 +163,7 @@ borg@borg-01:~$ </code></pre>
 Ok. It works well.
 
 !!! warning
-    Please keep your private key safe. Since this is a demo environment I don't care much the security. I'm storngly recommend to use individual keys for each host. This post is not about ssh key management, but Borg backup.
+    Please keep your private key safe. Since this is a demo environment I don't care much the security. I storngly recommend to use individual keys for each host. This post is not about ssh key management, but Borg backup.
 
 !!! info
     I'm using the `root` user on the clients, bacuse only the `root` account has access to the directories I want to backup.
@@ -196,9 +196,51 @@ Use "borg key export" to export the key, optionally in printable format.
 Write down the passphrase. Store both at safe place(s). </code></pre>
 
 !!! caution
-    If you lose the passphare (`~/.borg-passphrase`) you lose all of the backups, as well. So I do really recommend to keep it in a safe place, not just in the home directory!
+    If you lose the passphrase (`~/.borg-passphrase`) you lose all of the backups, as well. So I do really recommend to keep it in a safe place, not just in the home directory!
 
 Repeat this step on all nodes you want to create backup.
+
+!!! important
+    There are two really important things to be kept in safe, the passphrase  and the key. I strongly recommend to save them to you password manager or keep them somewhere in really safe. 
+    
+#### Manage Your Key And Passphrase 
+
+I assume you are using password manager in any way, and hope this manager is not a plain text file. :) 
+
+Save your passphrase to your password manager is simple. Just save the conent of this file: `~/.borg-passphrase`
+```bash
+cat ~/.borg-passphrase  ; echo
+```
+The key is bit more complicated. Fisrt see how to export:
+
+<pre class="command-line" data-user="root" data-host="borg-02" data-output="2-15"><code class="language-bash">borg key export borg@172.16.1.236:/home/borg/borg-02  /tmp/key
+cat /tmp/key
+BORG_KEY f968c50460d1ca7aaec9a8e2347a61fd286b26fb84adcaa6de7808966026b51e
+hqlhbGdvcml0aG2mc2hhMjU2pGRhdGHaAZ7vhs+Yzwxg9VgXxo95S5+ScE8RT3yY6elK5J
+KJKhfwz/YYJrGO6ZlDSpr9i+fnUI7qz6BfIxBLA6yILdcFVpOUuy99cDp79Uyc7wrIDnTV
+sk0oiQWBt3710yM3hJQC84Q69grriPrF0jdzgSCvDKn+FNfQQgLTgnYMavxxnXZESTStng
+zfxMtcJZMghEm1Mfd8ZwRTDXPgpF5z03bXy+7DrQ/btxgiW8G+h6DEccBDKvf0oAfDOPvH
+sGgC2aBq+lqpUcxdIhpd+CZ0BzFkWCMrQkr3QOhlMbGtkqi7a78/rIYeJWevyWwODM7RvZ
+i01qqbrDoflkRAg/LiY76p0wi46ls8Annygw9RY7YzOq7+xEvImGRYXX5joJ9Lb1GQ3Eh1
+7MSFFdVRfAXbcAUlyQXZ+k/TzxZIFw7ZsXvQL33AFD1MwuXVJdXCJZFtWNUD97Cd5cTwEq
+f6T5AofjK6WAIF5qD4RGVEoH0X8+7MJ6IHCu8aPbjnqVLvjR9Ubii7mS5gC9IRdaN5T61i
+PjNC3Lm8TjqL8WlSjqfqvu2BczikaGFzaNoAIL0XSOEvCdQ46MtJO5/Q98J1mEDsC9tLVv
+OBZZy+emXAqml0ZXJhdGlvbnPOAAGGoKRzYWx02gAg/tXk5wRp5YZlOHdzm+Gk+8f5Qi/f
+s2VHKZJPL8BfecWndmVyc2lvbgE=</code></pre>
+
+If you can save this file as attachment  you are done. But not all password manager supports attachments. In this case I recommend to use `base64`:
+
+<pre class="command-line" data-user="root" data-host="borg-02" data-output="2"><code class="language-bash">cat /tmp/key | base64 -w0 ; echo
+Qk9SR19LRVkgZjk2OGM1MDQ2MGQxY2E3YWFlYzlhOGUyMzQ3YTYxZmQyODZiMjZmYjg0YWRjYWE2ZGU3ODA4OTY2MDI2YjUxZQpocWxoYkdkdmNtbDBhRzJtYzJoaE1qVTJwR1JoZEdIYUFaN3ZocytZend4ZzlWZ1h4bzk1UzUrU2NFOFJUM3lZNmVsSzVKCktKS2hmd3ovWVlKckdPNlpsRFNwcjlpK2ZuVUk3cXo2QmZJeEJMQTZ5SUxkY0ZWcE9VdXk5OWNEcDc5VXljN3dySURuVFYKc2swb2lRV0J0MzcxMHlNM2hKUUM4NFE2OWdycmlQckYwamR6Z1NDdkRLbitGTmZRUWdMVGduWU1hdnh4blhaRVNUU3RuZwp6ZnhNdGNKWk1naEVtMU1mZDhad1JURFhQZ3BGNXowM2JYeSs3RHJRL2J0eGdpVzhHK2g2REVjY0JES3ZmMG9BZkRPUHZICnNHZ0MyYUJxK2xxcFVjeGRJaHBkK0NaMEJ6RmtXQ01yUWtyM1FPaGxNYkd0a3FpN2E3OC9ySVllSldldnlXd09ETTdSdloKaTAxcXFickRvZmxrUkFnL0xpWTc2cDB3aTQ2bHM4QW5ueWd3OVJZN1l6T3E3K3hFdkltR1JZWFg1am9KOUxiMUdRM0VoMQo3TVNGRmRWUmZBWGJjQVVseVFYWitrL1R6eFpJRnc3WnNYdlFMMzNBRkQxTXd1WFZKZFhDSlpGdFdOVUQ5N0NkNWNUd0VxCmY2VDVBb2ZqSzZXQUlGNXFENFJHVkVvSDBYOCs3TUo2SUhDdThhUGJqbnFWTHZqUjlVYmlpN21TNWdDOUlSZGFONVQ2MWkKUGpOQzNMbThUanFMOFdsU2pxZnF2dTJCY3ppa2FHRnphTm9BSUwwWFNPRXZDZFE0Nk10Sk81L1E5OEoxbUVEc0M5dExWdgpPQlpaeStlbVhBcW1sMFpYSmhkR2x2Ym5QT0FBR0dvS1J6WVd4MDJnQWcvdFhrNXdScDVZWmxPSGR6bStHays4ZjVRaS9mCnMyVkhLWkpQTDhCZmVjV25kbVZ5YzJsdmJnRT0K</code></pre>
+
+Restore command: `echo -n [BASE64_STRING] | base64 -d`
+
+!!! tip
+    If you want to make the `base64` string smaller you can use `gzip`.  
+    **Encode**: `cat /tmp/key | gzip -c | base64`  
+    **Decode**: `echo -n [BASE64_STRING] | base64 -d | gunzip -c`
+    
+
 
 ### Create Backups
 
@@ -342,6 +384,7 @@ Daily 1:   2021-12-11T02:00:01                  Sat, 2021-12-11 02:00:03 [e0385e
 * `keep-monthly` --> keeps the last backup from the last day of the month
 
 Read more: [https://borgbackup.readthedocs.io/en/stable/usage/prune.html](https://borgbackup.readthedocs.io/en/stable/usage/prune.html)
+
 
 ## Backup With Crontab
 
