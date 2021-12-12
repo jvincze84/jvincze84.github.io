@@ -213,7 +213,7 @@ cat ~/.borg-passphrase  ; echo
 ```
 The key is bit more complicated. Fisrt see how to export:
 
-<pre class="command-line" data-user="root" data-host="borg-02" data-output="2-15"><code class="language-bash">borg key export borg@172.16.1.236:/home/borg/borg-02  /tmp/key
+<pre class="command-line" data-user="root" data-host="borg-02" data-output="3-15"><code class="language-bash">borg key export borg@172.16.1.236:/home/borg/borg-02  /tmp/key
 cat /tmp/key
 BORG_KEY f968c50460d1ca7aaec9a8e2347a61fd286b26fb84adcaa6de7808966026b51e
 hqlhbGdvcml0aG2mc2hhMjU2pGRhdGHaAZ7vhs+Yzwxg9VgXxo95S5+ScE8RT3yY6elK5J
@@ -228,7 +228,7 @@ PjNC3Lm8TjqL8WlSjqfqvu2BczikaGFzaNoAIL0XSOEvCdQ46MtJO5/Q98J1mEDsC9tLVv
 OBZZy+emXAqml0ZXJhdGlvbnPOAAGGoKRzYWx02gAg/tXk5wRp5YZlOHdzm+Gk+8f5Qi/f
 s2VHKZJPL8BfecWndmVyc2lvbgE=</code></pre>
 
-If you can save this file as attachment  you are done. But not all password manager supports attachments. In this case I recommend to use `base64`:
+If you can save this file as attachment  you are done. But not all password manager supports attachments, and the line brakes can be broken. In this case I recommend to use `base64`:
 
 <pre class="command-line" data-user="root" data-host="borg-02" data-output="2"><code class="language-bash">cat /tmp/key | base64 -w0 ; echo
 Qk9SR19LRVkgZjk2OGM1MDQ2MGQxY2E3YWFlYzlhOGUyMzQ3YTYxZmQyODZiMjZmYjg0YWRjYWE2ZGU3ODA4OTY2MDI2YjUxZQpocWxoYkdkdmNtbDBhRzJtYzJoaE1qVTJwR1JoZEdIYUFaN3ZocytZend4ZzlWZ1h4bzk1UzUrU2NFOFJUM3lZNmVsSzVKCktKS2hmd3ovWVlKckdPNlpsRFNwcjlpK2ZuVUk3cXo2QmZJeEJMQTZ5SUxkY0ZWcE9VdXk5OWNEcDc5VXljN3dySURuVFYKc2swb2lRV0J0MzcxMHlNM2hKUUM4NFE2OWdycmlQckYwamR6Z1NDdkRLbitGTmZRUWdMVGduWU1hdnh4blhaRVNUU3RuZwp6ZnhNdGNKWk1naEVtMU1mZDhad1JURFhQZ3BGNXowM2JYeSs3RHJRL2J0eGdpVzhHK2g2REVjY0JES3ZmMG9BZkRPUHZICnNHZ0MyYUJxK2xxcFVjeGRJaHBkK0NaMEJ6RmtXQ01yUWtyM1FPaGxNYkd0a3FpN2E3OC9ySVllSldldnlXd09ETTdSdloKaTAxcXFickRvZmxrUkFnL0xpWTc2cDB3aTQ2bHM4QW5ueWd3OVJZN1l6T3E3K3hFdkltR1JZWFg1am9KOUxiMUdRM0VoMQo3TVNGRmRWUmZBWGJjQVVseVFYWitrL1R6eFpJRnc3WnNYdlFMMzNBRkQxTXd1WFZKZFhDSlpGdFdOVUQ5N0NkNWNUd0VxCmY2VDVBb2ZqSzZXQUlGNXFENFJHVkVvSDBYOCs3TUo2SUhDdThhUGJqbnFWTHZqUjlVYmlpN21TNWdDOUlSZGFONVQ2MWkKUGpOQzNMbThUanFMOFdsU2pxZnF2dTJCY3ppa2FHRnphTm9BSUwwWFNPRXZDZFE0Nk10Sk81L1E5OEoxbUVEc0M5dExWdgpPQlpaeStlbVhBcW1sMFpYSmhkR2x2Ym5QT0FBR0dvS1J6WVd4MDJnQWcvdFhrNXdScDVZWmxPSGR6bStHays4ZjVRaS9mCnMyVkhLWkpQTDhCZmVjV25kbVZ5YzJsdmJnRT0K</code></pre>
