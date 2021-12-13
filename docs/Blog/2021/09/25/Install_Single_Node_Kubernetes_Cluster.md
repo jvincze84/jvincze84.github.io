@@ -831,7 +831,7 @@ namespaces is forbidden: User "system:serviceaccount:kubernetes-dashboard:kubern
 
 **Screenshot:**
 
-![Error](//assets/images/DeepinScreenshot_select-area_20211011165036.png)
+![Error](/assets/images/DeepinScreenshot_select-area_20211011165036.png)
 
 I don't want to bother with roles and rolebindigns at this article. I want quick win, so edit the `kubernetes-dashboard` ClusterRole.
 
