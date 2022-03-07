@@ -342,7 +342,7 @@ Read more:
 
 ### WireGuard Server
 
-![WG-Server-Diagram.jpg](///assets/images/WG-Server-Diagram.jpg){ width="740" }
+![WG-Server-Diagram.jpg](/assets/images/WG-Server-Diagram.jpg){ width="740" }
 
 * Match the colors: Config and the element have the same color. Example green peer config text goes to the green client.
 * The "Cloud" pictogram means the public Internet.
@@ -376,7 +376,7 @@ Disatvantages:
 
 ### Dynamic DNS
 
-![WG-DynDNS.jpg](///assets/images/WG-DynDNS.jpg){ width="740" }
+![WG-DynDNS.jpg](/assets/images/WG-DynDNS.jpg){ width="740" }
 
 * Network Address Translation is set on your home router
     - Incomming connection to 55870 goes to Client1
@@ -394,7 +394,7 @@ Disatvantages:
 
 ### Wireguard Gateway
 
-![WG-Gateway.jpg](///assets/images/WG-Gateway.jpg){ width="740" }
+![WG-Gateway.jpg](/assets/images/WG-Gateway.jpg){ width="740" }
 
 * Moblie client can access the entire private home network through  the VPN gateway.
     - This means that traffic from the mobile client to the `172.16.0.0/22` first goes to the WG Gateway over the VPN tunnel. After the `iptables` rule (masquerade) applied the package reaches the target machine via the physical home network. 
