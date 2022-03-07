@@ -240,11 +240,11 @@ For this you need a free [Github](https://github.com) registration.
 
 * **1. Create a repository**
 
-![CreateRepository](https://images.vinczejanos.info/uploads/big/41c3c94672675263b04db274cd510a8f.png)
+![CreateRepository]assets/images/41c3c94672675263b04db274cd510a8f.png)
 
 The name of the repository must be [your username]**.github.io** and must be public. In my case:
 
-![RepoName](https://images.vinczejanos.info/uploads/big/57e634cde0ddd63b898847414de0b8fb.png)
+![RepoName](assets/images//big/57e634cde0ddd63b898847414de0b8fb.png)
 
 * **2. Push**
 
@@ -252,11 +252,11 @@ Github does not support user/pass auth anymore, so you need to create an auth to
 
 Go to **settings**: 
 
-![Settings](https://images.vinczejanos.info/uploads/big/299ad76f3df10dd6737cd6ccb5bffb3e.png)
+![Settings](assets/images/299ad76f3df10dd6737cd6ccb5bffb3e.png)
 
 **Developer settings**:
 
-![DeveloperSettings](https://images.vinczejanos.info/uploads/big/d1a100ee22aa3c7dc35a3a847df578da.png)
+![DeveloperSettings](assets/images//d1a100ee22aa3c7dc35a3a847df578da.png)
 
 And **Personal access tokens**:
 
@@ -311,7 +311,7 @@ INFO     -  NOTE: Your DNS records must be configured appropriately for your CNA
 
 We are almost done. Go back to Github, and set up the newly created "gh-pages" branch for pages:
 
-![GHpages](https://images.vinczejanos.info/uploads/big/6554ba8a7110913475f9457514a8a084.png)
+![GHpages](assets/images/6554ba8a7110913475f9457514a8a084.png)
 
 * **4. Custom Domain**
 
@@ -324,7 +324,7 @@ readthedocs.vinczejanos.info
 
 But first you need to create a CNAME DNS record which points to "[username].github.io". Godaddy example:
 
-![Godaddy](https://images.vinczejanos.info/uploads/big/de8abd46fe31f44a970d5128b301c877.png)
+![Godaddy](assets/images/de8abd46fe31f44a970d5128b301c877.png)
 
 !!! warning
     Do not modify your custom domain directly on github.com; `mkdocs gh-deploy` will overwrite your config.
