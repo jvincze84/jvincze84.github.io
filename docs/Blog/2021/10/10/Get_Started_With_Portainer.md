@@ -105,9 +105,13 @@ Where the `10.5.0.2`  is the IP Address of your VPN interface (tun0,wg0,tailscal
 
 How does it look like:
 
-<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-3"><code class="language-bash">docker ps --filter name=portainer
+```bash title="Command"
+docker ps --filter name=portainer
+```
+```text title="Output"
 CONTAINER ID   IMAGE                           COMMAND        CREATED        STATUS        PORTS                                                          NAMES
-90ca6ef446e3   portainer/portainer-ce:latest   "/portainer"   43 hours ago   Up 43 hours   10.5.0.2:8000->8000/tcp, 10.5.0.2:9443->9443/tcp, 9000/tcp   portainer</code></pre>
+90ca6ef446e3   portainer/portainer-ce:latest   "/portainer"   43 hours ago   Up 43 hours   10.5.0.2:8000->8000/tcp, 10.5.0.2:9443->9443/tcp, 9000/tcp   portainer
+```
 
 
 Now you can access Portainer on [https://10.5.0.2:9443](https://10.5.0.2:9443)
@@ -138,16 +142,22 @@ By default there are three networks:
 
 What you see is equialent to `docker network ls` command:
 
-<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-5"><code class="language-bash">docker network ls
+```bash title="Command"
+docker network ls
+```
+```text title="Output"
 NETWORK ID     NAME      DRIVER    SCOPE
 e15c0c8f8d67   bridge    bridge    local
 f728316f0193   host      host      local
 54ac360308df   none      null      local</code></pre>
-
+```
 
 If you need more details about a network use the `inspect` command:
 
-<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-46"><code class="language-bash">docker inspect  e15c0c8f8d67
+```bash title="Command"
+docker inspect  e15c0c8f8d67
+```
+```json title="Output"
 [
     {
         "Name": "bridge",
@@ -192,7 +202,8 @@ If you need more details about a network use the `inspect` command:
         },
         "Labels": {}
     }
-]</code></pre>
+]
+```
 
 
 **Why should we create new network?**
@@ -252,15 +263,20 @@ You can click on it and see all the details.
 
 Try out our new docker Registry:
 
-<pre class="command-line" data-user="root" data-host="dockerhost" data-output="3-9"><code class="language-bash">docker tag registry:latest 127.0.0.1:49153/registry/registry:v1
+
+```bash title="Commands"
+docker tag registry:latest 127.0.0.1:49153/registry/registry:v1
 docker push 127.0.0.1:49153/registry/registry:v1
+```
+```text title="Outptu"
 The push refers to repository [127.0.0.1:49153/registry/registry]
 6da1e15d5d7f: Pushed
 d385a2515a0f: Pushed
 d661c8a70d1e: Pushed
 02ada6f7a843: Pushed
 39982b2a789a: Pushed
-v1: digest: sha256:b0b8dd398630cbb819d9a9c2fbd50561370856874b5d5d935be2e0af07c0ff4c size: 1363</code></pre>
+v1: digest: sha256:b0b8dd398630cbb819d9a9c2fbd50561370856874b5d5d935be2e0af07c0ff4c size: 1363
+```
 
 
 We successfully pushed the locally stored portainer image to our new registry.
@@ -268,7 +284,8 @@ Unfortunately there is no easy way the list the images form the custom registry.
 
 At the moment we don't have any other choice than use the API:
 
-<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-7,9-14"><code class="language-bash">curl -s http://127.0.0.1:49153/v2/_catalog | jq
+```text hl_lines="1 8" linenums="1"
+curl -s http://127.0.0.1:49153/v2/_catalog | jq
 {
   "repositories": [
     "registry/registry"
@@ -281,7 +298,8 @@ curl -s http://127.0.0.1:49153/v2/registry/registry/tags/list | jq
   "tags": [
     "v1"
   ]
-}</code></pre>
+}
+```
 
 
 ### Deploy Single Container
@@ -352,7 +370,8 @@ The most important is attaching both the registry and registry-ui to the same ne
 
 For better understanding please see the following examples:
 
-<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-6,9-13,16-22"><code class="language-bash">docker ps
+```text hl_lines="1 7 8 14 15" linenums="1"
+docker ps
 CONTAINER ID   IMAGE                                 COMMAND                  CREATED          STATUS          PORTS                                                      NAMES
 dcbf77aa6492   joxit/docker-registry-ui:latest       "/docker-entrypoint.…"   11 minutes ago   Up 11 minutes   0.0.0.0:18081->80/tcp                                      registriy-ui
 031ffbed2392   registry:latest                       "/entrypoint.sh /etc…"   4 hours ago      Up 4 hours      0.0.0.0:49153->5000/tcp                                    registry
@@ -373,7 +392,8 @@ PING registriy-ui (10.1.1.3): 56 data bytes
 ^C
 --- registriy-ui ping statistics ---
 2 packets transmitted, 2 packets received, 0% packet loss
-round-trip min/avg/max = 0.068/0.083/0.098 ms</code></pre>
+round-trip min/avg/max = 0.068/0.083/0.098 ms
+```
 
 
 Regarding the port, inside a Docker network always use the port on which the process itself is listening on, NOT the published port. (`0.0.0.0:49153->5000/tcp`)
@@ -566,18 +586,26 @@ kubectl apply -f https://openebs.github.io/charts/examples/local-hostpath/local-
 kubectl apply -f https://openebs.github.io/charts/examples/local-hostpath/local-hostpath-pod.yaml
 ```
 
-<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-3"><code class="language-bash">kubectl get pvc
+```bash title="Command"
+kubectl get pvc
+```
+```text title="Output"
 NAME                 STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
-local-hostpath-pvc   Bound    pvc-dda89e6e-43e6-4552-8985-9564b95f5e9a   5G         RWO            openebs-hostpath   27m</code></pre>
+local-hostpath-pvc   Bound    pvc-dda89e6e-43e6-4552-8985-9564b95f5e9a   5G         RWO            openebs-hostpath   27m
+```
 
 
 #### Default StorageClass
 
 Portainer needs default Storage Class. But the `openebs-hostpath` is not annotated as default:
 
-<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-3"><code class="language-bash">kubectl get sc
+```bash title="Command"
+kubectl get sc
+```
+```text title="Output"
 NAME               PROVISIONER        RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
-openebs-hostpath   openebs.io/local   Delete          WaitForFirstConsumer   false                  25m</code></pre>
+openebs-hostpath   openebs.io/local   Delete          WaitForFirstConsumer   false                  25m
+```
 
 
 Fix this:
@@ -588,9 +616,13 @@ kubectl patch storageclass openebs-hostpath -p '{"metadata": {"annotations":{"st
 
 And check again:
 
-<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-3"><code class="language-bash">kubectl get sc
+```bash title="Command"
+kubectl get sc
+```
+```text title="Output"
 NAME                         PROVISIONER        RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
-openebs-hostpath (default)   openebs.io/local   Delete          WaitForFirstConsumer   false                  27m</code></pre>
+openebs-hostpath (default)   openebs.io/local   Delete          WaitForFirstConsumer   false                  27m
+```
 
 
 #### Deploy Portainer
@@ -601,9 +633,14 @@ kubectl apply -n portainer -f https://raw.githubusercontent.com/portainer/k8s/ma
 
 Now we have to figure out on which port the Portainer is accessible (nodePort):
 
-<pre class="command-line" data-user="root" data-host="dockerhost" data-output="2-3"><code class="language-bash">kubectl -n portainer  get svc
+```bash title="Command"
+kubectl -n portainer  get svc
+```
+```text title="Outout"
 NAME        TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)                                         AGE
-portainer   NodePort   10.22.142.7   <none>        9000:30777/TCP,9443:30779/TCP,30776:30776/TCP   2m31s </code></pre>
+portainer   NodePort   10.22.142.7   <none>        9000:30777/TCP,9443:30779/TCP,30776:30776/TCP   2m31s 
+```
+
 
 The winner is: 9443:**30779**/TCP
 

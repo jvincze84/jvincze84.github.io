@@ -145,8 +145,10 @@ cp /etc/containerd/config.toml /etc/containerd/config.toml-orig
 
 ### Fix `crictl` error
 
-<pre class="command-line" data-user="root" data-host="mkdocs" data-output="2"><code class="language-bash">crictl ps
-FATA[0010] failed to connect: failed to connect: context deadline exceeded </code></pre>
+```text hl_lines="1" linenums="1"
+crictl ps
+FATA[0010] failed to connect: failed to connect: context deadline exceeded
+```
 
 Fix:
 
@@ -194,7 +196,10 @@ sudo apt-get update
 
 Now we do some extra steps before installing the kubeadm. In the world of Kubernetes it is important to install the same version of kubeadm kubelet and kubectl. So fist we check the avaiable versions:
 
-<pre class="command-line" data-user="root" data-host="mkdocs" data-output="2-10"><code class="language-bash">apt-cache madison kubeadm | egrep '(1.22|1.21)'
+```bash title="Command"
+apt-cache madison kubeadm | egrep '(1.22|1.21)'
+```
+```text title="Output"
    kubeadm |  1.22.2-00 | https://apt.kubernetes.io kubernetes-xenial/main amd64 Packages
    kubeadm |  1.22.1-00 | https://apt.kubernetes.io kubernetes-xenial/main amd64 Packages
    kubeadm |  1.22.0-00 | https://apt.kubernetes.io kubernetes-xenial/main amd64 Packages
@@ -203,7 +208,8 @@ Now we do some extra steps before installing the kubeadm. In the world of Kubern
    kubeadm |  1.21.3-00 | https://apt.kubernetes.io kubernetes-xenial/main amd64 Packages
    kubeadm |  1.21.2-00 | https://apt.kubernetes.io kubernetes-xenial/main amd64 Packages
    kubeadm |  1.21.1-00 | https://apt.kubernetes.io kubernetes-xenial/main amd64 Packages
-   kubeadm |  1.21.0-00 | https://apt.kubernetes.io kubernetes-xenial/main amd64 Packages</code></pre>
+   kubeadm |  1.21.0-00 | https://apt.kubernetes.io kubernetes-xenial/main amd64 Packages
+```
 
 
 We won't install the latest version in order to be able to show you an update process as well.
@@ -217,7 +223,10 @@ apt-mark hold kubelet kubeadm kubectl
     We don't want to update kubeadm, kubeclt and kubelet with system (os) updates (apt-get update & upgrade). Kubernetes update has its own process. Always be careful when update you base system, and never update these packages alongside with the underlying os.
 
 **Check the installed version**
-<pre class="command-line" data-user="root" data-host="mkdocs" data-output="2-11"><code class="language-bash">kubeadm version -o yaml
+```bash title="Command"
+kubeadm version -o yaml
+```
+```text title="Output"
 clientVersion:
   buildDate: "2021-09-15T21:09:27Z"
   compiler: gc
@@ -227,7 +236,8 @@ clientVersion:
   goVersion: go1.16.8
   major: "1"
   minor: "21"
-  platform: linux/amd64</code></pre>
+  platform: linux/amd64
+```
 
 
 ### Init the cluster
@@ -247,10 +257,13 @@ kubeadm init --help
 * `--cri-socket /var/run/containerd/containerd.sock` --> We want to use Containerd as container runtime insted of the default docker.
 * `--service-cidr 10.22.0.0/16` and  `--pod-network-cidr 10.23.0.0/16` --> Really important to size well your internal Kubernets network. Be sure that none of these IP address ranges don't overlap your phisical network, VPN connection or each other. Since this is only a demo system it will be enough about 250 IP address for PODS and Services. 
 
-<pre class="command-line" data-user="kube" data-host="kube-test" data-output="5-74"><code class="language-bash">kubeadm init \
+```bash linenums="1" title="Command"
+kubeadm init \
 --cri-socket /var/run/containerd/containerd.sock \
 --service-cidr 10.22.0.0/16 \
 --pod-network-cidr 10.23.0.0/16
+```
+```text title="Output" linenums="1" hl_lines="58-60"
 I1011 10:54:59.868163    6330 version.go:254] remote version is much newer: v1.22.2; falling back to: stable-1.21
 [init] Using Kubernetes version: v1.21.5
 [preflight] Running pre-flight checks
@@ -323,13 +336,14 @@ Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
 Then you can join any number of worker nodes by running the following on each as root:
 
 kubeadm join 172.16.1.214:6443 --token gvcye3.n7xemwaq8a94t8bs \
-  --discovery-token-ca-cert-hash sha256:bf86bed07219b08acaab0dc5451b3c4ddfd550a5b4b6295d5594758e693cf7e9 </code></pre>
+  --discovery-token-ca-cert-hash sha256:bf86bed07219b08acaab0dc5451b3c4ddfd550a5b4b6295d5594758e693cf7e9 
+```
 
 Beleve or not our Single node Kubernetes cluster is almost ready. :)
 
 Check it:
 
-```bash
+```bash linenums="1"
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
@@ -338,7 +352,7 @@ kubectl get nodes -o wide
 ```
 
 Output looks like this:
-```plain
+```plain linenums="1"
 NAME        STATUS     ROLES                  AGE     VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION   CONTAINER-RUNTIME
 kube-test   NotReady   control-plane,master   5m26s   v1.21.5   172.16.1.214   <none>        Debian GNU/Linux 11 (bullseye)   5.10.0-9-amd64   containerd://1.4.11
 ```
@@ -351,7 +365,10 @@ It is beutiful, isn't it?
 I can say that this behavior is normal in case of newly installed Kubernetes cluster. Check the reaseon:
 
 
-<pre class="command-line" data-user="kube" data-host="kube-test" data-output="2-9"><code class="language-bash">kubectl get pods --all-namespaces -o wide
+```bash title="Command"
+kubectl get pods --all-namespaces -o wide
+```
+```text title="Output"
 NAMESPACE     NAME                                READY   STATUS    RESTARTS   AGE     IP             NODE        NOMINATED NODE   READINESS GATES
 kube-system   coredns-558bd4d5db-8tzmf            0/1     Pending   0          9m42s   <none>         <none>      <none>           <none>
 kube-system   coredns-558bd4d5db-l6gtq            0/1     Pending   0          9m42s   <none>         <none>      <none>           <none>
@@ -359,7 +376,8 @@ kube-system   etcd-kube-test                      1/1     Running   0          1
 kube-system   kube-apiserver-kube-test            1/1     Running   0          9m49s   172.16.1.214   kube-test   <none>           <none>
 kube-system   kube-controller-manager-kube-test   1/1     Running   0          9m57s   172.16.1.214   kube-test   <none>           <none>
 kube-system   kube-proxy-nhm2h                    1/1     Running   0          9m43s   172.16.1.214   kube-test   <none>           <none>
-kube-system   kube-scheduler-kube-test            1/1     Running   0          9m58s   172.16.1.214   kube-test   <none>           <none></code></pre>
+kube-system   kube-scheduler-kube-test            1/1     Running   0          9m58s   172.16.1.214   kube-test   <none>           <none>
+```
 
 You can see that the coredns pods are in pending state. These pods are responsible for internal DNS queries inside the Cluster Network. What should be the problem? We don't have any network plugin installed in the cluster....
 
@@ -372,17 +390,24 @@ As you can see that there are a lot of varions of network plugins. For this litt
 
 It is really simple to install, can be achieved with only one command:
 
-<pre class="command-line" data-user="kube" data-host="kube-test" data-output="2-7"><code class="language-bash">kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+```bash title="Command"
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+```
+```text title="Output"
 serviceaccount/weave-net created
 clusterrole.rbac.authorization.k8s.io/weave-net created
 clusterrolebinding.rbac.authorization.k8s.io/weave-net created
 role.rbac.authorization.k8s.io/weave-net created
 rolebinding.rbac.authorization.k8s.io/weave-net created
-daemonset.apps/weave-net created</code></pre>
+daemonset.apps/weave-net created
+```
 
 Check again the cluster:
 
-<pre class="command-line" data-user="kube" data-host="kube-test" data-output="2-10, 12-13"><code class="language-bash">kubectl get pods --all-namespaces -o wide
+```bash title="Command"
+kubectl get pods --all-namespaces -o wide
+```
+```text title="Output"
 NAMESPACE     NAME                                READY   STATUS    RESTARTS   AGE     IP             NODE        NOMINATED NODE   READINESS GATES
 kube-system   coredns-558bd4d5db-8tzmf            1/1     Running   0          18m     10.32.0.3      kube-test   <none>           <none>
 kube-system   coredns-558bd4d5db-l6gtq            1/1     Running   0          18m     10.32.0.2      kube-test   <none>           <none>
@@ -392,9 +417,15 @@ kube-system   kube-controller-manager-kube-test   1/1     Running   0          1
 kube-system   kube-proxy-nhm2h                    1/1     Running   0          18m     172.16.1.214   kube-test   <none>           <none>
 kube-system   kube-scheduler-kube-test            1/1     Running   0          18m     172.16.1.214   kube-test   <none>           <none>
 kube-system   weave-net-l8xkh                     2/2     Running   1          2m22s   172.16.1.214   kube-test   <none>           <none>
+```
+```bash title="Command"
 kubectl get nodes -o wide
+```
+```text title="Output"
 NAME        STATUS   ROLES                  AGE   VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION   CONTAINER-RUNTIME
-kube-test   Ready    control-plane,master   18m   v1.21.5   172.16.1.214   <none>        Debian GNU/Linux 11 (bullseye)   5.10.0-9-amd64   containerd://1.4.11</code></pre>
+kube-test   Ready    control-plane,master   18m   v1.21.5   172.16.1.214   <none>        Debian GNU/Linux 11 (bullseye)   5.10.0-9-amd64   containerd://1.4.11
+```
+
 
 Now we really have a working single node Kubernetes cluster. 
 
@@ -442,8 +473,10 @@ spec:
 ```
 
 **Check**
-
-<pre class="command-line" data-user="kube" data-host="kube-test" data-output="2-9"><code class="language-bash">kubectl -n kube-system get pods
+```bash title="Command"
+kubectl -n kube-system get pods
+```
+```text title="Output"
 NAME                                READY   STATUS    RESTARTS   AGE
 coredns-558bd4d5db-l6gtq            1/1     Running   0          32m
 etcd-kube-test                      1/1     Running   0          33m
@@ -451,9 +484,8 @@ kube-apiserver-kube-test            1/1     Running   0          33m
 kube-controller-manager-kube-test   1/1     Running   0          33m
 kube-proxy-nhm2h                    1/1     Running   0          32m
 kube-scheduler-kube-test            1/1     Running   0          33m
-weave-net-l8xkh                     2/2     Running   1          16m</code></pre>
-
-
+weave-net-l8xkh                     2/2     Running   1          16m
+```
 
 ### Install Kuberntes Metrics Server
 
@@ -487,7 +519,10 @@ Edit the deployment `kubectl -n kube-system edit  deployment metrics-server` and
 ```
 
 **Check**
-<pre class="command-line" data-user="kube" data-host="kube-test" data-output="2-10"><code class="language-bash">kubectl -n kube-system top pods
+```bash title="Command"
+kubectl -n kube-system top pods
+```
+```text title="Output"
 NAME                                CPU(cores)   MEMORY(bytes)   
 coredns-558bd4d5db-l6gtq            3m           18Mi            
 etcd-kube-test                      16m          41Mi            
@@ -496,7 +531,8 @@ kube-controller-manager-kube-test   12m          60Mi
 kube-proxy-nhm2h                    1m           20Mi            
 kube-scheduler-kube-test            4m           25Mi            
 metrics-server-6775f684f6-gxpcz     6m           18Mi            
-weave-net-l8xkh                     2m           61Mi</code></pre>
+weave-net-l8xkh                     2m           61Mi
+```
 
 
 ### Install (Nginx) Ingress Controller
@@ -528,10 +564,14 @@ ingress-nginx-controller-6c68f5b657-hvfn9   1/1     Running             0       
 
 This is the default installation process. But at this point we have only NodePort service for incomming traffic:
 
-<pre class="command-line" data-user="kube" data-host="kube-test" data-output="2-4"><code class="language-bash">kubectl -n ingress-nginx get services
+```bash title="Command"
+kubectl -n ingress-nginx get services
+```
+```text title="Ouptut"
 NAME                                 TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)                      AGE
 ingress-nginx-controller             NodePort    10.22.0.78    <none>        80:30016/TCP,443:32242/TCP   104s
-ingress-nginx-controller-admission   ClusterIP   10.22.0.242   <none>        443/TCP                      104s</code></pre>
+ingress-nginx-controller-admission   ClusterIP   10.22.0.242   <none>        443/TCP                      104s
+```
 
 !!! warning
     Please read very carefully this documentation: [https://kubernetes.github.io/ingress-nginx/deploy/baremetal/](https://kubernetes.github.io/ingress-nginx/deploy/baremetal/)
@@ -543,7 +583,10 @@ Or you can install a reverse proxy somewehere in you physical network. This can 
 
 To check the NGinx Ingress Controller you should use another machine in your network. Most of the time I use curl to check if web server is running or not, but you can use your browser instead.
 
-<pre class="command-line" data-user="kube" data-host="kube-test" data-output="2-15,17-30"><code class="language-bash">curl -i http://172.16.1.214:30016 
+```bash title="Command"
+curl -i http://172.16.1.214:30016 
+```
+```text title="Output"
 HTTP/1.1 404 Not Found
 Date: Mon, 11 Oct 2021 10:11:40 GMT
 Content-Type: text/html
@@ -557,8 +600,12 @@ Connection: keep-alive
 <hr><center>nginx</center>
 </body>
 </html>
+```
 
+```bash title="Command"
 curl -ik https://172.16.1.214:32242
+```
+```text title="Ouptut"
 HTTP/2 404 
 date: Mon, 11 Oct 2021 10:12:13 GMT
 content-type: text/html
@@ -571,7 +618,8 @@ strict-transport-security: max-age=15724800; includeSubDomains
 <center><h1>404 Not Found</h1></center>
 <hr><center>nginx</center>
 </body>
-</html></code></pre>
+</html>
+```
 
 
 This is not the desired stat I want, I want to access my Ingresss Controller over the standard 80(http) and 443(https) ports, so choose the hostPort: [https://kubernetes.github.io/ingress-nginx/deploy/baremetal/#via-the-host-network](https://kubernetes.github.io/ingress-nginx/deploy/baremetal/#via-the-host-network)
@@ -589,7 +637,8 @@ kubectl patch deployment/ingress-nginx-controller -n ingress-nginx \
 
 **Check**
 
-<pre class="command-line" data-user="kube" data-host="kube-test" data-output="2-7,8-13"><code class="language-bash">curl -ikI https://172.16.1.214
+```text hl_lines="1 8" linenums="1"
+curl -ikI https://172.16.1.214
 HTTP/2 404 
 date: Mon, 11 Oct 2021 10:29:13 GMT
 content-type: text/html
@@ -601,7 +650,8 @@ HTTP/1.1 404 Not Found
 Date: Mon, 11 Oct 2021 10:29:16 GMT
 Content-Type: text/html
 Content-Length: 146
-Connection: keep-alive</code></pre>
+Connection: keep-alive
+```
 
 #### Deploy An Application And Create Service And Ingress For It
 
@@ -625,7 +675,10 @@ kubectl create service clusterip ghost-test --tcp=2368:2368
 
 **Check the Service:**
 
-<pre class="command-line" data-user="kube" data-host="kube-test" data-output="2-16"><code class="language-bash">kubectl describe service ghost-test
+```bash title="Command"
+kubectl describe service ghost-test
+```
+```text title="Output"
 Name:              ghost-test
 Namespace:         default
 Labels:            app=ghost-test
@@ -640,7 +693,8 @@ Port:              2368-2368  2368/TCP
 TargetPort:        2368/TCP
 Endpoints:         10.32.0.3:2368
 Session Affinity:  None
-Events:            <none></code></pre>
+Events:            <none>
+```
 
 
 The most important thing here is the Endpoints:
@@ -651,9 +705,13 @@ Endpoints:         10.32.0.3:2368
 
 The IP address should point to the IP address of the Ghost POD:
 
-<pre class="command-line" data-user="kube" data-host="kube-test" data-output="2,3"><code class="language-bash">get pods -o wide
+```bash title="Command"
+get pods -o wide
+```
+```text title="Output"
 NAME                          READY   STATUS    RESTARTS   AGE   IP          NODE        NOMINATED NODE   READINESS GATES
-ghost-test-66846549b5-8z6mj   1/1     Running   0          15m   10.32.0.3   kube-test   <none>           <none></code></pre>
+ghost-test-66846549b5-8z6mj   1/1     Running   0          15m   10.32.0.3   kube-test   <none>           <none>
+```
 
 
 **The last step is to create the `Ingress` object.**
@@ -688,7 +746,10 @@ kubectl apply -f ghost-ingress.yaml
 
 **Check the ingress**
 
-<pre class="command-line" data-user="kube" data-host="kube-test" data-output="2-16"><code class="language-bash">kubectl describe ingress ghost-web 
+```bash title="Command"
+kubectl describe ingress ghost-web 
+```
+```text title="Ouptut"
 Name:             ghost-web
 Namespace:        default
 Address:          172.16.1.214
@@ -703,7 +764,8 @@ Events:
   Type    Reason  Age                   From                      Message
   ----    ------  ----                  ----                      -------
   Normal  Sync    3m19s                 nginx-ingress-controller  Scheduled for sync
-  Normal  Sync    104s (x2 over 2m55s)  nginx-ingress-controller  Scheduled for sync</code></pre>
+  Normal  Sync    104s (x2 over 2m55s)  nginx-ingress-controller  Scheduled for sync
+```  
 
 **Check With `curl`**
 
@@ -739,16 +801,23 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/a
 
 Check if the pods are fine.
 
-<pre class="command-line" data-user="kube" data-host="kube-test" data-output="2-4"><code class="language-bash">kubectl -n kubernetes-dashboard get pods
+```bash title="Command"
+kubectl -n kubernetes-dashboard get pods
+```
+```text title="Output"
 NAME                                         READY   STATUS    RESTARTS   AGE
 dashboard-metrics-scraper-856586f554-pgq5l   1/1     Running   0          47s
-kubernetes-dashboard-67484c44f6-vjlkw        1/1     Running   0          47s</code></pre>
+kubernetes-dashboard-67484c44f6-vjlkw        1/1     Running   0          47s
+```
 
 ### Create An Ingress
 
 **Check The Service**
 
-<pre class="command-line" data-user="kube" data-host="kube-test" data-output="2-17"><code class="language-bash">kubectl -n kubernetes-dashboard describe  svc kubernetes-dashboard
+```bash title="Command"
+kubectl -n kubernetes-dashboard describe  svc kubernetes-dashboard
+```
+```text title="Output"
 Name:              kubernetes-dashboard
 Namespace:         kubernetes-dashboard
 Labels:            k8s-app=kubernetes-dashboard
@@ -763,7 +832,8 @@ Port:              <unset>  443/TCP
 TargetPort:        8443/TCP
 Endpoints:         10.32.0.5:8443
 Session Affinity:  None
-Events:            <none></code></pre>
+Events:            <none>
+```
 
 
 **The Ingress `yaml`**
@@ -805,13 +875,17 @@ Now I can access the Kubernetes Dashboard at [https://dashboard.k8s-test.loc](ht
 When you see the login screen, you are asked for the token or kubeconfig file. I choose the simpier way and use token.
 
 First obtain the name of the secret:
-<pre class="command-line" data-user="kube" data-host="kube-test" data-output="2-7"><code class="language-bash">kubectl -n kubernetes-dashboard get secrets
+```bash title="Command"
+kubectl -n kubernetes-dashboard get secrets
+```
+```text title="Output"
 NAME                               TYPE                                  DATA   AGE
 default-token-v85k8                kubernetes.io/service-account-token   3      14m
 kubernetes-dashboard-certs         Opaque                                0      14m
 kubernetes-dashboard-csrf          Opaque                                1      14m
 kubernetes-dashboard-key-holder    Opaque                                2      14m
-kubernetes-dashboard-token-24jfb   kubernetes.io/service-account-token   3      14m</code></pre>
+kubernetes-dashboard-token-24jfb   kubernetes.io/service-account-token   3      14m
+```
 
 We need this: **kubernetes-dashboard-token-24jfb**
 
@@ -947,11 +1021,15 @@ ingress-nginx-controller-745c7c9f6c-m9q5q   1/1     Running   2          128m
 ```
 
 Events:
-<pre class="command-line" data-user="kube" data-host="kube-test" data-output="2-7"><code class="language-bash">kubectl -n ingress-nginx get events
+```bash title="Command"
+kubectl -n ingress-nginx get events
+```
+```text title="Output"
 LAST SEEN   TYPE      REASON              OBJECT                                           MESSAGE
 34s         Warning   FailedScheduling    pod/ingress-nginx-controller-5f7bb7476d-2nhqc    0/1 nodes are available: 1 node(s) didn't have free ports for the requested pod ports.
 35s         Normal    SuccessfulCreate    replicaset/ingress-nginx-controller-5f7bb7476d   Created pod: ingress-nginx-controller-5f7bb7476d-2nhqc
-36s         Normal    ScalingReplicaSet   deployment/ingress-nginx-controller              Scaled up replica set ingress-nginx-controller-5f7bb7476d to 1</code></pre>
+36s         Normal    ScalingReplicaSet   deployment/ingress-nginx-controller              Scaled up replica set ingress-nginx-controller-5f7bb7476d to 1
+```
 
 The problem: `0/1 nodes are available: 1 node(s) didn't have free ports for the requested pod ports.`
 
@@ -1032,6 +1110,8 @@ kubectl -n default cp ghost-test-66846549b5-qgcl8:/var/lib/ghost .
     `kubectl -n default cp ghost-test-66846549b5-qgcl8:/var/lib/ghost .` <-- This will copy the conents of the directory. If you want to create the 'ghost' directory on the destination use: 
 
     `kubectl -n default cp ghost-test-66846549b5-qgcl8:/var/lib/ghost ghost`
+
+
 
 
 

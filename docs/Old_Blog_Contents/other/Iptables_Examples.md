@@ -55,7 +55,10 @@ So there are three different network:
 * 172.20.18.0/24
 
 First we have to determine on which ports the NVR listens. 
-<pre class="command-line" data-user="root" data-host="somehost" data-output="2-15"><code class="language-bash">nmap 192.168.100.4
+```bash title="Command"
+nmap 192.168.100.4
+```
+```text title="Output"
 
 Starting Nmap 7.40 ( https://nmap.org ) at 2018-11-07 10:30 UTC
 Nmap scan report for 192.168.100.4
@@ -70,7 +73,7 @@ PORT     STATE SERVICE
 MAC Address: 08:EA:40:56:95:EB (Shenzhen Bilian Electronicltd)
 
 Nmap done: 1 IP address (1 host up) scanned in 2.34 seconds
-</code></pre>
+```
 
 
 **Solution:**

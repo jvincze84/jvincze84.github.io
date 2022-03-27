@@ -32,7 +32,11 @@ I don't like to install various python packages on my computer, because sooner o
 I do know that "Material for MkDocs" have official Docker image, but I like to use Docker images was built by my own. Every time I build a new Docker image from scratch I learn something or make my knowledge deeper about Dockerfiles, so it's absolutely worth it.
 
 ### Dockerfile & Build
-<pre class="line-numbers language-docker" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/Dockerfile"></pre>
+
+```dockerfile title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/Dockerfile" target="_blank">Click Here For Raw Source</a>' linenums="1"
+--8<-- "docs/files/Dockerfile"
+```
+
 
 * `FROM python:3-alpine` --> Using the official python image.
 * `ARG USER=1001` --> Default user id. If you don't specify another when building the container (see below)
@@ -105,7 +109,9 @@ Every modification inside the `/tmp/example` directory immediately take effects,
 Configuring your MKDocs intstance basically means editing `mkdocs.yml`.
 
 You can see my current configuration below:
-<pre class="line-numbers language-yaml" data-src="/files/mkdocs.yml"></pre>
+```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/mkdocs.yml" target="_blank">Click Here For Raw Source</a>' linenums="1"
+--8<-- "docs/files/mkdocs.yml"
+```
 
 I think there is nothing special in this configuration, but could be a good example. Every part of this file is very well documented on the officail Material and MKDocs website:
 
@@ -166,7 +172,8 @@ This section disables the theme built in "copy to clipoad" funcion, it's neccess
 
 Some functions of prismj won't work properly without this modification, for example line numbering.
 
-Example: 
+Example:
+
 ```html
 <pre class="line-numbers language-docker" data-src="/files/Dockerfile"></pre>
 ```
@@ -264,7 +271,10 @@ Finally click on the **Generate new token**, select the permissions you need and
 
 **Push your mkdocs root dir:**
 
-<pre class="command-line" data-user="root" data-host="mkdocs" data-output="2-12"><code class="language-bash">ls -al
+```bash title="Command"
+ls -al
+```
+```text title="Output"
 total 40
 drwxr-xr-x  7 root root 4096 Oct  9 14:34 .
 drwx------ 22 root root 4096 Oct  9 14:33 ..
@@ -275,17 +285,21 @@ drwxr-xr-x  8 root root 4096 Oct  9 14:35 .git
 -rw-r--r--  1 root root 4471 Oct  9 14:33 mkdocs.yml
 drwxr-xr-x  2 root root 4096 Oct  9 14:33 overrides
 drwxr-xr-x 11 root root 4096 Oct  9 14:33 site
-
+```
+```bash
 git init
 git add --all
 git commit -m 'Initial release'
 git remote add origin https://github.com/jvincze84/test-delete.git
-git push -u origin master</code></pre>
+git push -u origin master
+```
 
 * **3. Push gh-pages**
 
-<pre class="command-line" data-user="root" data-host="mkdocs" data-output="3-24"><code class="language-bash">clear
+```bash title="Command"
 docker run -it -v /root/test-delete/:/usr/src/mkdocs/build example-mkdocs:v2 gh-deploy
+```
+```text title="Output"
 INFO     -  Cleaning site directory
 INFO     -  Building documentation to directory: /usr/src/mkdocs/build/site
 INFO     -  Documentation built in 1.04 seconds
@@ -307,7 +321,9 @@ remote:
 To https://github.com/jvincze84/test-delete.git
  * [new branch]      gh-pages -> gh-pages
 INFO     -  Based on your CNAME file, your documentation should be available shortly at: http://readthedocs.vinczejanos.info
-INFO     -  NOTE: Your DNS records must be configured appropriately for your CNAME URL to work.</code></pre>
+INFO     -  NOTE: Your DNS records must be configured appropriately for your CNAME URL to work.
+```
+
 
 We are almost done. Go back to Github, and set up the newly created "gh-pages" branch for pages:
 
@@ -337,14 +353,18 @@ If you want to update a page or add new pages you can follow these steps:
 
 **Clone your repository**
 
-<pre class="command-line" data-user="root" data-host="mkdocs" data-output="2-8"><code class="language-bash">git clone https://github.com/jvincze84/jvincze84.github.io
+```bash title="Command"
+git clone https://github.com/jvincze84/jvincze84.github.io
+```
+```text title="Output"
 Cloning into 'jvincze84.github.io'...
 remote: Enumerating objects: 850, done.
 remote: Counting objects: 100% (850/850), done.
 remote: Compressing objects: 100% (292/292), done.
 remote: Total 850 (delta 351), reused 820 (delta 327), pack-reused 0
 Receiving objects: 100% (850/850), 16.09 MiB | 10.59 MiB/s, done.
-Resolving deltas: 100% (351/351), done.</code></pre>
+Resolving deltas: 100% (351/351), done.
+```
 
 !!! info
     If you want to save your git credentials run this command: `git config --global credential.helper store`
@@ -356,8 +376,11 @@ After you have done the neccessary modification (add/change page) push your chan
 
 **push to git**
 
-<pre class="command-line" data-user="root" data-host="mkdocs" data-output="3,4,6-14"><code class="language-bash">git add docs/How_to_use_MKdocs.md mkdocs.yml
+```bash title="Command"
+git add docs/How_to_use_MKdocs.md mkdocs.yml
 git commit -m 'Add new page : docs/How_to_use_MKdocs.md'
+```
+```text title="Output"
 master 0949efa] Add new page : docs/How_to_use_MKdocs.md
  1 file changed, 25 insertions(+), 9 deletions(-)
 git push
@@ -369,7 +392,8 @@ Writing objects: 100% (4/4), 993 bytes | 993.00 KiB/s, done.
 Total 4 (delta 3), reused 0 (delta 0)
 remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
 To https://github.com/jvincze84/jvincze84.github.io
-   a9585e6..0949efa  master -> master</code></pre>
+   a9585e6..0949efa  master -> master
+```
 
 **gh-deploy**
 

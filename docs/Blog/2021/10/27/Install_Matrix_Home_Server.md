@@ -26,8 +26,9 @@ I assume you build this server for your family and friends, and don't want to sh
 
 Maybe the easiest way to install everything all together is writing a Docker compose file. The compose file below can be used with `docker-compose` command or as Stack in [Portainer](https://www.portainer.io).  Later in this article we will use this compose file as reference for writing the Kubernetes manifest files (cm, deployment, sevice, pvc, etc).
 
-
-<pre class="line-numbers" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/docker-compose.yaml"><code class="language-yaml"></code></pre>
+```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/docker-compose.yaml" target="_blank">Click Here For Raw Source</a>' linenums="1"
+--8<-- "docs/files/matrix/docker-compose.yaml"
+```
 
 You can see that we have 3 services:
 
@@ -40,7 +41,7 @@ You can see that we have 3 services:
 
 Before you `up` this compose file create the necessary directories:
 
-```bash
+```bash linenums="1"
 mkdir -p /opt/docker/matrix/config
 mkdir /opt/docker/matrix/data
 mkdir /opt/docker/matrix/caddy
@@ -60,11 +61,14 @@ chown -R 991:991 /opt/docker/matrix
 
 For generating the initial config files please follow these steps:
 
-<pre class="command-line" data-user="root" data-host="matrix-host" data-output="6-23,26,28-32"><code class="language-bash">docker run -it --rm \
+```bash linenums="1" title="Command"
+docker run -it --rm \
     --mount type=bind,src=/opt/docker/matrix/config,dst=/data \
     -e SYNAPSE_SERVER_NAME=matrix.vincze.work \
     -e SYNAPSE_REPORT_STATS=yes \
     matrixdotorg/synapse:latest generate
+```
+```text title="Output"    
 Unable to find image 'matrixdotorg/synapse:latest' locally
 latest: Pulling from matrixdotorg/synapse
 7d63c13d9b9b: Pull complete
@@ -82,16 +86,19 @@ Creating log config /data/matrix.vincze.work.log.config
 Generating config file /data/homeserver.yaml
 Generating signing key file /data/matrix.vincze.work.signing.key
 A config file has been generated in '/data/homeserver.yaml' for server name 'matrix.vincze.work'. Please review this file and customise it to your needs.
-
+```
+```bash linenums="1" title="Command"
 cd /opt/docker/matrix
 mv ./config/matrix.vincze.work.signing.key ./config/matrix.vincze.work.log.config ./data
-
 find data/ config/
+```
+```text title="Output"  
 data/
 data/matrix.vincze.work.signing.key
 data/matrix.vincze.work.log.config
 config/
-config/homeserver.yaml</code></pre>
+config/homeserver.yaml
+```
 
 !!! important
     You have to change `SYNAPSE_SERVER_NAME` to point to your own domain.
@@ -101,7 +108,7 @@ config/homeserver.yaml</code></pre>
 
 * Start the a postgres instance
 
-```bash
+```bash linenums="1" title="Command"
 docker run -d \
 --name postgres-init \
 --env POSTGRES_PASSWORD=rootpass \
@@ -135,12 +142,14 @@ PostgreSQL init process complete; ready for start up.
 
 * Get into the container and create the user and database
 
-<pre class="command-line" data-user="root" data-host="matrix-host" data-output=""><code class="language-bash">docker exec -it postgres-init /bin/bash
+```bash
+docker exec -it postgres-init /bin/bash
 createuser --pwprompt synapse_user
 Enter password for new role:
 Enter it again:
 createdb --encoding=UTF8 --locale=C --template=template0 --owner=synapse_user synapse
-exit</code></pre>
+exit
+```
 
 !!! info
     If you use another user than `root` (`POSTGRES_USER=root`) add `-U [USERNAME]` paramter at the and of the commands. `createuser --pwprompt synapse_user -U [USERNAME]`
@@ -228,7 +237,7 @@ This will create a minimal `Caddyfile` example. Actually this command does nothi
 
 You Caddyfile should look like this:
 
-```conf
+```conf linenums="1"
 matrix.vincze.work {
   # Set this path to your site's directory.
   root * /usr/share/caddy
@@ -253,17 +262,25 @@ docker-compose up --detach
 
 And wait for `up` condition:
 
-<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-6"><code class="language-bash">docker-compose ps
+```bash linenums="1" title="Command" 
+docker-compose ps
+```
+```text title="Output"
       Name                    Command                  State                                            Ports                                      
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 matrix-postgres    docker-entrypoint.sh postgres    Up             5432/tcp                                                                        
 matrix-web-caddy   caddy run --config /etc/ca ...   Up             2019/tcp, 0.0.0.0:443->443/tcp,:::443->443/tcp, 0.0.0.0:80->80/tcp,:::80->80/tcp
-synapse-matrix     /start.py                        Up (healthy)   0.0.0.0:8008->8008/tcp,:::8008->8008/tcp, 8009/tcp, 8448/tcp</code></pre>
+synapse-matrix     /start.py                        Up (healthy)   0.0.0.0:8008->8008/tcp,:::8008->8008/tcp, 8009/tcp, 8448/tcp
+```
 
 **Check your matrix server:**
 
-<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2"><code class="language-bash">curl https://matrix.vincze.work/health
-OK</code></pre>
+```bash title="Command"
+curl https://matrix.vincze.work/health
+```
+```text title="Output"
+OK
+```
 
 **Browser Screenshot:**
 
@@ -394,10 +411,14 @@ kubectl -n matrix create secret generic matrix-key \
 --from-file config/matrix-kub-test.duckdns.org.signing.key
 
 ```
+
 * Create Persistent Volume
 
 
-<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/PersistentVolumeClaim-matrix.yaml"></pre>
+```json title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/PersistentVolumeClaim-matrix.yaml" target="_blank">Click Here For Raw Source</a>' linenums="1"
+--8<-- "docs/files/matrix/PersistentVolumeClaim-matrix.yaml"
+```
+
 
 **Download & Apply**
 
@@ -412,7 +433,9 @@ kubectl apply -f /tmp/matrix-pvc.yaml
 First we deploy the Matrix homeserver without any configuration changes. Later we can update the `homeserver.yaml` in the Configmap.
 
 
-<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Deployment-matrix.yaml"></pre>
+```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Deployment-matrix.yaml" target="_blank">Click Here For Raw Source</a>' linenums="1"
+--8<-- "docs/files/matrix/Deployment-matrix.yaml"
+```
 
 
 **Download & Apply**
@@ -427,13 +450,20 @@ kubectl apply -f /tmp/Deployment-matrix.yaml
 
 **Check The Deployment**
 
-<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-3"><code class="language-bash">kubectl -n matrix get deployment
+
+```bash title="Command"
+kubectl -n matrix get deployment
+```
+```text title="Output"
 NAME     READY   UP-TO-DATE   AVAILABLE   AGE
-matrix   1/1     1            1           3d1h </code></pre>
+matrix   1/1     1            1           3d1h 
+```
 
 #### Create Service
 
-<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Service-matrix.yaml"></pre>
+```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Service-matrix.yaml" target="_blank">Click Here For Raw Source</a>' linenums="1"
+--8<-- "docs/files/matrix/Service-matrix.yaml"
+```
 
 **Download & Apply**
 
@@ -445,7 +475,10 @@ kubectl apply -f /tmp/Service-matrix.yaml
 
 **Check The Service**
 
-<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-16"><code class="language-bash">kubectl -n matrix describe svc matrix
+```bash title="Command"
+kubectl -n matrix describe svc matrix
+```
+```text title="Output"
 Name:              matrix
 Namespace:         matrix
 Labels:            k8s-app=postgres
@@ -460,7 +493,8 @@ Port:              matrix  8008/TCP
 TargetPort:        8008/TCP
 Endpoints:         10.32.0.3:8008
 Session Affinity:  None
-Events:            <none> </code></pre>
+Events:            <none> 
+```
 
 
 
@@ -469,7 +503,10 @@ Events:            <none> </code></pre>
 
 #### Create The `PersistentVolumeClaim`
 
-<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/PersistentVolumeClaim-postgres.yaml"></pre>
+```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/PersistentVolumeClaim-postgres.yaml" target="_blank">Click Here For Raw Source</a>' linenums="1"
+--8<-- "docs/files/matrix/PersistentVolumeClaim-postgres.yaml"
+```
+
 
 **Download & Apply**
 
@@ -490,8 +527,10 @@ This password will be used in the `Deployment` as the password of the initial us
 
 #### Deployment
 
+```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Deployment-postgres.yaml" target="_blank">Click Here For Raw Source</a>' linenums="1"
+--8<-- "docs/files/matrix/Deployment-postgres.yaml"
+```
 
-<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Deployment-postgres.yaml"></pre>
 
 **Download & Apply**
 
@@ -503,24 +542,36 @@ kubectl apply -f /tmp/Deployment-postgres.yaml
 
 **Check The Pod & Logs**
 
-<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-5,7-10,12-14"><code class="language-bash">kubectl -n matrix get deployment
+```bash title="Command"
+kubectl -n matrix get deployment
+```
+```text title="Output"
 NAME       READY   UP-TO-DATE   AVAILABLE   AGE
 matrix     1/1     1            1           3d2h
 postgres   1/1     1            1           6m15s
-
+```
+```bash title="Command"
 kubectl -n matrix get pods -o wide
+```
+```text title="Output"
 NAME                        READY   STATUS    RESTARTS   AGE     IP          NODE                           NOMINATED NODE   READINESS GATES
 matrix-7658b9d5db-49kcc     1/1     Running   5          5d19h   10.32.0.3   kube-test.int.vinyosoft.info   <none>           <none>
 postgres-7698969f95-8c4jn   1/1     Running   1          2d18h   10.32.0.8   kube-test.int.vinyosoft.info   <none>           <none>
-
+```
+```bash title="Command"
 kubectl -n matrix logs $(kubectl -n matrix get pods -o name | grep postgres ) | tail -n 3
+```
+```title="Output"
 2021-10-26 18:41:34.085 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
 2021-10-26 18:41:34.170 UTC [64] LOG:  database system was shut down at 2021-10-26 18:41:33 UTC
-2021-10-26 18:41:34.216 UTC [1] LOG:  database system is ready to accept connections</code></pre>
+2021-10-26 18:41:34.216 UTC [1] LOG:  database system is ready to accept connections
+```
 
 #### Service
 
-<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Service-postgres.yaml"></pre>
+```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Service-postgres.yaml" target="_blank">Click Here For Raw Source</a>' linenums="1"
+--8<-- "docs/files/matrix/Service-postgres.yaml"
+```
 
 **Download & Apply**
 
@@ -532,7 +583,10 @@ kubectl apply -f /tmp/Service-postgres.yaml
 
 **Check The Service**
 
-<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-16"><code class="language-bash">kubectl -n matrix describe services postgres
+```bash title="Command"
+kubectl -n matrix describe services postgres
+```
+```text title="Output"
 Name:              postgres
 Namespace:         matrix
 Labels:            k8s-app=postgres
@@ -547,7 +601,9 @@ Port:              postgres  5432/TCP
 TargetPort:        5432/TCP
 Endpoints:         10.32.0.8:5432
 Session Affinity:  None
-Events:            <none> </code></pre>
+Events:            <none> 
+```
+
 
 Check if the IP address and port of `Endpoints` are matching the Postgres POD IP address and port.
 
@@ -557,14 +613,15 @@ Check if the IP address and port of `Endpoints` are matching the Postgres POD IP
 
 First we need to create a user and database for the homeserver, just like we did before in the compose section.
 
-<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2,3,8"><code class="language-bash">kubectl -n matrix exec -it postgres-7698969f95-8c4jn -- /bin/bash
+```bash linenums="1"
+kubectl -n matrix exec -it postgres-7698969f95-8c4jn -- /bin/bash
 
 # Inside the container:
 createuser --pwprompt synapse_user -U matrix
 Enter password for new role: 12345678
 Enter it again: 12345678
 createdb --encoding=UTF8 --locale=C --template=template0 --owner=synapse_user synapse -U matrix  
-</code></pre>
+```
 
 #### Modify The Homeserver Configmap
 
@@ -619,8 +676,9 @@ I can't write example for the all available scenario, but I want to post here a 
 
 If you have already a working architecture you may need only an Ingress like this:
 
-
-<pre class="line-numbers language-yaml" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Ingress-matrix.yaml"></pre>
+```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/matrix/Ingress-matrix.yaml" target="_blank">Click Here For Raw Source</a>' linenums="1"
+--8<-- "docs/files/matrix/Ingress-matrix.yaml"
+```
 
 **Download & Apply**
 
@@ -632,7 +690,10 @@ kubectl apply -f /tmp/Ingress-matrix.yaml
 
 **Check Ingress**
 
-<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-15"><code class="language-bash">kubectl -n matrix describe ingress matrix
+```bash title="Command"    
+kubectl -n matrix describe ingress matrix
+```
+```text title="Output" hl_lines="8 9"
 Name:             matrix
 Namespace:        matrix
 Address:          172.16.1.214
@@ -646,8 +707,8 @@ Annotations:           nginx.ingress.kubernetes.io/proxy-body-size: 110m
 Events:
   Type    Reason  Age                From                      Message
   ----    ------  ----               ----                      -------
-  Normal  Sync    24s (x3 over 17m)  nginx-ingress-controller  Scheduled for sync </code> </pre>
-
+  Normal  Sync    24s (x3 over 17m)  nginx-ingress-controller  Scheduled for sync 
+```
 
 **How Ingress - Service And Deployment Are Related?**
 
@@ -728,10 +789,15 @@ spec:
 
 Check:
 
-<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-4"><code class="language-bash">kubectl get ClusterIssuer -o wide
+
+```bash title="Command"
+kubectl get ClusterIssuer -o wide
+```
+```text title="Output"
 NAME                  READY   STATUS                                                 AGE
 letsencrypt-prod      True    The ACME account was registered with the ACME server   49s
-letsencrypt-staging   True    The ACME account was registered with the ACME server   5h31m </code></pre>
+letsencrypt-staging   True    The ACME account was registered with the ACME server   5h31m 
+```
 
 
 **Create `Ingress`**
@@ -768,20 +834,28 @@ That's all! :) If your Kubernetes Ingress accessible from the Internet on port 8
 
 If something is not working as expected, there are some `resources` you should check.
 
-<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-7"><code class="language-bash">api-resources | grep cert-manager.io
+
+```bash title="Command"
+api-resources | grep cert-manager.io
+```
+```text title="Output"
 challenges                                     acme.cert-manager.io/v1                true         Challenge
 orders                                         acme.cert-manager.io/v1                true         Order
 certificaterequests               cr,crs       cert-manager.io/v1                     true         CertificateRequest
 certificates                      cert,certs   cert-manager.io/v1                     true         Certificate
 clusterissuers                                 cert-manager.io/v1                     false        ClusterIssuer
-issuers                                        cert-manager.io/v1                     true         Issuer </code></pre>
+issuers                                        cert-manager.io/v1                     true         Issuer 
+```
 
 First check `challenges`:
 
-
-<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-3"><code class="language-bash">kubectl -n matrix get challenges
+```bash title="Command"
+kubectl -n matrix get challenges
+```
+```text title="Output"
 NAME                                              STATE     DOMAIN                                   AGE
-matrix-prod-ingress-gptxf-1059591821-1281697531   pending   homeserver.matrix-kub-test.duckdns.org   2m42s </code></pre>
+matrix-prod-ingress-gptxf-1059591821-1281697531   pending   homeserver.matrix-kub-test.duckdns.org   2m42s 
+```
 
 You can see that the `challenge` is in `pending` state. You can check what could be the problem with the following command:
 
@@ -807,12 +881,16 @@ status:
 
 Check `certificaterequests` and `certificates`
 
-<pre class="command-line" data-user="root" data-host="matrix-host" data-output="2-6"><code class="language-bash">kubectl -n matrix get crs,certs
+```bash title="Command"
+kubectl -n matrix get crs,certs
+```
+```text title="Command"
 NAME                                                           APPROVED   DENIED   READY   ISSUER             REQUESTOR                                         AGE
 certificaterequest.cert-manager.io/matrix-prod-ingress-gptxf   True                True    letsencrypt-prod   system:serviceaccount:cert-manager:cert-manager   19m
 
 NAME                                              READY   SECRET                AGE
-certificate.cert-manager.io/matrix-prod-ingress   True    matrix-prod-ingress   19m </code></pre>
+certificate.cert-manager.io/matrix-prod-ingress   True    matrix-prod-ingress   19m 
+```
 
 Your certificate is stored in this `Secret`: `secretName: matrix-prod-ingress`
 

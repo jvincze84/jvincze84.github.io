@@ -149,7 +149,7 @@ This stores the MQTT message from the device.
 
 
 Example message:
-```json
+```json linenums="1"
 {
   "PulseTime1": {
     "Set": 0,
@@ -181,7 +181,7 @@ Here we build a list contains all the device which we want to use with `Pulsetim
 
 This automation is triggered immediately after you have selected a new device form the drop down list.
 
-```yaml
+```yaml linenums="1"
 trigger:
   - platform: state
     entity_id: input_select.timer_set
@@ -189,7 +189,7 @@ trigger:
 
 #### Action
 
-```yaml
+```yaml linenums="1"
 action:
   - service: input_text.set_value
     target:
@@ -254,7 +254,7 @@ Let's see how we handle the received message.
 
 #### Trigger
 
-```yaml
+```yaml linenums="1"
 trigger:
   - platform: mqtt
     topic: sonoff/+/stat/RESULT
@@ -286,15 +286,19 @@ This will cause error when we try to parese the json... I want to explain what I
 
 As we discussed earlier we need the actual pulsetime from the device/channel. We can parse the JSON like this:
 
-```bash
+```bash title="Command"
 echo -n '{"PulseTime1":{"Set":0,"Remaining":0}}' | jq -r '.PulseTime1.Set'
+```
+```text title="Output"
 0
 ```
 
 But what happens with the `{"POWER4":"OFF"}` message:
 
-```bash
+```bash title="Command"
 echo -n '{"POWER4":"OFF"}' | jq -r '.PulseTime1.Set'
+```
+```text title="Output"
 null
 ```
 
@@ -303,7 +307,7 @@ We got a big `null`. To avoid error or warn messages in the Home Assistant log w
 
 #### Conditions
 
-```yaml
+```yaml linenums="1"
 condition:
   - condition: template
     value_template: '{{ ''PulseTime'' in  trigger.payload }}'
@@ -322,7 +326,7 @@ You selected the "Kitchen Spot" from the drop down list. The `input_number.pulse
 
 #### Actions
 
-```yaml
+```yaml linenums="1"
 action:
   - service: input_number.set_value
     target:
@@ -371,7 +375,7 @@ The first action set the value of `input_number.pulseTimeActualValue` helper. Bu
 
 
 Maybe this block have to be mentioned, as well:
-```yaml
+```yaml linenums="1"
         {% if  pulseTime != 'notset' %}
           {% if  pulseTime == 0 %}
             0
@@ -399,7 +403,7 @@ Now we have only one Automation left to discuss. Everything we did before is use
 
 #### Trigger
 
-```yaml
+```yaml linenums="1"
 trigger:
   - platform: state
     entity_id: input_number.number
@@ -410,7 +414,7 @@ Simple trigger: when a new value is set. I think no explanation is required.
 
 #### Action
 
-```yaml
+```yaml linenums="1"
 action:
   - service: mqtt.publish
     data:
@@ -456,7 +460,7 @@ Ok we are almost done. Only two part we have to mention. Do you remember the "Pu
 
 ### PulseTime Set New
 
-```yaml
+```yaml linenums="1"
 alias: PulseTime Set New
 sequence:
   - service: mqtt.publish
@@ -478,7 +482,7 @@ I think every part of this script is discussed earlier and I don't want to repea
 
 ### Check Debug
 
-```yaml
+```yaml linenums="1"
 sequence:
   - service: mqtt.publish
     data:
@@ -496,7 +500,7 @@ Simply publish to topic stored in `input_text.pulsetimeactualmac` helper.
 
 For your convenience  I share the dashboard I use (Fig 1). Here you can check how each components are used.
 
-```yaml
+```yaml linenums="1"
 title: Otthon
 views:
   - title: Timer

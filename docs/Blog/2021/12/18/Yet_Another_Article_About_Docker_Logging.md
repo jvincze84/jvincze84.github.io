@@ -31,7 +31,7 @@ Documentation: [https://docs.fluentd.org/input/forward](https://docs.fluentd.org
 
 This section is responsible for receiving the logs from the Docker daemon.
 
-```config
+```xml
 <source>
   @type forward
   port 24224
@@ -47,7 +47,7 @@ Documentation: [https://docs.fluentd.org/output/elasticsearch](https://docs.flue
 
 Configuration example:
 
-```conf
+```code
 <match {syslog.**,dockerdaemon.**}>
   @type elasticsearch
   suppress_type_name true
@@ -80,9 +80,19 @@ Configuration example:
 `suppress_type_name`
 
 : In Elasticsearch 7.x, Elasticsearch cluster complains the following types removal warnings  
-  ``` json
-  {"type": "deprecation", "timestamp": "2020-07-03T08:02:20,830Z", "level": "WARN", "component": "o.e.d.a.b.BulkRequestParser", "cluster.name": "docker-cluster", "node.name": "70dd5c6b94c3", "message": "[types removal] Specifying types in bulk requests is deprecated.", "cluster.uuid": "NoJJmtzfTtSzSMv0peG8Wg", "node.id": "VQ-PteHmTVam2Pnbg7xWHw"  }
-  ```
+``` json
+  {
+  "type": "deprecation",
+  "timestamp": "2020-07-03T08:02:20,830Z",
+  "level": "WARN",
+  "component": "o.e.d.a.b.BulkRequestParser",
+  "cluster.name": "docker-cluster",
+  "node.name": "70dd5c6b94c3",
+  "message": "[types removal] Specifying types in bulk requests is deprecated.",
+  "cluster.uuid": "NoJJmtzfTtSzSMv0peG8Wg",
+  "node.id": "VQ-PteHmTVam2Pnbg7xWHw"
+}
+```
 
 `host "10.8.0.30"`
 
@@ -144,7 +154,8 @@ Parser documentation: [https://docs.fluentd.org/parser/syslog](https://docs.flue
 * Adds hostname field to the json message. (`Line 12`)
 
 Example:
-<pre data-line="12,13" class="language-json" style="white-space:pre-wrap;" ><code>{
+```json hl_lines="12 13" linenums="1"
+{
   "_index": "vps10-2021.12.18",
   "_type": "_doc",
   "_id": "KD5Azn0BkfuDokpII8aN",
@@ -172,7 +183,8 @@ Example:
   "sort": [
     1639842843000
   ]
-} </code></pre>
+} 
+```
 
 ### Docker Filter
 
@@ -189,14 +201,16 @@ This is similar to the previous syslog filter.
 
 ## Docker Daemon Config
 
-<pre data-line="4,5,6" class="language-json" style="white-space:pre-wrap;" ><code>{
+```json  hl_lines="4 5 6" linenums="1"
+{
   "log-driver": "fluentd",
   "log-opts": {
     "fluentd-address": "localhost:24224",
     "fluentd-async": "true",
     "tag": "dockerdaemon.{{.Name}}"
   }
-} </code></pre>
+} 
+```
 
 **Line 4**
 
@@ -214,7 +228,8 @@ This is similar to the previous syslog filter.
 
 **Example JSON:**
 
-<pre data-line="12" class="language-json" style="white-space:pre-wrap;" ><code>{
+```json  hl_lines="12" linenums="1"
+{
   "_index": "vps10-2021.12.18",
   "_type": "_doc",
   "_id": "JD9Qzn0BkfuDokpI9zL6",
@@ -241,7 +256,8 @@ This is similar to the previous syslog filter.
   "sort": [
     1639843947000
   ]
-} </code></pre>
+}
+```
 
 !!! warning
     It's not enough to restart the docker daemon to take affects logging settings on containers. Every container have to be recreated. (not just restarted)
@@ -252,7 +268,7 @@ In the examples above all of you containers are tagged with their name. It is us
 
 Another `/etc/docker/daemon.json` example:
 
-```conf
+```json
 {
   "log-driver": "fluentd",
   "log-opts": {
@@ -291,7 +307,8 @@ LogFormat "%V:%p %h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" v
 ```
 
 Example JSON log message:
-<pre data-line="12-21" class="language-json" style="white-space:pre-wrap;" ><code>{
+```json  hl_lines="12-21" linenums="1"
+{
   "_index": "nuc-2021.12.18",
   "_type": "_doc",
   "_id": "qj9Yzn0BkfuDokpIOGHF",
@@ -327,11 +344,16 @@ Example JSON log message:
   "sort": [
     1639844425000
   ]
-} </code></pre>
+} 
+```
 
 ## Complete Fluentd Config
 
-<pre class="line-numbers language-conf" data-src="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/td-agen-20211218.conf"></pre>
+
+```json title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/td-agen-20211218.conf" target="_blank">Click Here For Raw Source</a>' linenums="1"
+--8<-- "docs/files/td-agen-20211218.conf"
+```
+
 
 
 

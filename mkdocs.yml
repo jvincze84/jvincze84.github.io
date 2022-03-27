@@ -18,6 +18,7 @@ theme:
       - search.highlight
 #      - toc.integrate
       - header.autohide
+      - content.code.annotate      
     palette:
       - scheme: default
         primary: indigo
@@ -45,12 +46,11 @@ markdown_extensions:
   - pymdownx.mark
   - pymdownx.tilde
   - pymdownx.details
-#  - pymdownx.highlight
-#  - pymdownx.inlinehilite
-#  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
   - pymdownx.snippets  
-#  - pymdownx.highlight:
-#      linenums: true
+  - pymdownx.highlight:
+      anchor_linenums: true
   - attr_list
   - md_in_html
 
@@ -94,13 +94,8 @@ markdown_extensions:
 
 
 
-
 extra_css:
   - css/width.css
-  - css/prism.css
-
-extra_javascript:
-  - js/prism.js
 
 plugins:
   - blogging:

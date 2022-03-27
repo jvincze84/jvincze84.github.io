@@ -34,7 +34,7 @@ Since the borg install procedure is always the same, I've done once and cloned t
 ### Install On Debian 11
 
 OS version:
-```plain
+```plain linenums="1"
 root@borg01:~# cat /etc/os-release
 PRETTY_NAME="Debian GNU/Linux 11 (bullseye)"
 NAME="Debian GNU/Linux"
@@ -88,19 +88,19 @@ IP Addresses:
 The borg-01 will be the server, it will store the backups.
 
 * Create User
-```bash
+```bash linenums="1" title="Command"
 useradd --shell /bin/bash --create-home  borg
 ```
 
 * Create SSH keys
-```bash
+```bash linenums="1"
 su borg -s /bin/bash
 ssh-keygen
 cat ~/.ssh/id_rsa.pub >~/.ssh/authorized_keys
 ```
 
 * Distribute the private key accross the other servers.
-```bash
+```bash linenums="1"
 mkdir .ssh
 cat <<EOF>~/.ssh/id_rsa
 -----BEGIN OPENSSH PRIVATE KEY-----
@@ -148,7 +148,11 @@ chmod 600 ~/.ssh/id_rsa
 ```
 
 Test:
-<pre class="command-line" data-user="root" data-host="borg-02" data-output="2-10"><code class="language-bash">ssh borg@172.16.1.215
+```bash  title="Command"
+ssh borg@172.16.1.215
+```
+
+```text title="Output"
 Linux borg-01 5.13.19-1-pve #1 SMP PVE 5.13.19-2 (Tue, 09 Nov 2021 12:59:38 +0100) x86_64
 
 The programs included with the Debian GNU/Linux system are free software;
@@ -158,7 +162,8 @@ individual files in /usr/share/doc/*/copyright.
 Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
 permitted by applicable law.
 Last login: Sat Dec 11 15:51:46 2021 from 172.16.1.216
-borg@borg-01:~$ </code></pre>
+borg@borg-01:~$
+```
 
 Ok. It works well.
 
@@ -172,7 +177,7 @@ Ok. It works well.
 
 ### Initialize & Passphare
 
-* Create very storng passphare
+* Create very strong passphare
 ```bash
 head -c 32 /dev/urandom | base64 -w 0 > ~/.borg-passphrase
 chmod 400 ~/.borg-passphrase
@@ -180,9 +185,10 @@ export BORG_PASSCOMMAND="cat $HOME/.borg-passphrase"
 ```
 
 * Initialize
-
-<pre class="command-line" data-user="root" data-host="borg-02" data-output="2-13"><code class="language-bash">borg init -e repokey-blake2 borg@172.16.1.236:/home/borg/borg-02
-
+```bash linenums="1" title="Command"
+borg init -e repokey-blake2 borg@172.16.1.236:/home/borg/borg-02
+```
+```text title="Output"
 By default repositories initialized with this version will produce security
 errors if written to with an older version (up to and including Borg 1.0.8).
 
@@ -193,7 +199,8 @@ See https://borgbackup.readthedocs.io/en/stable/changes.html#pre-1-0-9-manifest-
 
 IMPORTANT: you will need both KEY AND PASSPHRASE to access this repo!
 Use "borg key export" to export the key, optionally in printable format.
-Write down the passphrase. Store both at safe place(s). </code></pre>
+Write down the passphrase. Store both at safe place(s). 
+```
 
 !!! caution
     If you lose the passphrase (`~/.borg-passphrase`) you lose all of the backups, as well. So I do really recommend to keep it in a safe place, not just in the home directory!
@@ -203,7 +210,7 @@ Repeat this step on all nodes you want to create backup.
 !!! important
     There are two really important things to be kept in safe, the passphrase  and the key. I strongly recommend to save them to you password manager or keep them somewhere in really safe. 
     
-#### Manage Your Key And Passphrase 
+#### Manage Your Key And Passphrase
 
 I assume you are using password manager in any way, and hope this manager is not a plain text file. :) 
 
@@ -213,8 +220,11 @@ cat ~/.borg-passphrase  ; echo
 ```
 The key is bit more complicated. Fisrt see how to export:
 
-<pre class="command-line" data-user="root" data-host="borg-02" data-output="3-15"><code class="language-bash">borg key export borg@172.16.1.236:/home/borg/borg-02  /tmp/key
+```bash title="Command" linenums="1"
+borg key export borg@172.16.1.236:/home/borg/borg-02  /tmp/key
 cat /tmp/key
+```
+```text title="Output" 
 BORG_KEY f968c50460d1ca7aaec9a8e2347a61fd286b26fb84adcaa6de7808966026b51e
 hqlhbGdvcml0aG2mc2hhMjU2pGRhdGHaAZ7vhs+Yzwxg9VgXxo95S5+ScE8RT3yY6elK5J
 KJKhfwz/YYJrGO6ZlDSpr9i+fnUI7qz6BfIxBLA6yILdcFVpOUuy99cDp79Uyc7wrIDnTV
@@ -226,12 +236,17 @@ i01qqbrDoflkRAg/LiY76p0wi46ls8Annygw9RY7YzOq7+xEvImGRYXX5joJ9Lb1GQ3Eh1
 f6T5AofjK6WAIF5qD4RGVEoH0X8+7MJ6IHCu8aPbjnqVLvjR9Ubii7mS5gC9IRdaN5T61i
 PjNC3Lm8TjqL8WlSjqfqvu2BczikaGFzaNoAIL0XSOEvCdQ46MtJO5/Q98J1mEDsC9tLVv
 OBZZy+emXAqml0ZXJhdGlvbnPOAAGGoKRzYWx02gAg/tXk5wRp5YZlOHdzm+Gk+8f5Qi/f
-s2VHKZJPL8BfecWndmVyc2lvbgE=</code></pre>
+s2VHKZJPL8BfecWndmVyc2lvbgE=
+```
 
 If you can save this file as attachment  you are done. But not all password manager supports attachments, and the line brakes can be broken. In this case I recommend to use `base64`:
 
-<pre class="command-line" data-user="root" data-host="borg-02" data-output="2"><code class="language-bash">cat /tmp/key | base64 -w0 ; echo
-Qk9SR19LRVkgZjk2OGM1MDQ2MGQxY2E3YWFlYzlhOGUyMzQ3YTYxZmQyODZiMjZmYjg0YWRjYWE2ZGU3ODA4OTY2MDI2YjUxZQpocWxoYkdkdmNtbDBhRzJtYzJoaE1qVTJwR1JoZEdIYUFaN3ZocytZend4ZzlWZ1h4bzk1UzUrU2NFOFJUM3lZNmVsSzVKCktKS2hmd3ovWVlKckdPNlpsRFNwcjlpK2ZuVUk3cXo2QmZJeEJMQTZ5SUxkY0ZWcE9VdXk5OWNEcDc5VXljN3dySURuVFYKc2swb2lRV0J0MzcxMHlNM2hKUUM4NFE2OWdycmlQckYwamR6Z1NDdkRLbitGTmZRUWdMVGduWU1hdnh4blhaRVNUU3RuZwp6ZnhNdGNKWk1naEVtMU1mZDhad1JURFhQZ3BGNXowM2JYeSs3RHJRL2J0eGdpVzhHK2g2REVjY0JES3ZmMG9BZkRPUHZICnNHZ0MyYUJxK2xxcFVjeGRJaHBkK0NaMEJ6RmtXQ01yUWtyM1FPaGxNYkd0a3FpN2E3OC9ySVllSldldnlXd09ETTdSdloKaTAxcXFickRvZmxrUkFnL0xpWTc2cDB3aTQ2bHM4QW5ueWd3OVJZN1l6T3E3K3hFdkltR1JZWFg1am9KOUxiMUdRM0VoMQo3TVNGRmRWUmZBWGJjQVVseVFYWitrL1R6eFpJRnc3WnNYdlFMMzNBRkQxTXd1WFZKZFhDSlpGdFdOVUQ5N0NkNWNUd0VxCmY2VDVBb2ZqSzZXQUlGNXFENFJHVkVvSDBYOCs3TUo2SUhDdThhUGJqbnFWTHZqUjlVYmlpN21TNWdDOUlSZGFONVQ2MWkKUGpOQzNMbThUanFMOFdsU2pxZnF2dTJCY3ppa2FHRnphTm9BSUwwWFNPRXZDZFE0Nk10Sk81L1E5OEoxbUVEc0M5dExWdgpPQlpaeStlbVhBcW1sMFpYSmhkR2x2Ym5QT0FBR0dvS1J6WVd4MDJnQWcvdFhrNXdScDVZWmxPSGR6bStHays4ZjVRaS9mCnMyVkhLWkpQTDhCZmVjV25kbVZ5YzJsdmJnRT0K</code></pre>
+```bash title="Command"
+cat /tmp/key | base64 -w0 ; echo
+```
+```text title="Output"
+Qk9SR19LRVkgZjk2OGM1MDQ2MGQxY2E3YWFlYzlhOGUyMzQ3YTYxZmQyODZiMjZmYjg0YWRjYWE2ZGU3ODA4OTY2MDI2YjUxZQpocWxoYkdkdmNtbDBhRzJtYzJoaE1qVTJwR1JoZEdIYUFaN3ZocytZend4ZzlWZ1h4bzk1UzUrU2NFOFJUM3lZNmVsSzVKCktKS2hmd3ovWVlKckdPNlpsRFNwcjlpK2ZuVUk3cXo2QmZJeEJMQTZ5SUxkY0ZWcE9VdXk5OWNEcDc5VXljN3dySURuVFYKc2swb2lRV0J0MzcxMHlNM2hKUUM4NFE2OWdycmlQckYwamR6Z1NDdkRLbitGTmZRUWdMVGduWU1hdnh4blhaRVNUU3RuZwp6ZnhNdGNKWk1naEVtMU1mZDhad1JURFhQZ3BGNXowM2JYeSs3RHJRL2J0eGdpVzhHK2g2REVjY0JES3ZmMG9BZkRPUHZICnNHZ0MyYUJxK2xxcFVjeGRJaHBkK0NaMEJ6RmtXQ01yUWtyM1FPaGxNYkd0a3FpN2E3OC9ySVllSldldnlXd09ETTdSdloKaTAxcXFickRvZmxrUkFnL0xpWTc2cDB3aTQ2bHM4QW5ueWd3OVJZN1l6T3E3K3hFdkltR1JZWFg1am9KOUxiMUdRM0VoMQo3TVNGRmRWUmZBWGJjQVVseVFYWitrL1R6eFpJRnc3WnNYdlFMMzNBRkQxTXd1WFZKZFhDSlpGdFdOVUQ5N0NkNWNUd0VxCmY2VDVBb2ZqSzZXQUlGNXFENFJHVkVvSDBYOCs3TUo2SUhDdThhUGJqbnFWTHZqUjlVYmlpN21TNWdDOUlSZGFONVQ2MWkKUGpOQzNMbThUanFMOFdsU2pxZnF2dTJCY3ppa2FHRnphTm9BSUwwWFNPRXZDZFE0Nk10Sk81L1E5OEoxbUVEc0M5dExWdgpPQlpaeStlbVhBcW1sMFpYSmhkR2x2Ym5QT0FBR0dvS1J6WVd4MDJnQWcvdFhrNXdScDVZWmxPSGR6bStHays4ZjVRaS9mCnMyVkhLWkpQTDhCZmVjV25kbVZ5YzJsdmJnRT0K
+```
 
 Restore command: `echo -n [BASE64_STRING] | base64 -d`
 
@@ -250,7 +265,10 @@ Restore command: `echo -n [BASE64_STRING] | base64 -d`
 
 
 
-<pre class="command-line" data-user="root" data-host="borg-02" data-output="2-17"><code class="language-bash">borg create --stats borg@172.16.1.236:/home/borg/borg-02::firstBackup /root /etc /home /opt
+```bash title="Command"
+borg create --stats borg@172.16.1.236:/home/borg/borg-02::firstBackup /root /etc /home /opt
+```
+```text title="Output"
 ------------------------------------------------------------------------------
 Archive name: firstBackup
 Archive fingerprint: 882ed726a7115928149aa438af4b78f09d322a34c17dd65f0bf7ce537092ee1b
@@ -266,11 +284,15 @@ All archives:                1.61 MB            654.41 kB            649.83 kB
 
                        Unique chunks         Total chunks
 Chunk index:                     424                  434
------------------------------------------------------------------------------- </code></pre>
+------------------------------------------------------------------------------
+```
 
 Create another backup:
 
-<pre class="command-line" data-user="root" data-host="borg-02" data-output="2-17"><code class="language-bash">borg create --stats borg@172.16.1.236:/home/borg/borg-02::secondBackup /root /etc /home /opt /var/log/
+```bash title="Command"
+borg create --stats borg@172.16.1.236:/home/borg/borg-02::secondBackup /root /etc /home /opt /var/log/
+```
+```txt title="Output"
 ------------------------------------------------------------------------------
 Archive name: secondBackup
 Archive fingerprint: f61a6d2ce46fc6433a6cfa9cdb1f146933f897c6bce769d071644e7117684cd9
@@ -286,20 +308,25 @@ All archives:               52.77 MB              9.60 MB              9.00 MB
 
                        Unique chunks         Total chunks
 Chunk index:                     458                  898
-------------------------------------------------------------------------------</code></pre>
-
+------------------------------------------------------------------------------
+```
 
 ### Check & List Backups
 
 * List Backups 
-
-<pre class="command-line" data-user="root" data-host="borg-02" data-output="2-3"><code class="language-bash">borg list borg@172.16.1.236:/home/borg/borg-02
+```bash title="Command"
+borg list borg@172.16.1.236:/home/borg/borg-02
+```
+```text title="Output"
 firstBackup                          Sat, 2021-12-11 17:43:09 [882ed726a7115928149aa438af4b78f09d322a34c17dd65f0bf7ce537092ee1b]
-secondBackup                         Sat, 2021-12-11 17:44:53 [f61a6d2ce46fc6433a6cfa9cdb1f146933f897c6bce769d071644e7117684cd9]</code></pre>
+secondBackup                         Sat, 2021-12-11 17:44:53 [f61a6d2ce46fc6433a6cfa9cdb1f146933f897c6bce769d071644e7117684cd9]
+```
 
 * Check The Conent Of A Backup
-
-<pre class="command-line" data-user="root" data-host="borg-02" data-output="2-10"><code class="language-bash">borg list borg@172.16.1.236:/home/borg/borg-02::secondBackup
+```bash title="Command"
+borg list borg@172.16.1.236:/home/borg/borg-02::secondBackup
+```
+```text title="Output"
 drwx------ root   root          0 Sat, 2021-12-11 17:36:41 root
 -rw-r--r-- root   root        161 Tue, 2019-07-09 12:05:50 root/.profile
 -rw-r--r-- root   root        571 Sat, 2021-04-10 22:00:00 root/.bashrc
@@ -308,25 +335,29 @@ drwx------ root   root          0 Sat, 2021-12-11 17:26:32 root/.ssh
 -rw------- root   root       2602 Sat, 2021-12-11 17:25:59 root/.ssh/id_rsa
 -rw-r--r-- root   root        222 Sat, 2021-12-11 17:26:32 root/.ssh/known_hosts
 ...
-... </code></pre>
+...
+```
 
 
 ### Extact Content
 
 For example we want to restore the home direcrory from the `secondBackup`.
-
-<pre class="command-line" data-user="root" data-host="borg-02" data-output="6-12"><code class="language-bash">cd /tmp
+```bash title="Command"
+cd /tmp
 mkdir restore
 cd restore
 borg extract borg@172.16.1.236:/home/borg/borg-02::secondBackup home
 find
+```
+```text title="Output"
 .
 ./home
 ./home/user
 ./home/user/.bash_history
 ./home/user/.bash_logout
 ./home/user/.bashrc
-./home/user/.profile </code></pre>
+./home/user/.profile 
+```
 
 Borg has a really lovely feature: you can mount any of your backup.
 
@@ -338,8 +369,11 @@ borg mount borg@172.16.1.236:/home/borg/borg-02::secondBackup /mnt
 ```
 
 Check:
-<pre class="command-line" data-user="root" data-host="borg-02" data-output="2-10"><code class="language-bash">cd /mnt/
+```bash title="Command"
+cd /mnt/
 ls -la
+```
+```text title="Output"
 total 4
 drwxr-xr-x  1 root root    0 Dec 11 18:01 .
 drwxr-xr-x 18 root root 4096 Nov 21 13:38 ..
@@ -347,7 +381,8 @@ drwxr-xr-x  1 root root    0 Dec 11 17:43 etc
 drwxr-xr-x  1 root root    0 Nov 21 13:42 home
 drwxr-xr-x  1 root root    0 Nov 21 13:35 opt
 drwx------  1 root root    0 Dec 11 17:36 root
-drwxr-xr-x  1 root root    0 Dec 11 18:01 var </code></pre>
+drwxr-xr-x  1 root root    0 Dec 11 18:01 var 
+```
 
 You can browse inside the backup and restore any file you want. 
 
@@ -410,7 +445,11 @@ borg list ${REPO_PATH}
 
 This script write logs to the `syslog`:
 
-<pre class="command-line" data-user="root" data-host="borg-02" data-output="2-29"><code class="language-bash">cat /var/log/syslog | grep 'borgbackup'
+```bash title="Command"
+cat /var/log/syslog | grep 'borgbackup'
+```
+
+```text title="Output"
 Dec 11 18:23:56 borg-02 borgbackup[4557]: ==================== Creating Backup ====================
 Dec 11 18:23:58 borg-02 borgbackup[4557]: ------------------------------------------------------------------------------
 Dec 11 18:23:58 borg-02 borgbackup[4557]: Archive name: 2021-12-11T18:23:56
@@ -438,7 +477,8 @@ Dec 11 18:24:00 borg-02 borgbackup[4557]:                        Unique chunks  
 Dec 11 18:24:00 borg-02 borgbackup[4557]: Chunk index:                     425                  435
 Dec 11 18:24:00 borg-02 borgbackup[4557]: ------------------------------------------------------------------------------
 Dec 11 18:24:00 borg-02 borgbackup[4557]: ==================== List ====================
-Dec 11 18:24:01 borg-02 borgbackup[4557]: 2021-12-11T18:23:56                  Sat, 2021-12-11 18:23:56 [d8be120187e55f630cd4816b3879b2aae83f262a00336c3d20bd62da96dce7fa] </code></pre>
+Dec 11 18:24:01 borg-02 borgbackup[4557]: 2021-12-11T18:23:56                  Sat, 2021-12-11 18:23:56 [d8be120187e55f630cd4816b3879b2aae83f262a00336c3d20bd62da96dce7fa]
+```
 
 You can schedule this script using `crontab`:
 

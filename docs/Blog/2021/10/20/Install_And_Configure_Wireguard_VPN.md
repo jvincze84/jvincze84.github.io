@@ -45,13 +45,11 @@ You may want to check the official install doc if you have another system than D
 ## Configure The Server
 
 * Private Key
-
 ```bash
 export PRIVATE_KEY=$( wg genkey )
 ```
 
 * Public Key
-
 ```bash
 export PUBLIC_KEY=$( echo $PRIVATE_KEY | wg pubkey )
 ```
@@ -59,7 +57,6 @@ export PUBLIC_KEY=$( echo $PRIVATE_KEY | wg pubkey )
 Now you have to choose a public IP address range which never will overlap any of your existing network. Example: `10.9.0.0/24`
 
 * Create The Interface Configuration file `/etc/wireguard/wg0.conf`
-
 ```bash
 cat <<EOF>/etc/wireguard/wg0.conf
 # PubKey: $PUBLIC_KEY
@@ -71,15 +68,16 @@ EOF
 ```
 
 * Start the VPN Server
-
 ```bash
 systemctl enable wg-quick@wg0
 systemctl start wg-quick@wg0
 ```
 
 * Check The Interface
-
-<pre class="command-line" data-user="root" data-host="wghost" data-output="2-8"><code class="language-bash">ifconfig wg0
+```bash title="Command"
+ifconfig wg0
+```
+```text title="Ouptut"
 wg0: flags=209<UP,POINTOPOINT,RUNNING,NOARP>  mtu 1420
         inet 10.9.0.1  netmask 255.255.255.255  destination 10.9.0.1
         unspec 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  txqueuelen 1000  (UNSPEC)
@@ -87,13 +85,13 @@ wg0: flags=209<UP,POINTOPOINT,RUNNING,NOARP>  mtu 1420
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 0  bytes 0 (0.0 B)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0 </UP,POINTOPOINT,RUNNING,NOARP>
-</code></pre>
+```
 
 ## Create Peer (Client) Config
 
 ### Collect Things We Need
-
-<pre class="command-line" data-user="root" data-host="wghost" data-output="1,3,4,5,7,8,9,11,12,13,15"><code class="language-bash"># Private Key (Client)
+```bash hl_lines="2 6 10 14" linenums="1"
+# Private Key (Client)
 wg genkey
 iEypOx3Xt5HE++e5I5udO8oJ+bArSoEXqK3XvuvFeXo=
 
@@ -107,7 +105,8 @@ TSXemmthLlXp8gsLSTfcmqgjolvYWmppNhIUeppg/CU=
 
 # Preshared Key
 wg genpsk
-Samqdyf9gVcfEUPCS52I1hJCLMlXAmHoitk1l5y9UO0=</code></pre>
+Samqdyf9gVcfEUPCS52I1hJCLMlXAmHoitk1l5y9UO0=
+```
 
 
 Peer Config File:
@@ -419,7 +418,9 @@ Disatvantages:
 
 First let see the script:
 
-<pre class="line-numbers" data-src="/files/wg-sciprt.sh"><code class="language-bash"></code></pre>
+```json title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/wg-sciprt.sh" target="_blank">Click Here For Raw Source</a>' linenums="1"
+--8<-- "docs/files/wg-sciprt.sh"
+```
 
 ### Configuration
 
@@ -458,7 +459,8 @@ cp /tmp/wg0.conf /etc/wireguard
 ```
 ### Generate Your First Peer
 
-<pre class="command-line" data-user="root" data-host="wghost" data-output="5-32"><code class="language-bash">cd /etc/wireguard/clients
+```text hl_lines="1 2" linenums="1"
+cd /etc/wireguard/clients
 ./generate.sh 
 Config Name (peername): test-peer01
 Endpoint (leave blank for 232.188.60.51:51820): 
@@ -489,7 +491,8 @@ PersistentKeepalive = 25
 AllowedIPs = 10.8.0.0/24
 
 Run command to reload Wireguard: 
-wg syncconf wg0 <(wg-quick strip wg0)</code></pre>
+wg syncconf wg0 <(wg-quick strip wg0)
+```
 
 
 * The script will generate QR code for mobile client, and the config file: `test-peer01.conf`

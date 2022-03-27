@@ -47,28 +47,37 @@ iface br0 inet dhcp
 
 Now you should restart your PI, after that you can check your config:
 
-<pre class="command-line" data-user="root" data-host="raspberrypi" data-output="2-4"><code class="language-bash">brctl show
+```bash title="Command"
+brctl show
+```
+```text title="Output"
 bridge name	bridge id		STP enabled	interfaces
 br0		8000.b827eb26993d	no		eth0
-</code></pre>
+```
 
 ## Check Wifi Device & Configure Hostapd
 
 First it is recommended to **check if your Wireless device supports AP mode** or not. It is only necessary for example if you are using an RPI which is older than PI3. (RPI3 has built-n WiFi chip, which supports AP mode.)
 
 * **Check your interface list**
-<pre class="command-line" data-user="root" data-host="raspberrypi" data-output="2-8"><code class="language-bash">iw dev  
+```bash title="Command"
+iw dev  
+```
+```text title="Output"
 phy#0
 	Interface wlan0
 		ifindex 3
 		wdev 0x1
 		addr b8:27:eb:73:cc:68
 		type managed
-</code></pre>
+```
 
 You can see I have only one interface: `phy#0`. Here is an example when there are multiple interfaces:
 
-<pre class="command-line" data-user="root" data-host="raspberrypi" data-output="2-18"><code class="language-bash">iw dev  
+```bash title="Command"
+iw dev  
+```
+```text title="Output"
 phy#1
 	Interface wlan1
 		ifindex 4
@@ -84,11 +93,13 @@ phy#0
 		ssid Vinyo-Net
 		type AP
 		channel 2 (2417 MHz), width: 20 MHz, center1: 2417 MHz
-</code></pre>
+```
 
 * **Check "Supported interface modes"**
-
-<pre class="command-line" data-user="root" data-host="raspberrypi" data-output="2-29"><code class="language-bash">iw phy phy0 info
+```bash title="Command"
+iw phy phy0 info
+```
+```text title="Output"
 Wiphy phy0
 	max # scan SSIDs: 10
 	max scan IEs length: 2048 bytes
@@ -119,7 +130,7 @@ Wiphy phy0
 			DSSS/CCK HT40
 ...
 ...
-</code></pre>
+```
 
 
 As you can see, our built-in Wifi device supports the AP mode.
@@ -376,7 +387,7 @@ Finally I set up a systemd timer:
 
 * **hostapd.timer**
 
-<pre class="command-line" data-user="root" data-host="raspberrypi" data-output="2-12"><code class="language-bash">cat /lib/systemd/system/hostapd.timer
+```text title="cat /lib/systemd/system/hostapd.timer"
 [Unit]
 Description=Runs hostapd
 After=multi-user.target
@@ -386,7 +397,8 @@ OnBootSec=1min
 Unit=hostapd.service
 
 [Install]
-WantedBy=multi-user.target</code></pre>
+WantedBy=multi-user.target
+```
 
 I think 1 minute enough delay after boot to start hostapd.  
 
@@ -414,12 +426,15 @@ User=root
 #WantedBy=multi-user.target
 ```
 Commands:
-<pre class="command-line" data-user="root" data-host="raspberrypi" data-output="3,5"><code class="language-bash">systemctl daemon-reload
+```bash title="Command"
+systemctl daemon-reload
 systemctl disable hostapd.service
+```
+```text title="Output"
 Removed symlink /etc/systemd/system/multi-user.target.wants/hostapd.service.
 systemctl enable hostapd.timer
 Created symlink from /etc/systemd/system/multi-user.target.wants/hostapd.timer to /lib/systemd/system/hostapd.timer.
-</code></pre>
+```
 
 ## Final Thoughts
 
@@ -446,21 +461,25 @@ hostapd_cli all_sta | grep  -E '^([0-9|a-f|A-F]{2,2}\:?){6,6}'
 
 * **Check Connected Devices & Query MAC address on MIKROTIK router**
 
-<pre class="command-line" data-user="root" data-host="raspberrypi" data-output="2-6"><code class="language-bash">for MAC in $(hostapd_cli all_sta | grep  -E '^([0-9|a-f|A-F]{2,2}\:?){6,6}'); do echo "########## $MAC ##########" ; ssh admin@172.16.0.1 "ip dhcp-server lease print where mac-address=$MAC" ; done
+```bash title="Command"
+for MAC in $(hostapd_cli all_sta | grep  -E '^([0-9|a-f|A-F]{2,2}\:?){6,6}'); do echo "########## $MAC ##########" ; ssh admin@172.16.0.1 "ip dhcp-server lease print where mac-address=$MAC" ; done
+```
+```text title="Output"
 ########## 60:01:94:08:31:48 ##########
 Flags: X - disabled, R - radius, D - dynamic, B - blocked
  # ADDRESS                                      MAC-ADDRESS       HO SER.. RA
  0   172.20.0.15                                  60:01:94:08:31:48 NO def..
-</code></pre>
-
-
+```
 
 * **Check bridge interface**
-<pre class="command-line" data-user="root" data-host="raspberrypi" data-output="2-4"><code class="language-bash">brctl show
+```bash title="Command"
+brctl show
+```
+```text title="Output"
 bridge name	bridge id		STP enabled	interfaces
 br0		8000.b827eb26993d	no		eth0
 							wlan0
-</code></pre>
+```
 
 ==NOTE:== If the hostapd have been started successfully you have to see WLAN0 in the interface list.
 

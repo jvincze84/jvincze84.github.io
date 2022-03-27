@@ -106,7 +106,10 @@ Taking backup is always optional, but essential. If you skip this step, you lose
 You will need Esptool to achieve this step. If you don't know how to install it, please take a look at this page: [esptool](https://github.com/espressif/esptool)
 For Windows users maybe the "ESP8266Flasher" could be an option ([nodemcu-flasher](https://github.com/nodemcu/nodemcu-flasher)).
 
-<pre class="command-line" data-user="root" data-host="localhost" data-output="2-14"><code class="language-bash">esptool.py --port /dev/ttyUSB0 read_flash 0x00000 0x100000 image1M.bin
+```bash title="Command"
+esptool.py --port /dev/ttyUSB0 read_flash 0x00000 0x100000 image1M.bin
+```
+```text title="Output"
 esptool.py v2.3.1
 Connecting....
 Detecting chip type... ESP8266
@@ -119,7 +122,7 @@ Stub running...
 1048576 (100 %)
 Read 1048576 bytes at 0x0 in 94.9 seconds (88.4 kbit/s)...
 Hard resetting via RTS pin...
-</code></pre>
+```
 
 **Please be aware** that after any esptool command you have to reconnect to the device. (So, you have to disconnect vcc, press and hold the button and connect VCC again.)
 
@@ -127,7 +130,10 @@ Hard resetting via RTS pin...
 
 This step is also optional, but recommended.
 
-<pre class="command-line" data-user="root" data-host="localhost" data-output="2-13"><code class="language-bash">esptool.py --port /dev/ttyUSB0 erase_flash
+```bash title="Command"
+esptool.py --port /dev/ttyUSB0 erase_flash
+```
+```text title="Output"
 esptool.py v2.3.1
 Connecting....
 Detecting chip type... ESP8266
@@ -139,7 +145,7 @@ Stub running...
 Erasing flash (this may take a while)...
 Chip erase completed successfully in 3.2s
 Hard resetting via RTS pin...
-</code></pre>
+```
 
 ### 2.3. Flashing The Firmware
 
@@ -151,7 +157,10 @@ Before you use this link, please make sure that no newer version has been releas
 
 So, let's burn the firmware:
 
-<pre class="command-line" data-user="root" data-host="localhost" data-output="2-17"><code class="language-bash">esptool.py --port /dev/ttyUSB0 write_flash -fs 1MB -fm dout 0x0 sonoff.bin
+```bash title="Command"
+esptool.py --port /dev/ttyUSB0 write_flash -fs 1MB -fm dout 0x0 sonoff.bin
+```
+```text title="Output"
 
 esptool.py v2.3.1
 Connecting....
@@ -168,7 +177,7 @@ Hash of data verified.
 
 Leaving...
 Hard resetting via RTS pin...
-</code></pre>
+```
 
 That's all. You can assemble your sonoff and start using it. :)
 
