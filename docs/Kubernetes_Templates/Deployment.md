@@ -1,15 +1,15 @@
-# Deployments
+#Deployments
 
 ## Debian With Infinite Loop
 
-``` yaml linenums="1"
+```yaml linenums="1"
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
     k8s-app: debian-example
-  name: replace_me
-  namespace: replace_me
+  name: replace_me #(1)
+  namespace: replace_me # (2)
 spec:
   replicas: 1
   revisionHistoryLimit: 10
@@ -36,3 +36,6 @@ spec:
         securityContext:
           privileged: false
 ```
+
+1.  Name Of The Deployment
+2.  Namespace name where you want to Deploy.

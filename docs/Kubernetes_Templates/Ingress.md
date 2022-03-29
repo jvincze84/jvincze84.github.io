@@ -2,7 +2,7 @@
 
 ## Nginx Ingress Class
 
-```yaml
+```yaml linenums="1"
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -29,7 +29,7 @@ spec:
 !!! attention
     Deprecated Api Version
 
-```yaml
+```yaml linenums="1"
 kind: Ingress
 apiVersion: extensions/v1beta1
 metadata:
@@ -48,7 +48,7 @@ spec:
 
 ## Nginx Ingress HTTPS backend
 
-```yaml
+```yaml linenums="1"
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS

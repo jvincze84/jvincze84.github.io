@@ -98,6 +98,7 @@ extra_css:
   - css/width.css
 
 plugins:
+  - tags
   - blogging:
       dirs: # The directories to be included
         - Blog  
