@@ -1,3 +1,7 @@
+# Services
+
+## Nginx Ingress - MetalLB
+```yaml linenums="1"
 apiVersion: v1
 kind: Service
 metadata:
@@ -18,3 +22,4 @@ spec:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/name: ingress-nginx
   type: LoadBalancer
+```
