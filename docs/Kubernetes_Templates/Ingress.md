@@ -38,7 +38,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: dashboard.k8s-nuc-test.loc
+  - host: # replace with host name
     http:
       paths:
       - backend:
