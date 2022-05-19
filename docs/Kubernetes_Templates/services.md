@@ -70,5 +70,4 @@ Events:
   Normal  nodeAssigned  3h47m              metallb-speaker     announcing from node "k8s-nuc-test"
   Normal  nodeAssigned  61m                metallb-speaker     announcing from node "k8s-nuc-test"
   Normal  nodeAssigned  26m (x2 over 26m)  metallb-speaker     announcing from node "k8s-nuc-test"
-  
- ```
+```
