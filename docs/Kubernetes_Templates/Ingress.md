@@ -24,6 +24,34 @@ spec:
         pathType: ImplementationSpecific
 ```
 
+## Kubernetes Dashboard
+```yaml linenums="1"
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+  labels:
+    app.kubernetes.io/instance: kubernetes-dashboard
+  name: dashboard
+  namespace: kubernetes-dashboard
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: dashboard.k8s-nuc-test.loc
+    http:
+      paths:
+      - backend:
+          service:
+            name: kubernetes-dashboard
+            port:
+              number: 443
+        path: /
+        pathType: ImplementationSpecific
+```
+
+
+
 ## `extensions/v1beta1`
 
 !!! attention
