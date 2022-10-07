@@ -2,9 +2,9 @@
 
 ## TL;DR
 
-Maybe you are wondering if Kubernetes capable proxying requests to an external service.
+Maybe you are wondering if Kubernetes capable of proxying requests to an external service.
 In which situation can it be useful? What is the benefit of it?
-Imagine the situation that you have a Kubernetes cluster, perfectly configured Ingresses, Services, applications, etc. Everything goes well. But you have a service which is not running inside the Kubernetes cluster, and you want to access it form the internet. Port 443 and 80 are reserved for the IngressController, so your application could not bind these ports. My situation is similar to this, but there is a little difference.
+Imagine the situation that you have a Kubernetes cluster, perfectly configured Ingresses, Services, applications, etc. Everything goes well. But you have a service which is not running inside the Kubernetes cluster, and you want to access it form the internet. Port 443 and 80 are reserved for the IngressController, so your application could not bind these ports. My situation is similar to this, but it is a little difference.
 
 I have a Kubernetes cluster running on some VPS and at home: 
 
@@ -28,7 +28,7 @@ ingress-nginx-controller-qwr4c   1/1     Running   0          23d   10.8.0.2    
 ```
 
 For simplicity I'm using dns loadbalancer between my two ingress pods.  
-Another important thing, that the entire Kubernetes cluster is behind Wireguard VPN, so the nodes are connected to each other in this VPN connection. 
+Another important thing, that the entire Kubernetes cluster is behind Wireguard VPN, so the nodes are connected to each other inside this VPN connection. 
 
 I have a separate HomeAssistant server, and I want to access it through my static ip addresses. I think it is better than user some kind of DynDns service, and it is even impossible when you are behind CGNAT. All of my PCs (servers) connected to the same Wireguard VPN. So I want to access the HomeAssistant server through the nginx ingress. 
 
