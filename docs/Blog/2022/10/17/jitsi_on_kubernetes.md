@@ -67,6 +67,8 @@ These setting are for devices behind NAT. If you have your own TURN server, conf
 Since we will have only one POD and multiple containers inside it, we should use localhost to reach another component.
 If you have multiple containers inside a POD, you have to use localhost to reach one container from another. So contained inside the POD cannot bind the same port.
 
+Link: [https://kubernetes.io/docs/tasks/access-application-cluster/communicate-containers-same-pod-shared-volume/](https://kubernetes.io/docs/tasks/access-application-cluster/communicate-containers-same-pod-shared-volume/)
+
 If you experiencing connection timeout error messages, check the nginx configuration in the web container. 
 
 ```
@@ -95,9 +97,6 @@ location = /xmpp-websocket {
 
 Don't modify the nginx confuguration by hand, insted double check the XMPP_BOSH_URL_BASE & XMPP_SERVER system environments.
 
-
-
-[https://kubernetes.io/docs/tasks/access-application-cluster/communicate-containers-same-pod-shared-volume/](https://kubernetes.io/docs/tasks/access-application-cluster/communicate-containers-same-pod-shared-volume/)
 
 ## Persistent Volume
 
