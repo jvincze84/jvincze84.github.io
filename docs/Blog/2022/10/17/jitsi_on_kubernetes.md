@@ -125,7 +125,7 @@ spec:
 ## Deployment
 
 ```title="Jitsi Deployment"
---8<-- "https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/Deplyoment-jitsi.yaml"
+--8<-- "files/Deplyoment-jitsi.yaml"
 ```
 
 
