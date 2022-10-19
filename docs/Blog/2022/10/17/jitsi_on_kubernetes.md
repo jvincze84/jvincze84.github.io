@@ -124,7 +124,7 @@ spec:
 
 ## Deployment
 
-```title="Jitsi Deployment"
+```yaml title="Jitsi Deployment"
 --8<-- "docs/files/Deplyoment-jitsi.yaml"
 ```
 
