@@ -209,7 +209,7 @@ The following environment variabels in the `git initContainer`  must be set acco
 * **GIT_URL**: URL of your repository. (Example: github.com) Only `https` is supported. If you need plain http connection you have to modify the  `run.sh` shell script (git clone).
 * **GIT_REPO**: You can copy paste this value from the git URL in your browser. Example: `https://github.com/jvincze84/jvincze84.github.io` --> `jvincze84/jvincze84.github.io`
 * **GIT_USER**: Your git username. Mandatory if you set `GIT_AUTH` to `true`.
-* **GIT_PASS**: Your git password or tken. Mandatory if you set `GIT_AUTH` to `true`. 
+* **GIT_PASS**: Your git password or token. Mandatory if you set `GIT_AUTH` to `true`. 
 
 Additionally you may want to use kuberntes secret for storing the git password. In this case you have to add the following lines to the Deployment:
 
