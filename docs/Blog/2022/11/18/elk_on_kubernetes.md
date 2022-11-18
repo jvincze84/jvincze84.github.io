@@ -9,7 +9,7 @@ There is another enterprise ready and feature rich log management system which b
 ## Requirements
 
 * A working Kubernetes cluster. The current version of my cluster: v1.24.4
-* Kubectl cli tools
+* Kubectl cli tool
 * Installed and ready to use Persistent Volume solution (Example Longhorn, OpenEBS, rook, etc)
 * At least 2GB of free memory for Elasticsearch instances.
 
