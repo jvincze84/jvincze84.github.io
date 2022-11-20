@@ -179,7 +179,7 @@ You will use this username/password to login to Kiabana.
 
 ### StatefulSet 
 
-```yaml linenums="1" title=statefulset.yaml
+```yaml linenums="1" title="statefulset.yaml"
 --8<-- "/files/es-statefulset.yaml"
 ```
 
