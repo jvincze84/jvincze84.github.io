@@ -516,6 +516,12 @@ content-length: 2
 {}
 ```
 
+!!! warning
+
+    Do not use the cli tools (/usr/share/elasticsearch/bin/elasticsearch-*) to update/reseet paswword. .
+    This will create a file inside the /usr/share/elasticsearch/config directory, and after the pod restart this file will be gone.
+    
+
 !!! note
 
     Please note that the password (`elastic:Admin1234`) comes from the `ELASTIC_PASSWORD` environment variable (pre-created secret).
@@ -656,3 +662,4 @@ This is only an example ingress, so modify according to your needs.
 
 * [https://www.elastic.co/guide/en/kibana/8.5/docker.html](https://www.elastic.co/guide/en/kibana/8.5/docker.html)
 * [https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
+* [https://hub.docker.com/_/elasticsearch](https://hub.docker.com/_/elasticsearch)
