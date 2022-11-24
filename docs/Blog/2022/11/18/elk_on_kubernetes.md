@@ -1,4 +1,4 @@
-# (UNFINISHED) Deploy Elasticsearch Cluster & Kibaba On Kubernetes
+# Deploy Elasticsearch Cluster & Kibaba On Kubernetes
 
 ## Preface
 
