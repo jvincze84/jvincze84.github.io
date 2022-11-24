@@ -535,6 +535,95 @@ spec:
     Because of the Kubernetes service you don't know which pod will get the request that's why all node certificate should contain all possible domain name and/or IP address.
     
 
+## Bonus - Single Node Deployment
+
+If you want to test Elasticsarch or you don't need multinode environment you can deploy Elasticearch as a single node environment.
+
+```yaml
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: elastic
+  namespace: logging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: elastic
+  template:
+    metadata:
+      name: elastic
+      creationTimestamp: null
+      labels:
+        k8s-app: elastic
+    spec:
+      volumes:
+        - name: es-data
+          persistentVolumeClaim:
+            claimName: es-data
+      containers:
+        - name: elastic
+          image: docker.elastic.co/elasticsearch/elasticsearch:8.5.1
+          env:
+            - name: discovery.type
+              value: single-node
+            - name: cluster.name
+              value: es-single
+            - name: node.name
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: ES_JAVA_OPTS
+              value: '-Xms2g -Xmx2g'
+            - name: xpack.security.enabled
+              value: 'true'
+            - name: xpack.security.http.ssl.enabled
+              value: 'false'
+            - name: xpack.security.transport.ssl.enabled
+              value: 'false'
+            - name: ELASTIC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-password
+                  key: elastic
+          resources:
+            limits:
+              cpu: 1500m
+              memory: 3Gi
+            requests:
+              cpu: 250m
+              memory: 2Gi
+          volumeMounts:
+            - name: es-data
+              mountPath: /usr/share/elasticsearch/data
+              subPath: data
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext:
+        fsGroup: 1000
+      schedulerName: default-scheduler
+  strategy:
+    type: Recreate
+  minReadySeconds: 10
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+```
+
+This is very similar to the StatefulSet, but notice the following parameters:
+
+* `discovery.type: single-node` --> This indicates that only one ES node will be present.
+* `xpack.security.enabled: true` --> Without this you won't be able to create users, and must find another way to protect Kibana. (Example: Ingress basic auth)
+* `xpack.security.*.ssl.enabled: false` --> Use plain HTTP. If you set them true, you have to generate certificates and set up them as in the StatefulSet.
+* The PersistentVolumeClaim must be pre-created.
+
+
 
 ## References
 
