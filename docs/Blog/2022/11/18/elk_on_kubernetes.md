@@ -442,7 +442,7 @@ metadata:
 spec:
   tls:
     - hosts:
-        - kibana.vincze.work
+        - kibana.******.com
       secretName: kibana-https
   rules:
     - host: kibana.vincze.work
@@ -457,6 +457,84 @@ spec:
 ```
 
 This is only an example ingress, so modify according to your needs.
+
+## Send Logs To The Elasticsearch Cluster
+
+From inside the Kubernetes cluster it is really simple, just create a headless service:
+
+```yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: es-cluster
+  namespace: logging
+spec:
+  ports:
+    - name: rest
+      protocol: TCP
+      port: 9200
+      targetPort: 9200
+    - name: inter-node
+      protocol: TCP
+      port: 9300
+      targetPort: 9300
+  selector:
+    k8s-app: elastic
+  clusterIP: None
+  type: ClusterIP
+  sessionAffinity: None
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  internalTrafficPolicy: Cluster
+```
+
+Now you can use the `es-cluster.logging.svc.cluster.local` address.
+
+Accessing Elasticsearch from outside the Kubernetes cluster a bit more complicated and highly depends on your environment.
+I have never tried, but you may create an Ingress, since the port 9200 for API calls over HTTP. [https://discuss.elastic.co/t/what-are-ports-9200-and-9300-used-for/238578](https://discuss.elastic.co/t/what-are-ports-9200-and-9300-used-for/238578)
+
+!!! caution
+
+    This way your Elasticsearch cluster may be exposed to the public Internet.
+    
+Another way can be using NodePort serivce, or MetalLB LoadBalancer serivce. 
+Example MetalLB service:
+
+```yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: elasticsearch
+  namespace: logging
+  annotations:
+    metallb.universe.tf/address-pool: default
+spec:
+  ports:
+    - name: tcp-9200
+      protocol: TCP
+      port: 9200
+      targetPort: 9200
+  selector:
+    k8s-app: elastic
+  type: LoadBalancer
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
+  ipFamilyPolicy: SingleStack
+  allocateLoadBalancerNodePorts: true
+  internalTrafficPolicy: Cluster
+```
+
+!!! info
+
+    MetalLB will create nodeport(s), as well.
+    
+!!! important
+
+    Remember the DNS config in `instances.yaml`! When you accessing your Elasticsearch cluster the DNS or IP address must mach the entries in the `instances.yaml`. So if you create a DNS entry with `es.example.com` domain, this must present in the DNS entries. Or if you accessing the ES cluster over MetalLB service, the ip address of the service must be added to the IP sections. 
+    Because of the Kubernetes service you don't know which pod will get the request that's why all node certificate should contain all possible domain name and/or IP address.
+    
+
 
 ## References
 
