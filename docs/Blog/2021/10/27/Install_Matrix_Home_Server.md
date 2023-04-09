@@ -389,9 +389,10 @@ kubectl create ns matrix
 * Generate the config files
 
 ```bash
-mkdir -p /tmp/matrix/config
+mkdir -p /tmp/matrix/config /tmp/matrix/data
 docker run -it --rm \
     --mount type=bind,src=/tmp/matrix/config,dst=/config \
+    --mount type=bind,src=/tmp/matrix/data,dst=/data \    
     -e SYNAPSE_SERVER_NAME=matrix-kub-test.duckdns.org \
     -e SYNAPSE_REPORT_STATS=yes \
     -e SYNAPSE_CONFIG_DIR=/config \
