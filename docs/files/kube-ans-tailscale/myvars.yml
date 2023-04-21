@@ -1,0 +1,44 @@
+yq_url: https://github.com/mikefarah/yq/releases/download/v4.30.8/yq_linux_amd64
+kube_version: 1.26.4-00
+
+common_packages:
+  - apt-transport-https
+  - sudo
+  - vim
+  - vnstat
+  - xz-utils
+  - tcpdump
+  - screen
+  - rsync
+  - sshpass
+  - git
+  - mc
+  - wget
+  - curl
+  - jq
+  - htop
+  - net-tools
+  - dnsutils
+  - ca-certificates
+  - telnet
+  - htop
+  - iotop
+  - curl
+  - gnupg
+  - lsb-release
+  - wireguard
+  - wireguard-tools
+  - whois
+  - samba-common
+  - smbclient
+  - cifs-utils
+  - nfs-common
+  - open-iscsi
+  - gnupg-agent
+  - software-properties-common
+
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-compose-plugin
