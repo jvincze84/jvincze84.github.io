@@ -1,0 +1,10 @@
+[pve-kube02]
+172.16.1.77
+172.16.1.78
+172.16.1.79
+172.16.1.80
+
+[docker-swarm:vars]
+ansible_connection=ssh
+ansible_user=root
+ansible_password=rootpassword
