@@ -9,6 +9,7 @@
 
 In this post we will install a **multi-master** Kubernetes cluster behind Tailscale VPN.
 This scenario can be useful when:
+
 - You Kubernetes nodes are not in the same subnet. 
 - You are building a home-lab system, and the nodes are behind two or more NAT-ted network, or even behind CGNAT.
 - Your nodes are running in separate data centers, and don't want to publish API ports on the public internet. 
@@ -181,6 +182,7 @@ ansible-playbook playbook-install-kubernetes.yaml
 Now we have 3 identical nodes which are waing for us to install & configure Tailscale VPN and Kubernetes cluster.
 
 Before we proceed, I would like to advise you some really usefull links and tips. These are helful especially if you are not familiar with Ansible and don't want to bother with that:
+
 - Update OS: `apt-get update --allow-releaseinfo-change` && `apt-get upgrade`
 - Common Packages: You can install all necessary packages with `apt-get install` command.
 - [Install Container Engine](https://docs.docker.com/engine/install/debian/)
@@ -219,7 +221,7 @@ root@kube02-m3:~# tailscale status | grep kube02
 
 Try ping:
 
-``plain
+```plain
 root@kube02-m3:~# ping kube02-m1
 PING kube02-m1.tailnet-a5cd.ts.net (100.122.123.2) 56(84) bytes of data.
 64 bytes from kube02-m1.tailnet-a5cd.ts.net (100.122.123.2): icmp_seq=1 ttl=64 time=1.33 ms
