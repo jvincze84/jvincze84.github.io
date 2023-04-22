@@ -23,6 +23,7 @@ You can use any other VPN solution like Wireguard, OpenVPN, IPSec, etc. But nowa
 With a free registration you get 100 device, subnet routers, exit nodes, (Magic)DNS, and so many useful features. 
 
 For more information check the following links:
+
 - [TailScale](https://tailscale.com)
 - [Tailscale Pricing](https://tailscale.com/pricing/)
 
@@ -803,12 +804,12 @@ kubectl apply -f kube-flannel.yml
 !!! warning
     Choose only one CNI plugin, do not install both flannel and weave.
     If you want to replace weave you should remove it: 
-    
+
     - `kubectl delete -f weave-daemonset-k8s.yaml`
     - `rm /etc/cni/net.d/10-weave.conflist`
     - Additionally rebooting the nodes may be necessary.
 
-### Switch Between iptables-legacy And ip6tables-nft
+### Switch Between iptables-legacy And iptables-nft
 
 If you want or need to change iptables to or from iptables-legacy please check this link: [https://wiki.debian.org/iptables](https://wiki.debian.org/iptables)
 
@@ -821,5 +822,64 @@ update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 update-alternatives --set arptables /usr/sbin/arptables-legacy
 update-alternatives --set ebtables /usr/sbin/ebtables-legacy
 ```
+
+## (bonus) - Persistent Storage
+
+Almost all Kubernetes Cluster have some kind of PersistentVolume sultion for storing data. Now we will deploy [Longhorn](https://longhorn.io/docs/1.4.1/deploy/install/install-with-kubectl/)
+
+**Just a simple command:**
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.4.1/deploy/longhorn.yaml
+```
+
+!!! info
+    If you want to use RWX volumes NFSv4 client must be installed on all Kubernetes nodes. [LINK](https://longhorn.io/docs/1.4.1/advanced-resources/rwx-workloads/index.html#requirements)
+
+### Create PVC
+
+```bash
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-pvc-02
+spec:
+  storageClassName: longhorn
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+EOF
+```
+
+**Create Pod to consume The Storage**
+
+```bash
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-pvc
+  namespace: default
+spec:
+  volumes:
+  - name: storage
+    persistentVolumeClaim:
+      claimName: test-pvc-02
+  containers:
+  - name: hello-container
+    image: busybox
+    command:
+       - sh
+       - -c
+       - 'while true; do echo "`date` [`hostname`] Hello from OpenEBS Local PV." >> /mnt/store/greet.txt; sleep $(($RANDOM % 5 + 300)); done'
+    volumeMounts:
+    - mountPath: /mnt/store
+      name: storage
+EOF
+```      
+
 
 
