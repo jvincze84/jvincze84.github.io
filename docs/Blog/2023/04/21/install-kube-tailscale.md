@@ -188,10 +188,10 @@ Before we proceed, I would like to advise you some really usefull links and tips
 - [Install Container Engine](https://docs.docker.com/engine/install/debian/)
 - [Install Tailscale](https://tailscale.com/download/linux)
 - Install Kubernetes:
-  - [container-runtimes](https://kubernetes.io/docs/setup/production-environment/container-runtimes/)
-  - [install-kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
-  - [crictl](https://kubernetes.io/docs/tasks/debug/debug-cluster/crictl/#general-usage)
-  - [crictl usage](https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md)
+  * [container-runtimes](https://kubernetes.io/docs/setup/production-environment/container-runtimes/)
+  * [install-kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
+  * [crictl](https://kubernetes.io/docs/tasks/debug/debug-cluster/crictl/#general-usage)
+  * [crictl usage](https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md)
 
 If you follow these links you should be able to install everything without Ansible.
 
@@ -230,6 +230,7 @@ PING kube02-m1.tailnet-a5cd.ts.net (100.122.123.2) 56(84) bytes of data.
 --- kube02-m1.tailnet-a5cd.ts.net ping statistics ---
 2 packets transmitted, 2 received, 0% packet loss, time 1001ms
 rtt min/avg/max/mdev = 0.976/1.151/1.327/0.175 ms
+
 root@kube02-m3:~# ping kube02-m2
 PING kube02-m2.tailnet-a5cd.ts.net (100.103.128.9) 56(84) bytes of data.
 64 bytes from kube02-m2.tailnet-a5cd.ts.net (100.103.128.9): icmp_seq=1 ttl=64 time=1.49 ms
@@ -238,6 +239,7 @@ PING kube02-m2.tailnet-a5cd.ts.net (100.103.128.9) 56(84) bytes of data.
 --- kube02-m2.tailnet-a5cd.ts.net ping statistics ---
 2 packets transmitted, 2 received, 0% packet loss, time 1000ms
 rtt min/avg/max/mdev = 1.055/1.272/1.490/0.217 ms
+
 root@kube02-m3:~# ping kube02-haproxy
 PING kube02-haproxy.tailnet-a5cd.ts.net (100.121.89.125) 56(84) bytes of data.
 64 bytes from kube02-haproxy.tailnet-a5cd.ts.net (100.121.89.125): icmp_seq=1 ttl=64 time=1.27 ms
@@ -365,6 +367,8 @@ But keep in mind, that connection over relay server could be significantly slowe
 
 Before you do anything, prepare the kubelet to use Tailscale VPN IP address as node IP address. 
 
+Run this command on all Kubernetes nodes:
+
 ```bash
 echo "KUBELET_EXTRA_ARGS=--node-ip=$(tailscale ip --4)" | tee -a /etc/default/kubelet
 ```
@@ -448,6 +452,9 @@ frontend stats
     stats refresh 10s
     stats admin if LOCALHOST
 ```
+
+!!! warning
+    As I know HAProxy resolv DNS only once at startup. So use DNS name in `server` section with caution. If the IP address  has changed, do not forget to restart HAProxy.
 
 Run `HAProxy`:
 
@@ -595,6 +602,8 @@ kube02-m1   NotReady   control-plane   2m45s   v1.26.4   100.122.123.2   <none> 
 
 ### Init Additinal Control Plane Nodes
 
+**Command:**
+
 ```bash
 kubeadm join kube02-haproxy.tailnet-a5cd.ts.net:6443 --token 1q32dn.swfpr7qj89hl2g4j \
 --apiserver-advertise-address $(tailscale ip --4) \
@@ -604,7 +613,7 @@ kubeadm join kube02-haproxy.tailnet-a5cd.ts.net:6443 --token 1q32dn.swfpr7qj89hl
 ```
 
 !!! important
-    Important that the nodes use their own VPN address as `apiserver-advertise-address`
+    Important that the nodes must use their own VPN address as `apiserver-advertise-address`
 
 Example Command Output:
 
@@ -794,6 +803,7 @@ kubectl apply -f kube-flannel.yml
 !!! warning
     Choose only one CNI plugin, do not install both flannel and weave.
     If you want to replace weave you should remove it: 
+    
     - `kubectl delete -f weave-daemonset-k8s.yaml`
     - `rm /etc/cni/net.d/10-weave.conflist`
     - Additionally rebooting the nodes may be necessary.
