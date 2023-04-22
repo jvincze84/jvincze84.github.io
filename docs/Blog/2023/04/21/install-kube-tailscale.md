@@ -78,7 +78,7 @@ Just a quick overwiev about my Ansible configuration and variables.
 
 #### `ansible.cfg`
 
-```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/kube-ans-tailscale/ansible.cfg" target="_blank">Click Here For Raw Source</a>' linenums="1"
+```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/kube-ans-tailscale/ansible.cfg" target="_blank">Click Here For Raw Source</a>'
 --8<-- "files/kube-ans-tailscale/ansible.cfg"
 ```
 
