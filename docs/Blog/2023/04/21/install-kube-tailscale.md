@@ -78,22 +78,19 @@ Just a quick overwiev about my Ansible configuration and variables.
 
 #### `ansible.cfg`
 
-```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/kube-ans-tailscale/ansible.cfg" target="_blank">Click Here For Raw Source</a>'
+```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/kube-ans-tailscale/ansible.cfg" target="_blank">Click Here For Raw Source</a>' linenums="1"
 --8<-- "docs/files/kube-ans-tailscale/ansible.cfg"
 ```
-BROWS
 
-``` title=".browserslistrc"
---8<-- "docs/files/kube-ans-tailscale/ansible.cfg"
-```
 
 #### `myvars.yml`
 
 ```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/kube-ans-tailscale/myvars.yml" target="_blank">Click Here For Raw Source</a>' linenums="1"
---8<-- "files/kube-ans-tailscale/myvars.yml"
+--8<-- "docs/files/kube-ans-tailscale/myvars.yml"
 ```
 
-Details:
+**Details:**
+
 - `yq_url`: Yq binary URL. This version of yq will be installed on the hosts.
 - `kube_version`: Here you can define which version of Kubernetes you want to install. (kubelet, kubeadm and kubectl)
 - `common_packages`: These packages will be installed on the hosts. "Common packages" because usually I install these packages on my VMs, regardless of deploying Docker or Kubernetes. 
@@ -103,7 +100,7 @@ Details:
 #### `hosts`
 
 ```plain title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/kube-ans-tailscale/hosts" target="_blank">Click Here For Raw Source</a>' linenums="1"
---8<-- "files/kube-ans-tailscale/hosts"
+--8<-- "docs/files/kube-ans-tailscale/hosts"
 ```
 
 
@@ -121,14 +118,14 @@ I usually start with updating the OS to the latest version, unless the applicati
 **playbook-upgrade-debian.yaml**
 
 ```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/kube-ans-tailscale/playbook-upgrade-debian.yaml" target="_blank">Click Here For Raw Source</a>' linenums="1"
---8<-- docs/files/kube-ans-tailscale/playbook-upgrade-debian.yaml
+--8<-- "docs/files/kube-ans-tailscale/playbook-upgrade-debian.yaml"
 ```
 
 
 **task_allow_release_info_change.yaml**
 
 ```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/kube-ans-tailscale/task_allow_release_info_change.yaml" target="_blank">Click Here For Raw Source</a>' linenums="1"
---8<-- docs/files/kube-ans-tailscale/task_allow_release_info_change.yaml
+--8<-- "docs/files/kube-ans-tailscale/task_allow_release_info_change.yaml"
 ```
 
 
@@ -143,7 +140,7 @@ ansible-playbook playbook-upgrade-debian.yaml
 **playbook-install-common-packages.yaml**
 
 ```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/kube-ans-tailscale/playbook-install-common-packages.yaml" target="_blank">Click Here For Raw Source</a>' linenums="1"
---8<-- docs/files/kube-ans-tailscale/playbook-install-common-packages.yaml
+--8<-- "docs/files/kube-ans-tailscale/playbook-install-common-packages.yaml"
 ```
 
 
@@ -158,7 +155,7 @@ ansible-playbook playbook-install-common-packages.yaml
 **playbook-install-docker.yaml**
 
 ```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/kube-ans-tailscale/playbook-install-docker.yaml" target="_blank">Click Here For Raw Source</a>' linenums="1"
---8<-- docs/files/kube-ans-tailscale/playbook-install-docker.yaml
+--8<-- "docs/files/kube-ans-tailscale/playbook-install-docker.yaml"
 ```
 
 **Run this playbook:**
@@ -172,7 +169,7 @@ ansible-playbook playbook-install-docker.yaml
 **playbook-install-kubernetes.yaml**
 
 ```yaml title='<a href="https://raw.githubusercontent.com/jvincze84/jvincze84.github.io/master/docs/files/kube-ans-tailscale/playbook-install-kubernetes.yaml" target="_blank">Click Here For Raw Source</a>' linenums="1"
---8<-- docs/files/kube-ans-tailscale/playbook-install-kubernetes.yaml
+--8<-- "docs/files/kube-ans-tailscale/playbook-install-kubernetes.yaml"
 ```
 
 **Run this playbook:**
