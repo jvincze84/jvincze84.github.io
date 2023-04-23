@@ -874,7 +874,7 @@ spec:
     command:
        - sh
        - -c
-       - 'while true; do echo "`date` [`hostname`] Hello from OpenEBS Local PV." >> /mnt/store/greet.txt; sleep $(($RANDOM % 5 + 300)); done'
+       - 'while true; do echo "`date` [`hostname`] Hello from Longhorn PV." >> /mnt/store/greet.txt; sleep $(($RANDOM % 5 + 300)); done'
     volumeMounts:
     - mountPath: /mnt/store
       name: storage
