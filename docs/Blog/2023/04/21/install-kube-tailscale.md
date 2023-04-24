@@ -10,7 +10,7 @@
 In this post we will install a **multi-master** Kubernetes cluster behind Tailscale VPN.
 This scenario can be useful when:
 
-- You Kubernetes nodes are not in the same subnet. 
+- Your Kubernetes nodes are not in the same subnet. 
 - You are building a home-lab system, and the nodes are behind two or more NAT-ted network, or even behind CGNAT.
 - Your nodes are running in separate data centers, and don't want to publish API ports on the public internet. 
 - You want to access your cluster only from private VPN network.
@@ -19,7 +19,7 @@ This scenario can be useful when:
 
 **Why Tailscale VPN?**
 
-You can use any other VPN solution like Wireguard, OpenVPN, IPSec, etc. But nowadays I think Tailscal is the easiest way to bring up a VPN network.
+You can use any other VPN solution like Wireguard, OpenVPN, IPSec, etc. But nowadays I think Tailscale is the easiest way to bring up a VPN network.
 With a free registration you get 100 device, subnet routers, exit nodes, (Magic)DNS, and so many useful features. 
 
 For more information check the following links:
@@ -27,24 +27,25 @@ For more information check the following links:
 - [TailScale](https://tailscale.com)
 - [Tailscale Pricing](https://tailscale.com/pricing/)
 
-But as I mentiond you can use any other VPN solution, personally I'm using Wireguard in my home-lab system.
+But as I mentioned you can use any other VPN solution, personally I'm using Wireguard in my home-lab system.
 
 !!! warning
     Tailscale assigns IP address from `100.64.0.0/10` range! [IP Address Assignment](https://tailscale.com/kb/1015/100.x-addresses/)
-    If you are plannig to use [Kube-OVN](https://www.kube-ovn.io) nerworking don't forget to change the CIDR, because Kube-OVN is also use this subnet!
+    If you are planning to use [Kube-OVN](https://www.kube-ovn.io) networking don't forget to change the CIDR, because Kube-OVN is also use this subnet!
 
 ## Infrastructure
 
 As I mentioned we will deploy a multi-master Kubernetes cluster:
-- 3 master/worker nodes, without worker nodes. Later additional worker nodes can be added to the cluster, but for the simplicity we won't deploy extra worker nodes.
+
+- 3 master|worker nodes, without worker nodes. Later additional worker nodes can be added to the cluster, but for the simplicity we won't deploy extra worker nodes.
 - We need an additional TCP load balancer for the API requests. I prefer HAProxy for this purpose, because it is easy to set up and lightweight. 
-  - For this lab I will deploy only one Load Balancer, but if you need HA solution, at least two Load Balancers are needed. This can be achieved by using Keppalived. Or you can use external load balancer like F5. But this demo is not about HA Load balaners, so it is just enough to have only one LB.
+    * For this lab I will deploy only one Load Balancer, but if you need HA solution, at least two Load Balancers are needed. This can be achieved by using Keppalived. Or you can use external load balancer like F5. But this demo is not about HA Load balancers, so it is just enough to have only one LB.
 
 | Hostname        | Role                     | IP Address   | VPN IP Address   |
 | :-------------- | :----------------------- | :----------- | :--------------- |
-| kube02-m1       | Controle Plane Node 1    | 172.16.1.77  | Later            |
-| kube02-m2       | Controle Plane Node 2    | 172.16.1.78  | Later            |
-| kube02-m3       | Controle Plane Node 3    | 172.16.1.79  | Later            |
+| kube02-m1       | Control Plane Node 1     | 172.16.1.77  | Later            |
+| kube02-m2       | Control Plane Node 2     | 172.16.1.78  | Later            |
+| kube02-m3       | Control Plane Node 3     | 172.16.1.79  | Later            |
 | kube02-haproxy  | HAProxy Load Balancer    | 172.16.1.80  | Later            |
 | ansible         | Ansible Host             | 172.16.0.252 | ---              |
 
@@ -72,11 +73,11 @@ These nodes are completely identical both on hardware and OS level, running on P
 
 In this post I'm using **Ansible** to prepare the Debian OSes for Kubernetes installation.
 I'm highly recommend to use some kind of automatization tool(s) or scirpt(s) to maintain your infrastructure, especially if you planning to have a bunch of nodes, not just a home-lab.
-And if something goes wrong you can start it over in a munite.
+And if something goes wrong you can start it over in a minute.
 
 ### Ansible 
 
-Just a quick overwiev about my Ansible configuration and variables.
+Just a quick overview about my Ansible configuration and variables.
 
 #### `ansible.cfg`
 
@@ -107,15 +108,15 @@ Just a quick overwiev about my Ansible configuration and variables.
 
 
 !!! important
-    Ansible host must access the VMs over ssh. Before you run any of playbooks enable root login.
+    Ansible host must access the VMs over ssh. Before you run any of the playbooks please enable root login.
     For example: `sed -i -e 's/^#\(PermitRootLogin \).*/\1 yes/' /etc/ssh/sshd_config` and restart sshd daemon. 
     It is highly recommended to use dedicated ansible user (with sudo right) and ssh key authentication! 
-    And don't forget to accept ssh key by login to the remotes systems before run the playbooks.
+    **And don't forget to accept ssh key by login to the remotes systems before run the playbooks.**
     If you are using other user than root, you may want to use `become: 'yes'` option it the plays.
 
 ### Update 
 
-I usually start with updating the OS to the latest version, unless the application to be installed has no strict requirements.
+I usually start with updating the OS to the latest version, unless the application to be installed has strict requirements.
 
 **playbook-upgrade-debian.yaml**
 
@@ -180,19 +181,19 @@ ansible-playbook playbook-install-docker.yaml
 ansible-playbook playbook-install-kubernetes.yaml
 ```
 
-Now we have 3 identical nodes which are waing for us to install & configure Tailscale VPN and Kubernetes cluster.
+Now we have 3 identical nodes which are waiting for us to install & configure Tailscale VPN and Kubernetes cluster.
 
-Before we proceed, I would like to advise you some really usefull links and tips. These are helful especially if you are not familiar with Ansible and don't want to bother with that:
+Before we proceed, I would like to advise you some really useful links and tips. These are helpful especially if you are not familiar with Ansible and don't want to bother with that:
 
 - Update OS: `apt-get update --allow-releaseinfo-change` && `apt-get upgrade`
 - Common Packages: You can install all necessary packages with `apt-get install` command.
 - [Install Container Engine](https://docs.docker.com/engine/install/debian/)
 - [Install Tailscale](https://tailscale.com/download/linux)
-- Install Kubernetes:
-  * [container-runtimes](https://kubernetes.io/docs/setup/production-environment/container-runtimes/)
-  * [install-kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
-  * [crictl](https://kubernetes.io/docs/tasks/debug/debug-cluster/crictl/#general-usage)
-  * [crictl usage](https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md)
+- **Install Kubernetes:**
+    * [container-runtimes](https://kubernetes.io/docs/setup/production-environment/container-runtimes/)
+    * [install-kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
+    * [crictl](https://kubernetes.io/docs/tasks/debug/debug-cluster/crictl/#general-usage)
+    * [crictl usage](https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md)
 
 If you follow these links you should be able to install everything without Ansible.
 
@@ -202,7 +203,7 @@ I assume that Tailscale is successfully  installed on every node.
 Before you begin please register a free account: [Tailscale](https://login.tailscale.com/start)
 
 !!! info
-    I recommend you to enable "[MagicDNS(https://login.tailscale.com/admin/dns)]" on the Tailscale web interface. 
+    I recommend you to enable "[MagicDNS](https://login.tailscale.com/admin/dns)" on the Tailscale web interface. 
 
 Run the following command on all 4 nodes (kube0-m[1,2,3] and kube02-haproxy):
 
@@ -220,7 +221,7 @@ root@kube02-m3:~# tailscale status | grep kube02
 100.103.128.9   kube02-m2            jvincze84@   linux   -
 ```
 
-Try ping:
+**Try ping:**
 
 ```plain
 root@kube02-m3:~# ping kube02-m1
@@ -250,7 +251,7 @@ PING kube02-haproxy.tailnet-a5cd.ts.net (100.121.89.125) 56(84) bytes of data.
 rtt min/avg/max/mdev = 1.269/1.269/1.269/0.000 ms
 ```
 
-It seems everything is fine.
+It seems that everything is fine.
 
 Now check `tailscale status` command again:
 
@@ -264,13 +265,13 @@ root@kube02-m3:~# tailscale status | grep kube02
 
 After you connect to a host, the status command will show extra information: `active; direct 172.16.1.80:41641, tx 468 rx 348`
 
-#### Updated Table
+#### Updated IP Address Table
 
 | Hostname        | Role                     | IP Address   | VPN IP Address     |
 | :-------------- | :----------------------- | :----------- | :----------------- |
-| kube02-m1       | Controle Plane Node 1    | 172.16.1.77  | **100.122.123.2**  |
-| kube02-m2       | Controle Plane Node 2    | 172.16.1.78  | **100.103.128.9**  |
-| kube02-m3       | Controle Plane Node 3    | 172.16.1.79  | **100.124.70.97**  |
+| kube02-m1       | Control Plane Node 1     | 172.16.1.77  | **100.122.123.2**  |
+| kube02-m2       | Control Plane Node 2     | 172.16.1.78  | **100.103.128.9**  |
+| kube02-m3       | Control Plane Node 3     | 172.16.1.79  | **100.124.70.97**  |
 | kube02-haproxy  | HAProxy Load Balancer    | 172.16.1.80  | **100.121.89.125** |
 | ansible         | Ansible Host             | 172.16.0.252 | ---                |
 
@@ -279,7 +280,7 @@ After you connect to a host, the status command will show extra information: `ac
 This step is optional. I want to simulate the situation when the nodes are not sitting in the same subnet, and can talk to each other only over the Tailscale VPN.
 This way maybe easier to understand what we doing with the VPN.
 
-I don't want to make it complicated, so simpy disable the communiction between node with iptables.
+I don't want to make it complicated, so simply disable the communication between node with iptables.
 
 **kube02-m1**
 
@@ -303,7 +304,7 @@ iptables -I INPUT -s 172.16.1.78 -j DROP
 ```
 
 !!! note
-    These rules are not permanent. So if you restart the machine you should apply them again.
+    These rules are not permanent. So, if you restart the machine you should apply them again.
 
 **Check the Tailscale Connection**
 
@@ -316,9 +317,9 @@ root@kube02-m1:~# tailscale status | grep kube02-m
 100.124.70.97   kube02-m3            jvincze84@   linux   active; relay "waw", tx 308 rx 220
 ```
 
-Now you can see that the hosts are conneced each other via relay servers (`active; relay "fra", tx 308 rx 22`) provided by Tailscale.
+Now you can see that the hosts are connected to each other via relay servers (`active; relay "fra", tx 308 rx 22`) provided by Tailscale.
 
-To see the avaiable relays, run the `tailscale netcheck` command.
+To see the available relays, run the `tailscale netcheck` command.
 
 ```bash
 root@kube02-m1:~# tailscale netcheck
@@ -359,8 +360,8 @@ Report:
 root@kube02-m1:~#
 ```
 
-This is one of my favourte feature of Tailscale. You don't have to have stable static public IP address to use VPN service.
-But keep in mind, that connection over relay server could be significantly slower than direct connection. 
+This is one of my favorite feature of Tailscale. You don't have to have stable static public IP address to use VPN service.
+But keep in mind, that connection over relay server can be significantly slower than direct connection. 
 
 ## Init The Cluster
 
@@ -374,7 +375,7 @@ Run this command on all Kubernetes nodes:
 echo "KUBELET_EXTRA_ARGS=--node-ip=$(tailscale ip --4)" | tee -a /etc/default/kubelet
 ```
 
-Samples:
+**Samples:**
 
 ```plain
 root@kube02-m1:~# echo "KUBELET_EXTRA_ARGS=--node-ip=$(tailscale ip --4)" | tee -a /etc/default/kubelet
@@ -393,7 +394,7 @@ root@kube02-m3:~#
 ### Prepare The Load Balancer
 
 I won't want to waste a lot time for this task, since this is only a lab env with just one function: demonstrate the installation.
-HAProxy is a really good example about how to configure an external Load Balancer for kubernetes control plane. 
+HAProxy is a really good example about how to configure an external Load Balancer for kubernetes control plane nodes. 
 
 
 **Check if MagicDNS is working fine**
@@ -455,7 +456,7 @@ frontend stats
 ```
 
 !!! warning
-    As I know HAProxy resolv DNS only once at startup. So use DNS name in `server` section with caution. If the IP address  has changed, do not forget to restart HAProxy.
+    As I know HAProxy resolve DNS only once at startup. So use DNS name in `server` section with caution. If the IP address has changed, do not forget to restart HAProxy.
 
 Run `HAProxy`:
 
@@ -480,18 +481,18 @@ kubeadm init --cri-socket /var/run/containerd/containerd.sock \
 ```
 
 !!! important
-    If you don't have separate HAProxy node, and you are using one kubernetes node, you should consider changeing the `--apiserver-bind-port` port or the listen port of the HAProxy.
+    If you don't have separate HAProxy node, and you are using one kubernetes node, you should consider changing the `--apiserver-bind-port` port or the listen port of the HAProxy.
 
 !!! important
     `pod-network-cidr` and `service-cidr` is required by flannel CNI. 
 
 !!! important
-    Do not forget the `--upload-certs` option, otherwise additinal control plane nodes won't be able to join the cluster. 
+    Do not forget the `--upload-certs` option, otherwise additional control plane nodes won't be able to join the cluster without extra steps.
 
 **Command output:**
 
-```plain
-root@kube02-m1:/home/vinyo# kubeadm init --cri-socket /var/run/containerd/containerd.sock \
+```plain linenums="1" hl_lines="67-69 81-83"
+root@kube02-m1:# kubeadm init --cri-socket /var/run/containerd/containerd.sock \
 --control-plane-endpoint kube02-haproxy.tailnet-a5cd.ts.net \
 --apiserver-advertise-address $(tailscale ip --4) \
 --pod-network-cidr 10.25.0.0/16 \
@@ -618,8 +619,8 @@ kubeadm join kube02-haproxy.tailnet-a5cd.ts.net:6443 --token 1q32dn.swfpr7qj89hl
 
 Example Command Output:
 
-```plain
-root@kube02-m2:/home/vinyo# kubeadm join kube02-haproxy.tailnet-a5cd.ts.net:6443 --token 1q32dn.swfpr7qj89hl2g4j --apiserver-advertise-address $(tailscale ip --4) --cri-socket /var/run/containerd/containerd.sock --discovery-token-ca-cert-hash sha256:11c669ee4e4e27b997ae5431133dd2cd7c6a2050ddd16b38bee8bee544bbe680 --control-plane --certificate-key 2f2caa21e13d7f4bece27faa2515d024c8b4e93e08d8d21612113a7ebacff5ea
+```plain linenums="1" hl_lines="57-59 61"
+root@kube02-m2:# kubeadm join kube02-haproxy.tailnet-a5cd.ts.net:6443 --token 1q32dn.swfpr7qj89hl2g4j --apiserver-advertise-address $(tailscale ip --4) --cri-socket /var/run/containerd/containerd.sock --discovery-token-ca-cert-hash sha256:11c669ee4e4e27b997ae5431133dd2cd7c6a2050ddd16b38bee8bee544bbe680 --control-plane --certificate-key 2f2caa21e13d7f4bece27faa2515d024c8b4e93e08d8d21612113a7ebacff5ea
 W0421 16:23:11.602945   26931 initconfiguration.go:119] Usage of CRI endpoints without URL scheme is deprecated and can cause kubelet errors in the future. Automatically prepending scheme "unix" to the "criSocket" with value "/var/run/containerd/containerd.sock". Please update your configuration!
 [preflight] Running pre-flight checks
 [preflight] Reading configuration from the cluster...
@@ -682,7 +683,7 @@ To start administering your cluster from this node, you need to run the followin
 Run 'kubectl get nodes' to see this node join the cluster.
 ```
 
-Finally check the nodes:
+**Finally check the nodes:**
 
 ```
 root@kube02-m1:~# kubectl get nodes -o wide
@@ -732,7 +733,7 @@ You should consider to change iptables mode:
 
 In my case I use nft, so I have to add `IPTABLES_BACKEND` environment variable and set to `nft`
 
-```yaml
+```yaml hl_lines="5-7" linenums="1"
           containers:
             - name: weave
               command:
@@ -825,9 +826,9 @@ update-alternatives --set ebtables /usr/sbin/ebtables-legacy
 
 ## (bonus) - Persistent Storage
 
-Almost all Kubernetes Cluster have some kind of PersistentVolume sultion for storing data. Now we will deploy [Longhorn](https://longhorn.io/docs/1.4.1/deploy/install/install-with-kubectl/)
+Almost all Kubernetes Cluster have some kind of PersistentVolume solution for storing data. Now we will deploy [Longhorn](https://longhorn.io/docs/1.4.1/deploy/install/install-with-kubectl/)
 
-**Just a simple command:**
+**It is just a simple command:**
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.4.1/deploy/longhorn.yaml
@@ -838,25 +839,28 @@ kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.4.1/depl
 
 ### Create PVC
 
-```bash
+```yaml linenums="1"
 cat <<EOF | kubectl apply -f -
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: test-pvc-02
 spec:
-  storageClassName: longhorn
+  storageClassName: longhorn #(1)
   accessModes:
-    - ReadWriteMany
+    - ReadWriteMany # (2)
   resources:
     requests:
       storage: 1Gi
 EOF
 ```
 
-**Create Pod to consume The Storage**
+1.  This is the default Storage Class
+2.  Use one of: `ReadWriteOnce, ReadOnlyMany or ReadWriteMany, see AccessModes`
 
-```bash
+**Create Pod To Consume The Storage**
+
+```bash linenums="1"
 cat <<EOF | kubectl apply -f -
 apiVersion: v1
 kind: Pod
