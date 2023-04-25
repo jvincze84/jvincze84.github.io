@@ -783,19 +783,57 @@ Download the manifest:
 wget https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
 ```
 
-Modify the manifest to use the tailscale0 interface (`iface=tailscale0`):
+Modify the manifest to use the tailscale0 interface (`iface=tailscale0`) and our network CIDR:
 
-```yaml hl_lines="5" linenums="1"
-     containers:
-      - args:
-        - --ip-masq
-        - --kube-subnet-mgr
-        - --iface=tailscale0
-        command:
-        - /opt/bin/flanneld
-        env:
-        - name: POD_NAME
-          valueFrom:
+```diff linenums="1"
+--- kube-flannel-orig.yml       2023-03-22 15:48:52.000000000 +0100
++++ kube-flannel.yml    2023-04-25 08:27:05.183037370 +0200
+@@ -81,21 +81,21 @@
+         {
+           "type": "portmap",
+           "capabilities": {
+             "portMappings": true
+           }
+         }
+       ]
+     }
+   net-conf.json: |
+     {
+-      "Network": "10.244.0.0/16",
++      "Network": "10.25.0.0/16",
+       "Backend": {
+         "Type": "vxlan"
+       }
+     }
+ kind: ConfigMap
+ metadata:
+   labels:
+     app: flannel
+     k8s-app: flannel
+     tier: node
+@@ -129,20 +129,21 @@
+             nodeSelectorTerms:
+             - matchExpressions:
+               - key: kubernetes.io/os
+                 operator: In
+                 values:
+                 - linux
+       containers:
+       - args:
+         - --ip-masq
+         - --kube-subnet-mgr
++        - --iface=tailscale0
+         command:
+         - /opt/bin/flanneld
+         env:
+         - name: POD_NAME
+           valueFrom:
+             fieldRef:
+               fieldPath: metadata.name
+         - name: POD_NAMESPACE
+           valueFrom:
+             fieldRef:
+root@kube02-m1:~#
 ```
 
 Apply the manifest:
@@ -804,6 +842,38 @@ Apply the manifest:
 kubectl apply -f kube-flannel.yml
 ```
 
+??? example "Example flannel-ds logs `kubectl -n kube-flannel logs kube-flannel-ds-h2rp2`"
+    ```plain
+    Defaulted container "kube-flannel" out of: kube-flannel, install-cni-plugin (init), install-cni (init)
+    I0425 06:34:24.144883       1 main.go:211] CLI flags config: {etcdEndpoints:http://127.0.0.1:4001,http://127.0.0.1:2379 etcdPrefix:/coreos.com/network etcdKeyfile: etcdCertfile: etcdCAFile: etcdUsername: etcdPassword: version:false kubeSubnetMgr:true kubeApiUrl: kubeAnnotationPrefix:flannel.alpha.coreos.com kubeConfigFile: iface:[tailscale0] ifaceRegex:[] ipMasq:true ifaceCanReach: subnetFile:/run/flannel/subnet.env publicIP: publicIPv6: subnetLeaseRenewMargin:60 healthzIP:0.0.0.0 healthzPort:0 iptablesResyncSeconds:5 iptablesForwardRules:true netConfPath:/etc/kube-flannel/net-conf.json setNodeNetworkUnavailable:true useMultiClusterCidr:false}
+    W0425 06:34:24.146218       1 client_config.go:617] Neither --kubeconfig nor --master was specified.  Using the inClusterConfig.  This might not work.
+    I0425 06:34:24.207098       1 kube.go:144] Waiting 10m0s for node controller to sync
+    I0425 06:34:24.207158       1 kube.go:485] Starting kube subnet manager
+    I0425 06:34:24.220083       1 kube.go:506] Creating the node lease for IPv4. This is the n.Spec.PodCIDRs: [10.25.0.0/24]
+    I0425 06:34:24.220116       1 kube.go:506] Creating the node lease for IPv4. This is the n.Spec.PodCIDRs: [10.25.1.0/24]
+    I0425 06:34:24.220245       1 kube.go:506] Creating the node lease for IPv4. This is the n.Spec.PodCIDRs: [10.25.2.0/24]
+    I0425 06:34:25.207246       1 kube.go:151] Node controller sync successful
+    I0425 06:34:25.207266       1 main.go:231] Created subnet manager: Kubernetes Subnet Manager - kube02-m1
+    I0425 06:34:25.207272       1 main.go:234] Installing signal handlers
+    I0425 06:34:25.207991       1 main.go:542] Found network config - Backend type: vxlan
+    I0425 06:34:25.208718       1 match.go:259] Using interface with name tailscale0 and address 100.122.123.2
+    I0425 06:34:25.208762       1 match.go:281] Defaulting external address to interface address (100.122.123.2)
+    I0425 06:34:25.208917       1 vxlan.go:140] VXLAN config: VNI=1 Port=0 GBP=false Learning=false DirectRouting=false
+    I0425 06:34:25.210776       1 main.go:356] Setting up masking rules
+    I0425 06:34:25.252429       1 main.go:407] Changing default FORWARD chain policy to ACCEPT
+    I0425 06:34:25.253690       1 iptables.go:290] generated 7 rules
+    I0425 06:34:25.256468       1 main.go:435] Wrote subnet file to /run/flannel/subnet.env
+    I0425 06:34:25.256489       1 main.go:439] Running backend.
+    I0425 06:34:25.256646       1 iptables.go:290] generated 3 rules
+    I0425 06:34:25.257126       1 vxlan_network.go:64] watching for new subnet leases
+    I0425 06:34:25.258108       1 watch.go:51] Batch elem [0] is { subnet.Event{Type:0, Lease:subnet.Lease{EnableIPv4:true, EnableIPv6:false, Subnet:ip.IP4Net{IP:0xa190100, PrefixLen:0x18}, IPv6Subnet:ip.IP6Net{IP:(*ip.IP6)(nil), PrefixLen:0x0}, Attrs:subnet.LeaseAttrs{PublicIP:0x64678009, PublicIPv6:(*ip.IP6)(nil), BackendType:"vxlan", BackendData:json.RawMessage{0x7b, 0x22, 0x56, 0x4e, 0x49, 0x22, 0x3a, 0x31, 0x2c, 0x22, 0x56, 0x74, 0x65, 0x70, 0x4d, 0x41, 0x43, 0x22, 0x3a, 0x22, 0x35, 0x32, 0x3a, 0x39, 0x65, 0x3a, 0x32, 0x62, 0x3a, 0x63, 0x33, 0x3a, 0x38, 0x34, 0x3a, 0x63, 0x37, 0x22, 0x7d}, BackendV6Data:json.RawMessage(nil)}, Expiration:time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC), Asof:0}} }
+    I0425 06:34:25.258185       1 watch.go:51] Batch elem [0] is { subnet.Event{Type:0, Lease:subnet.Lease{EnableIPv4:true, EnableIPv6:false, Subnet:ip.IP4Net{IP:0xa190200, PrefixLen:0x18}, IPv6Subnet:ip.IP6Net{IP:(*ip.IP6)(nil), PrefixLen:0x0}, Attrs:subnet.LeaseAttrs{PublicIP:0x647c4661, PublicIPv6:(*ip.IP6)(nil), BackendType:"vxlan", BackendData:json.RawMessage{0x7b, 0x22, 0x56, 0x4e, 0x49, 0x22, 0x3a, 0x31, 0x2c, 0x22, 0x56, 0x74, 0x65, 0x70, 0x4d, 0x41, 0x43, 0x22, 0x3a, 0x22, 0x33, 0x61, 0x3a, 0x38, 0x31, 0x3a, 0x36, 0x30, 0x3a, 0x63, 0x64, 0x3a, 0x66, 0x63, 0x3a, 0x62, 0x63, 0x22, 0x7d}, BackendV6Data:json.RawMessage(nil)}, Expiration:time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC), Asof:0}} }
+    I0425 06:34:25.290612       1 iptables.go:283] bootstrap done
+    I0425 06:34:25.311445       1 iptables.go:283] bootstrap done
+    I0425 06:34:25.322841       1 main.go:460] Waiting for all goroutines to exit
+    ```
+
+
 !!! warning
     Choose only one CNI plugin, do not install both flannel and weave.
     If you want to replace weave you should remove it: 
@@ -811,6 +881,10 @@ kubectl apply -f kube-flannel.yml
     - `kubectl delete -f weave-daemonset-k8s.yaml`
     - `rm /etc/cni/net.d/10-weave.conflist`
     - Additionally rebooting the nodes may be necessary.
+    - After you applied the kube manifest run `kubectl delete pods --all -A` command. **This will recreate all pods in the entire cluster!!!**
+
+    I really recommend you to choose CNI network plugin carefully before you getting use your cluster, and avoid changing CNI in the future.
+
 
 ### Switch Between iptables-legacy And iptables-nft
 
