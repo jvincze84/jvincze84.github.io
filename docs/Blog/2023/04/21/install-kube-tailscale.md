@@ -375,21 +375,20 @@ Run this command on all Kubernetes nodes:
 echo "KUBELET_EXTRA_ARGS=--node-ip=$(tailscale ip --4)" | tee -a /etc/default/kubelet
 ```
 
-**Samples:**
+??? example "Example Commands:"
+    ```plain
+    root@kube02-m1:~# echo "KUBELET_EXTRA_ARGS=--node-ip=$(tailscale ip --4)" | tee -a /etc/default/kubelet
+    KUBELET_EXTRA_ARGS=--node-ip=100.122.123.2
+    root@kube02-m1:~#
 
-```plain
-root@kube02-m1:~# echo "KUBELET_EXTRA_ARGS=--node-ip=$(tailscale ip --4)" | tee -a /etc/default/kubelet
-KUBELET_EXTRA_ARGS=--node-ip=100.122.123.2
-root@kube02-m1:~#
+    root@kube02-m2:~# echo "KUBELET_EXTRA_ARGS=--node-ip=$(tailscale ip --4)" | tee -a /etc/default/kubelet
+    KUBELET_EXTRA_ARGS=--node-ip=100.103.128.9
+    root@kube02-m2:~#
 
-root@kube02-m2:~# echo "KUBELET_EXTRA_ARGS=--node-ip=$(tailscale ip --4)" | tee -a /etc/default/kubelet
-KUBELET_EXTRA_ARGS=--node-ip=100.103.128.9
-root@kube02-m2:~#
-
-root@kube02-m3:~# echo "KUBELET_EXTRA_ARGS=--node-ip=$(tailscale ip --4)" | tee -a /etc/default/kubelet
-KUBELET_EXTRA_ARGS=--node-ip=100.124.70.97
-root@kube02-m3:~#
-```
+    root@kube02-m3:~# echo "KUBELET_EXTRA_ARGS=--node-ip=$(tailscale ip --4)" | tee -a /etc/default/kubelet
+    KUBELET_EXTRA_ARGS=--node-ip=100.124.70.97
+    root@kube02-m3:~#
+    ```
 
 ### Prepare The Load Balancer
 
@@ -467,6 +466,11 @@ docker run --name haproxy -d -p 6443:6443 -p 8404:8404 -v /etc/haproxy.conf:/usr
 !!! info
     `*.tailnet-a5cd.ts.net` is my MagicDNS name.
 
+!!! tip
+    If you are looking for a solution without external Load Balancer you may want to take a look at [Kube-Vip](https://kube-vip.io)
+    ??? quote
+        kube-vip provides Kubernetes clusters with a virtual IP and load balancer for both the control plane (for building a highly-available cluster) and Kubernetes Services of type LoadBalancer without relying on any external hardware or software.
+
 ### Init The First Control Plane Node
 
 The command:
@@ -489,102 +493,101 @@ kubeadm init --cri-socket /var/run/containerd/containerd.sock \
 !!! important
     Do not forget the `--upload-certs` option, otherwise additional control plane nodes won't be able to join the cluster without extra steps.
 
-**Command output:**
+??? example "Command Output"
+    ```plain linenums="1" hl_lines="67-69 81-83"
+    root@kube02-m1:# kubeadm init --cri-socket /var/run/containerd/containerd.sock \
+    --control-plane-endpoint kube02-haproxy.tailnet-a5cd.ts.net \
+    --apiserver-advertise-address $(tailscale ip --4) \
+    --pod-network-cidr 10.25.0.0/16 \
+    --service-cidr 10.26.0.0/16 \
+    --upload-certs
+    W0421 16:13:16.891232   25655 initconfiguration.go:119] Usage of CRI endpoints without URL scheme is deprecated and can cause kubelet errors in the future. Automatically prepending scheme "unix" to the "criSocket" with value "/var/run/containerd/containerd.sock". Please update your configuration!
+    I0421 16:13:17.241235   25655 version.go:256] remote version is much newer: v1.27.1; falling back to: stable-1.26
+    [init] Using Kubernetes version: v1.26.4
+    [preflight] Running pre-flight checks
+    [preflight] Pulling images required for setting up a Kubernetes cluster
+    [preflight] This might take a minute or two, depending on the speed of your internet connection
+    [preflight] You can also perform this action in beforehand using 'kubeadm config images pull'
+    [certs] Using certificateDir folder "/etc/kubernetes/pki"
+    [certs] Generating "ca" certificate and key
+    [certs] Generating "apiserver" certificate and key
+    [certs] apiserver serving cert is signed for DNS names [kube02-haproxy.tailnet-a5cd.ts.net kube02-m1 kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.26.0.1 100.122.123.2]
+    [certs] Generating "apiserver-kubelet-client" certificate and key
+    [certs] Generating "front-proxy-ca" certificate and key
+    [certs] Generating "front-proxy-client" certificate and key
+    [certs] Generating "etcd/ca" certificate and key
+    [certs] Generating "etcd/server" certificate and key
+    [certs] etcd/server serving cert is signed for DNS names [kube02-m1 localhost] and IPs [100.122.123.2 127.0.0.1 ::1]
+    [certs] Generating "etcd/peer" certificate and key
+    [certs] etcd/peer serving cert is signed for DNS names [kube02-m1 localhost] and IPs [100.122.123.2 127.0.0.1 ::1]
+    [certs] Generating "etcd/healthcheck-client" certificate and key
+    [certs] Generating "apiserver-etcd-client" certificate and key
+    [certs] Generating "sa" key and public key
+    [kubeconfig] Using kubeconfig folder "/etc/kubernetes"
+    [kubeconfig] Writing "admin.conf" kubeconfig file
+    [kubeconfig] Writing "kubelet.conf" kubeconfig file
+    [kubeconfig] Writing "controller-manager.conf" kubeconfig file
+    [kubeconfig] Writing "scheduler.conf" kubeconfig file
+    [kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+    [kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+    [kubelet-start] Starting the kubelet
+    [control-plane] Using manifest folder "/etc/kubernetes/manifests"
+    [control-plane] Creating static Pod manifest for "kube-apiserver"
+    [control-plane] Creating static Pod manifest for "kube-controller-manager"
+    [control-plane] Creating static Pod manifest for "kube-scheduler"
+    [etcd] Creating static Pod manifest for local etcd in "/etc/kubernetes/manifests"
+    [wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory "/etc/kubernetes/manifests". This can take up to 4m0s
+    [kubelet-check] Initial timeout of 40s passed.
+    [apiclient] All control plane components are healthy after 101.038704 seconds
+    [upload-config] Storing the configuration used in ConfigMap "kubeadm-config" in the "kube-system" Namespace
+    [kubelet] Creating a ConfigMap "kubelet-config" in namespace kube-system with the configuration for the kubelets in the cluster
+    [upload-certs] Storing the certificates in Secret "kubeadm-certs" in the "kube-system" Namespace
+    [upload-certs] Using certificate key:
+    2f2caa21e13d7f4bece27faa2515d024c8b4e93e08d8d21612113a7ebacff5ea
+    [mark-control-plane] Marking the node kube02-m1 as control-plane by adding the labels: [node-role.kubernetes.io/control-plane node.kubernetes.io/exclude-from-external-load-balancers]
+    [mark-control-plane] Marking the node kube02-m1 as control-plane by adding the taints [node-role.kubernetes.io/control-plane:NoSchedule]
+    [bootstrap-token] Using token: 1q32dn.swfpr7qj89hl2g4j
+    [bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
+    [bootstrap-token] Configured RBAC rules to allow Node Bootstrap tokens to get nodes
+    [bootstrap-token] Configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
+    [bootstrap-token] Configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
+    [bootstrap-token] Configured RBAC rules to allow certificate rotation for all node client certificates in the cluster
+    [bootstrap-token] Creating the "cluster-info" ConfigMap in the "kube-public" namespace
+    [kubelet-finalize] Updating "/etc/kubernetes/kubelet.conf" to point to a rotatable kubelet client certificate and key
+    [addons] Applied essential addon: CoreDNS
+    [addons] Applied essential addon: kube-proxy
 
-```plain linenums="1" hl_lines="67-69 81-83"
-root@kube02-m1:# kubeadm init --cri-socket /var/run/containerd/containerd.sock \
---control-plane-endpoint kube02-haproxy.tailnet-a5cd.ts.net \
---apiserver-advertise-address $(tailscale ip --4) \
---pod-network-cidr 10.25.0.0/16 \
---service-cidr 10.26.0.0/16 \
---upload-certs
-W0421 16:13:16.891232   25655 initconfiguration.go:119] Usage of CRI endpoints without URL scheme is deprecated and can cause kubelet errors in the future. Automatically prepending scheme "unix" to the "criSocket" with value "/var/run/containerd/containerd.sock". Please update your configuration!
-I0421 16:13:17.241235   25655 version.go:256] remote version is much newer: v1.27.1; falling back to: stable-1.26
-[init] Using Kubernetes version: v1.26.4
-[preflight] Running pre-flight checks
-[preflight] Pulling images required for setting up a Kubernetes cluster
-[preflight] This might take a minute or two, depending on the speed of your internet connection
-[preflight] You can also perform this action in beforehand using 'kubeadm config images pull'
-[certs] Using certificateDir folder "/etc/kubernetes/pki"
-[certs] Generating "ca" certificate and key
-[certs] Generating "apiserver" certificate and key
-[certs] apiserver serving cert is signed for DNS names [kube02-haproxy.tailnet-a5cd.ts.net kube02-m1 kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.26.0.1 100.122.123.2]
-[certs] Generating "apiserver-kubelet-client" certificate and key
-[certs] Generating "front-proxy-ca" certificate and key
-[certs] Generating "front-proxy-client" certificate and key
-[certs] Generating "etcd/ca" certificate and key
-[certs] Generating "etcd/server" certificate and key
-[certs] etcd/server serving cert is signed for DNS names [kube02-m1 localhost] and IPs [100.122.123.2 127.0.0.1 ::1]
-[certs] Generating "etcd/peer" certificate and key
-[certs] etcd/peer serving cert is signed for DNS names [kube02-m1 localhost] and IPs [100.122.123.2 127.0.0.1 ::1]
-[certs] Generating "etcd/healthcheck-client" certificate and key
-[certs] Generating "apiserver-etcd-client" certificate and key
-[certs] Generating "sa" key and public key
-[kubeconfig] Using kubeconfig folder "/etc/kubernetes"
-[kubeconfig] Writing "admin.conf" kubeconfig file
-[kubeconfig] Writing "kubelet.conf" kubeconfig file
-[kubeconfig] Writing "controller-manager.conf" kubeconfig file
-[kubeconfig] Writing "scheduler.conf" kubeconfig file
-[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
-[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
-[kubelet-start] Starting the kubelet
-[control-plane] Using manifest folder "/etc/kubernetes/manifests"
-[control-plane] Creating static Pod manifest for "kube-apiserver"
-[control-plane] Creating static Pod manifest for "kube-controller-manager"
-[control-plane] Creating static Pod manifest for "kube-scheduler"
-[etcd] Creating static Pod manifest for local etcd in "/etc/kubernetes/manifests"
-[wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory "/etc/kubernetes/manifests". This can take up to 4m0s
-[kubelet-check] Initial timeout of 40s passed.
-[apiclient] All control plane components are healthy after 101.038704 seconds
-[upload-config] Storing the configuration used in ConfigMap "kubeadm-config" in the "kube-system" Namespace
-[kubelet] Creating a ConfigMap "kubelet-config" in namespace kube-system with the configuration for the kubelets in the cluster
-[upload-certs] Storing the certificates in Secret "kubeadm-certs" in the "kube-system" Namespace
-[upload-certs] Using certificate key:
-2f2caa21e13d7f4bece27faa2515d024c8b4e93e08d8d21612113a7ebacff5ea
-[mark-control-plane] Marking the node kube02-m1 as control-plane by adding the labels: [node-role.kubernetes.io/control-plane node.kubernetes.io/exclude-from-external-load-balancers]
-[mark-control-plane] Marking the node kube02-m1 as control-plane by adding the taints [node-role.kubernetes.io/control-plane:NoSchedule]
-[bootstrap-token] Using token: 1q32dn.swfpr7qj89hl2g4j
-[bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
-[bootstrap-token] Configured RBAC rules to allow Node Bootstrap tokens to get nodes
-[bootstrap-token] Configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
-[bootstrap-token] Configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
-[bootstrap-token] Configured RBAC rules to allow certificate rotation for all node client certificates in the cluster
-[bootstrap-token] Creating the "cluster-info" ConfigMap in the "kube-public" namespace
-[kubelet-finalize] Updating "/etc/kubernetes/kubelet.conf" to point to a rotatable kubelet client certificate and key
-[addons] Applied essential addon: CoreDNS
-[addons] Applied essential addon: kube-proxy
+    Your Kubernetes control-plane has initialized successfully!
 
-Your Kubernetes control-plane has initialized successfully!
+    To start using your cluster, you need to run the following as a regular user:
 
-To start using your cluster, you need to run the following as a regular user:
+      mkdir -p $HOME/.kube
+      sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+      sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-  mkdir -p $HOME/.kube
-  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+    Alternatively, if you are the root user, you can run:
 
-Alternatively, if you are the root user, you can run:
+      export KUBECONFIG=/etc/kubernetes/admin.conf
 
-  export KUBECONFIG=/etc/kubernetes/admin.conf
+    You should now deploy a pod network to the cluster.
+    Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+      https://kubernetes.io/docs/concepts/cluster-administration/addons/
 
-You should now deploy a pod network to the cluster.
-Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
-  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+    You can now join any number of the control-plane node running the following command on each as root:
 
-You can now join any number of the control-plane node running the following command on each as root:
+      kubeadm join kube02-haproxy.tailnet-a5cd.ts.net:6443 --token 1q32dn.swfpr7qj89hl2g4j \
+            --discovery-token-ca-cert-hash sha256:11c669ee4e4e27b997ae5431133dd2cd7c6a2050ddd16b38bee8bee544bbe680 \
+            --control-plane --certificate-key 2f2caa21e13d7f4bece27faa2515d024c8b4e93e08d8d21612113a7ebacff5ea
 
-  kubeadm join kube02-haproxy.tailnet-a5cd.ts.net:6443 --token 1q32dn.swfpr7qj89hl2g4j \
-        --discovery-token-ca-cert-hash sha256:11c669ee4e4e27b997ae5431133dd2cd7c6a2050ddd16b38bee8bee544bbe680 \
-        --control-plane --certificate-key 2f2caa21e13d7f4bece27faa2515d024c8b4e93e08d8d21612113a7ebacff5ea
+    Please note that the certificate-key gives access to cluster sensitive data, keep it secret!
+    As a safeguard, uploaded-certs will be deleted in two hours; If necessary, you can use
+    "kubeadm init phase upload-certs --upload-certs" to reload certs afterward.
 
-Please note that the certificate-key gives access to cluster sensitive data, keep it secret!
-As a safeguard, uploaded-certs will be deleted in two hours; If necessary, you can use
-"kubeadm init phase upload-certs --upload-certs" to reload certs afterward.
+    Then you can join any number of worker nodes by running the following on each as root:
 
-Then you can join any number of worker nodes by running the following on each as root:
-
-kubeadm join kube02-haproxy.tailnet-a5cd.ts.net:6443 --token 1q32dn.swfpr7qj89hl2g4j \
-        --discovery-token-ca-cert-hash sha256:11c669ee4e4e27b997ae5431133dd2cd7c6a2050ddd16b38bee8bee544bbe680
-```
+    kubeadm join kube02-haproxy.tailnet-a5cd.ts.net:6443 --token 1q32dn.swfpr7qj89hl2g4j \
+            --discovery-token-ca-cert-hash sha256:11c669ee4e4e27b997ae5431133dd2cd7c6a2050ddd16b38bee8bee544bbe680
+    ```
 
 Run these commands:
 
@@ -602,7 +605,7 @@ NAME        STATUS     ROLES           AGE     VERSION   INTERNAL-IP     EXTERNA
 kube02-m1   NotReady   control-plane   2m45s   v1.26.4   100.122.123.2   <none>        Debian GNU/Linux 11 (bullseye)   5.10.0-21-amd64   containerd://1.6.20
 ```
 
-### Init Additinal Control Plane Nodes
+### Init Additional Control Plane Nodes
 
 **Command:**
 
@@ -617,71 +620,70 @@ kubeadm join kube02-haproxy.tailnet-a5cd.ts.net:6443 --token 1q32dn.swfpr7qj89hl
 !!! important
     Important that the nodes must use their own VPN address as `apiserver-advertise-address`
 
-Example Command Output:
+??? example "Command Output"
+    ```plain linenums="1" hl_lines="57-59 61"
+    root@kube02-m2:# kubeadm join kube02-haproxy.tailnet-a5cd.ts.net:6443 --token 1q32dn.swfpr7qj89hl2g4j --apiserver-advertise-address $(tailscale ip --4) --cri-socket /var/run/containerd/containerd.sock --discovery-token-ca-cert-hash sha256:11c669ee4e4e27b997ae5431133dd2cd7c6a2050ddd16b38bee8bee544bbe680 --control-plane --certificate-key 2f2caa21e13d7f4bece27faa2515d024c8b4e93e08d8d21612113a7ebacff5ea
+    W0421 16:23:11.602945   26931 initconfiguration.go:119] Usage of CRI endpoints without URL scheme is deprecated and can cause kubelet errors in the future. Automatically prepending scheme "unix" to the "criSocket" with value "/var/run/containerd/containerd.sock". Please update your configuration!
+    [preflight] Running pre-flight checks
+    [preflight] Reading configuration from the cluster...
+    [preflight] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -o yaml'
+    [preflight] Running pre-flight checks before initializing the new control plane instance
+    [preflight] Pulling images required for setting up a Kubernetes cluster
+    [preflight] This might take a minute or two, depending on the speed of your internet connection
+    [preflight] You can also perform this action in beforehand using 'kubeadm config images pull'
+    [download-certs] Downloading the certificates in Secret "kubeadm-certs" in the "kube-system" Namespace
+    [download-certs] Saving the certificates to the folder: "/etc/kubernetes/pki"
+    [certs] Using certificateDir folder "/etc/kubernetes/pki"
+    [certs] Generating "apiserver" certificate and key
+    [certs] apiserver serving cert is signed for DNS names [kube02-haproxy.tailnet-a5cd.ts.net kube02-m2 kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.26.0.1 100.103.128.9]
+    [certs] Generating "apiserver-kubelet-client" certificate and key
+    [certs] Generating "front-proxy-client" certificate and key
+    [certs] Generating "etcd/peer" certificate and key
+    [certs] etcd/peer serving cert is signed for DNS names [kube02-m2 localhost] and IPs [100.103.128.9 127.0.0.1 ::1]
+    [certs] Generating "apiserver-etcd-client" certificate and key
+    [certs] Generating "etcd/server" certificate and key
+    [certs] etcd/server serving cert is signed for DNS names [kube02-m2 localhost] and IPs [100.103.128.9 127.0.0.1 ::1]
+    [certs] Generating "etcd/healthcheck-client" certificate and key
+    [certs] Valid certificates and keys now exist in "/etc/kubernetes/pki"
+    [certs] Using the existing "sa" key
+    [kubeconfig] Generating kubeconfig files
+    [kubeconfig] Using kubeconfig folder "/etc/kubernetes"
+    [kubeconfig] Writing "admin.conf" kubeconfig file
+    [kubeconfig] Writing "controller-manager.conf" kubeconfig file
+    [kubeconfig] Writing "scheduler.conf" kubeconfig file
+    [control-plane] Using manifest folder "/etc/kubernetes/manifests"
+    [control-plane] Creating static Pod manifest for "kube-apiserver"
+    [control-plane] Creating static Pod manifest for "kube-controller-manager"
+    [control-plane] Creating static Pod manifest for "kube-scheduler"
+    [check-etcd] Checking that the etcd cluster is healthy
+    [kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+    [kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+    [kubelet-start] Starting the kubelet
+    [kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap...
+    [etcd] Announced new etcd member joining to the existing etcd cluster
+    [etcd] Creating static Pod manifest for "etcd"
+    [etcd] Waiting for the new etcd member to join the cluster. This can take up to 40s
 
-```plain linenums="1" hl_lines="57-59 61"
-root@kube02-m2:# kubeadm join kube02-haproxy.tailnet-a5cd.ts.net:6443 --token 1q32dn.swfpr7qj89hl2g4j --apiserver-advertise-address $(tailscale ip --4) --cri-socket /var/run/containerd/containerd.sock --discovery-token-ca-cert-hash sha256:11c669ee4e4e27b997ae5431133dd2cd7c6a2050ddd16b38bee8bee544bbe680 --control-plane --certificate-key 2f2caa21e13d7f4bece27faa2515d024c8b4e93e08d8d21612113a7ebacff5ea
-W0421 16:23:11.602945   26931 initconfiguration.go:119] Usage of CRI endpoints without URL scheme is deprecated and can cause kubelet errors in the future. Automatically prepending scheme "unix" to the "criSocket" with value "/var/run/containerd/containerd.sock". Please update your configuration!
-[preflight] Running pre-flight checks
-[preflight] Reading configuration from the cluster...
-[preflight] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -o yaml'
-[preflight] Running pre-flight checks before initializing the new control plane instance
-[preflight] Pulling images required for setting up a Kubernetes cluster
-[preflight] This might take a minute or two, depending on the speed of your internet connection
-[preflight] You can also perform this action in beforehand using 'kubeadm config images pull'
-[download-certs] Downloading the certificates in Secret "kubeadm-certs" in the "kube-system" Namespace
-[download-certs] Saving the certificates to the folder: "/etc/kubernetes/pki"
-[certs] Using certificateDir folder "/etc/kubernetes/pki"
-[certs] Generating "apiserver" certificate and key
-[certs] apiserver serving cert is signed for DNS names [kube02-haproxy.tailnet-a5cd.ts.net kube02-m2 kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.26.0.1 100.103.128.9]
-[certs] Generating "apiserver-kubelet-client" certificate and key
-[certs] Generating "front-proxy-client" certificate and key
-[certs] Generating "etcd/peer" certificate and key
-[certs] etcd/peer serving cert is signed for DNS names [kube02-m2 localhost] and IPs [100.103.128.9 127.0.0.1 ::1]
-[certs] Generating "apiserver-etcd-client" certificate and key
-[certs] Generating "etcd/server" certificate and key
-[certs] etcd/server serving cert is signed for DNS names [kube02-m2 localhost] and IPs [100.103.128.9 127.0.0.1 ::1]
-[certs] Generating "etcd/healthcheck-client" certificate and key
-[certs] Valid certificates and keys now exist in "/etc/kubernetes/pki"
-[certs] Using the existing "sa" key
-[kubeconfig] Generating kubeconfig files
-[kubeconfig] Using kubeconfig folder "/etc/kubernetes"
-[kubeconfig] Writing "admin.conf" kubeconfig file
-[kubeconfig] Writing "controller-manager.conf" kubeconfig file
-[kubeconfig] Writing "scheduler.conf" kubeconfig file
-[control-plane] Using manifest folder "/etc/kubernetes/manifests"
-[control-plane] Creating static Pod manifest for "kube-apiserver"
-[control-plane] Creating static Pod manifest for "kube-controller-manager"
-[control-plane] Creating static Pod manifest for "kube-scheduler"
-[check-etcd] Checking that the etcd cluster is healthy
-[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
-[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
-[kubelet-start] Starting the kubelet
-[kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap...
-[etcd] Announced new etcd member joining to the existing etcd cluster
-[etcd] Creating static Pod manifest for "etcd"
-[etcd] Waiting for the new etcd member to join the cluster. This can take up to 40s
+    The 'update-status' phase is deprecated and will be removed in a future release. Currently it performs no operation
+    [mark-control-plane] Marking the node kube02-m2 as control-plane by adding the labels: [node-role.kubernetes.io/control-plane node.kubernetes.io/exclude-from-external-load-balancers]
+    [mark-control-plane] Marking the node kube02-m2 as control-plane by adding the taints [node-role.kubernetes.io/control-plane:NoSchedule]
 
-The 'update-status' phase is deprecated and will be removed in a future release. Currently it performs no operation
-[mark-control-plane] Marking the node kube02-m2 as control-plane by adding the labels: [node-role.kubernetes.io/control-plane node.kubernetes.io/exclude-from-external-load-balancers]
-[mark-control-plane] Marking the node kube02-m2 as control-plane by adding the taints [node-role.kubernetes.io/control-plane:NoSchedule]
+    This node has joined the cluster and a new control plane instance was created:
 
-This node has joined the cluster and a new control plane instance was created:
+    * Certificate signing request was sent to apiserver and approval was received.
+    * The Kubelet was informed of the new secure connection details.
+    * Control plane label and taint were applied to the new node.
+    * The Kubernetes control plane instances scaled up.
+    * A new etcd member was added to the local/stacked etcd cluster.
 
-* Certificate signing request was sent to apiserver and approval was received.
-* The Kubelet was informed of the new secure connection details.
-* Control plane label and taint were applied to the new node.
-* The Kubernetes control plane instances scaled up.
-* A new etcd member was added to the local/stacked etcd cluster.
+    To start administering your cluster from this node, you need to run the following as a regular user:
 
-To start administering your cluster from this node, you need to run the following as a regular user:
+            mkdir -p $HOME/.kube
+            sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+            sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-        mkdir -p $HOME/.kube
-        sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-        sudo chown $(id -u):$(id -g) $HOME/.kube/config
-
-Run 'kubectl get nodes' to see this node join the cluster.
-```
+    Run 'kubectl get nodes' to see this node join the cluster.
+    ```
 
 **Finally check the nodes:**
 
@@ -883,7 +885,5 @@ spec:
     - mountPath: /mnt/store
       name: storage
 EOF
-```      
-
-
+```
 
