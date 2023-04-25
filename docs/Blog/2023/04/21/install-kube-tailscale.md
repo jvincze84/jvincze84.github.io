@@ -1,10 +1,5 @@
 # Install Kubernetes Cluster Behind Tailscale VPN
 
-!!! important
-    UNFINISHED post!!!
-
-
-
 ## TL;DR
 
 In this post we will install a **multi-master** Kubernetes cluster behind Tailscale VPN.
