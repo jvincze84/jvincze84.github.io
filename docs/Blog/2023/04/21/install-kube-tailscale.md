@@ -61,6 +61,7 @@ The nodes in this test environment are connected each other on the same subnet.
 ### Hardware
 
 These nodes are completely identical both on hardware and OS level, running on Proxmox Virtualization platform with KVM.
+
 - 2 CPU cores
 - 2GB memory
 - 32B system disk
