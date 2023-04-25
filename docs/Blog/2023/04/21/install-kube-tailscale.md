@@ -843,7 +843,7 @@ kubectl apply -f kube-flannel.yml
 ```
 
 ??? example "Example flannel-ds logs `kubectl -n kube-flannel logs kube-flannel-ds-h2rp2`"
-    ```plain
+    ```plain linenums="1" hl_lines="6-9"
     Defaulted container "kube-flannel" out of: kube-flannel, install-cni-plugin (init), install-cni (init)
     I0425 06:34:24.144883       1 main.go:211] CLI flags config: {etcdEndpoints:http://127.0.0.1:4001,http://127.0.0.1:2379 etcdPrefix:/coreos.com/network etcdKeyfile: etcdCertfile: etcdCAFile: etcdUsername: etcdPassword: version:false kubeSubnetMgr:true kubeApiUrl: kubeAnnotationPrefix:flannel.alpha.coreos.com kubeConfigFile: iface:[tailscale0] ifaceRegex:[] ipMasq:true ifaceCanReach: subnetFile:/run/flannel/subnet.env publicIP: publicIPv6: subnetLeaseRenewMargin:60 healthzIP:0.0.0.0 healthzPort:0 iptablesResyncSeconds:5 iptablesForwardRules:true netConfPath:/etc/kube-flannel/net-conf.json setNodeNetworkUnavailable:true useMultiClusterCidr:false}
     W0425 06:34:24.146218       1 client_config.go:617] Neither --kubeconfig nor --master was specified.  Using the inClusterConfig.  This might not work.
