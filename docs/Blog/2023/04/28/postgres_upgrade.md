@@ -344,7 +344,7 @@ I think createing a new Persistent Volume for the migration process is better ch
 
 You will see in the next section that the Job using Configmap as source of the script. So first we need to create this CM.
 
-Save the script above to `/tmp/pg_dump.sh`, and run:
+Save the script to `/tmp/pg_dump.sh`, and run:
 
 ```bash
 kubectl -n postgres create cm pg-dump-script --from-file=pg_dump.sh=/tmp/pg_dump.sh
