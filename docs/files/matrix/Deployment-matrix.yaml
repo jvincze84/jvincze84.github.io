@@ -49,6 +49,8 @@ spec:
           subPath: matrix-kub-test.duckdns.org.signing.key
       dnsPolicy: ClusterFirst
       restartPolicy: Always
+      securityContext:
+        fsGroup: 991
       schedulerName: default-scheduler
       terminationGracePeriodSeconds: 10
       volumes:
