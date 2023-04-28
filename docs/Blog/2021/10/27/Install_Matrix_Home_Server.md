@@ -420,6 +420,15 @@ kubectl -n matrix create secret generic matrix-key \
 --8<-- "docs/files/matrix/PersistentVolumeClaim-matrix.yaml"
 ```
 
+!!! failure "2023-04-28 - Permission denied"
+    You may experince permission denied error on the mounted `/data` directory.
+    This is likely because your persistent volume provider mount the path with wrong uid/guid. Matirx uses 991:991 by default. So I added the followings to the Deployment manifest:
+    ```yaml
+          securityContext:
+            fsGroup: 991
+    ```
+
+    
 
 **Download & Apply**
 
