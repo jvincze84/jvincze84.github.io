@@ -181,7 +181,8 @@ cat <<EOF |  tee /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 EOF
- sysctl --system
+
+sysctl --system
 ```
 
 ```bash
@@ -194,7 +195,7 @@ curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key |  gpg --dear
 # Deprecated : echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" |  tee /etc/apt/sources.list.d/kubernetes.list
 echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' |  tee /etc/apt/sources.list.d/kubernetes.list
 
- apt-get update
+apt-get update
 ```
 
 !!! warning
@@ -271,7 +272,7 @@ kubeadm init \
 --service-cidr 10.22.0.0/16 \
 --pod-network-cidr 10.23.0.0/16
 ```
-```text title="Output" linenums="1" hl_lines="58-60"
+```text title="Output" linenums="1" hl_lines="57-63"
 [init] Using Kubernetes version: v1.28.2
 [preflight] Running pre-flight checks
 [preflight] Pulling images required for setting up a Kubernetes cluster
@@ -444,7 +445,7 @@ Before jump to the next section take a look at the node role: `control-plane,mas
 This means the only node we hava acts as control-plane and master, since we won't have any other worker nodes this nodes must have worker role as well:
 
 ```bash
-kubectl label node kube-test node-role.kubernetes.io/worker=
+kubectl label node singlek8s node-role.kubernetes.io/worker=
 ```
 
 But this is not enoguh because the master nodes have taint by default: [https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)
@@ -652,14 +653,14 @@ kubectl patch deployment/ingress-nginx-controller -n ingress-nginx \
 **Check**
 
 ```text hl_lines="1 8" linenums="1"
-curl -ikI https://172.16.1.214
+curl -ikI https://172.16.1.70
 HTTP/2 404 
 date: Mon, 11 Oct 2021 10:29:13 GMT
 content-type: text/html
 content-length: 146
 strict-transport-security: max-age=15724800; includeSubDomains
 
-curl -ikI http://172.16.1.214
+curl -ikI http://172.16.1.70
 HTTP/1.1 404 Not Found
 Date: Mon, 11 Oct 2021 10:29:16 GMT
 Content-Type: text/html
