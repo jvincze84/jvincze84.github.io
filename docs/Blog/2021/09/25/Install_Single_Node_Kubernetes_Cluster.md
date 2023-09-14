@@ -43,7 +43,7 @@ apt-get install vim mc net-tools sudo jq
 I always recommend to follow the official installation guide: [https://kubernetes.io/docs/setup/production-environment/container-runtimes](https://kubernetes.io/docs/setup/production-environment/container-runtimes)
 Everything is well docomented and easy to follow. 
 
-Kubernetes will leave Docker support so we will user Containerd as container runtime. 
+Kubernetes will leave Docker support so we will use Containerd as container runtime. 
 
 !!! info
     Read more about Docker vs Kubernetes: [https://kubernetes.io/blog/2020/12/02/dont-panic-kubernetes-and-docker/](https://kubernetes.io/blog/2020/12/02/dont-panic-kubernetes-and-docker/)
