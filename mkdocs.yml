@@ -18,7 +18,8 @@ theme:
       - search.highlight
 #      - toc.integrate
       - header.autohide
-      - content.code.annotate      
+      - content.code.annotate    
+      - content.code.copy
     palette:
       - scheme: default
         primary: indigo
