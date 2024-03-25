@@ -31,7 +31,7 @@ To see what kind of messages are sent over the network after this curl example I
 curl -s --user 'api:key-2bdec103ac5dea85b9378ab2541faecf' \
     http://blog.vinczejanos.info/v3/blog.vinczejanos.info/messages \
     -F from='blog@blog.vinczejanos.info' \
-    -F to=janos.vincze@vodafone.com \
+    -F to=janos.vincze@valami.com \
     -F subject='Hello' \
     -F text='Testing some Mailgun awesomness!'
 ```
@@ -67,7 +67,7 @@ blog@blog.vinczejanos.info
 --------------------------40dcfa2d67b56270
 Content-Disposition: form-data; name="to"
 
-janos.vincze@vodafone.com
+janos.vincze@valami.com
 --------------------------40dcfa2d67b56270
 Content-Disposition: form-data; name="subject"
 
