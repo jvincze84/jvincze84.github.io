@@ -1,0 +1,32 @@
+alias: Test - PulseTime - Item Change
+trigger:
+  - platform: state
+    entity_id: input_select.timer_set
+action:
+  - service: input_text.set_value
+    target:
+      entity_id: input_text.pulsetimeactualmac
+    data:
+      value: |
+        {% set mapper =
+          { 'Left Side Light':'sonoff/600194AD2A3C/cmnd/pulsetime1',
+            'Kitchen Spot':'sonoff/600194AD7228/cmnd/pulsetime1',
+            'Kitchen Chandelier':'sonoff/600194AD7228/cmnd/pulsetime2',
+            'Front Light': 'sonoff/DC4F22378237/cmnd/pulsetime1',
+            'Side Light - Left 1,3': 'sonoff/6001949C6548/cmnd/pulsetime1',
+            'Side Light - Right 1,3': 'sonoff/6001949C6548/cmnd/pulsetime2',
+            'Side Light - Left 2,4': 'sonoff/6001949C6548/cmnd/pulsetime3',
+            'Side Light - Right 2,4': 'sonoff/6001949C6548/cmnd/pulsetime4',
+            'S20 - 02 - Bathroom Fan': 'sonoff/BCDDC28027AD/cmnd/pulsetime1',
+            'S20 - 01 - Christmas Light': 'sonoff/BCDDC2802856/cmnd/pulsetime1'
+          } %}
+        {% set mac = mapper[states('input_select.timer_set')] %}
+        {% if mac == NULL %}
+          UNKNOWN
+        {% else %}
+          {{ mac }}
+        {% endif %}
+  - service: mqtt.publish
+    data:
+      topic: |
+        {{ states('input_text.pulsetimeactualmac') }}

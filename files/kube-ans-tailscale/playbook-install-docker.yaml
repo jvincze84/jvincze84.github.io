@@ -1,0 +1,45 @@
+- hosts: pve-kube02
+  become: 'yes'
+  tasks:
+    - include_vars: myvars.yml
+    - name: determine codeversion
+      command: "lsb_release -cs"
+      register: release_output
+    - set_fact:
+        codename: "{{ release_output.stdout }}"
+
+    - name: Run the equivalent of "apt-get update" as a separate step
+      ansible.builtin.apt:
+        update_cache: yes
+    - name: add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+    - name: add docker repository to apt
+      apt_repository:
+        repo: deb https://download.docker.com/linux/debian "{{ codename }}" stable
+        state: present
+    - name: add tailscale gpg key
+      apt_key:
+        url: https://pkgs.tailscale.com/stable/debian/bullseye.noarmor.gpg
+        state: present
+    - name: add tailscale repository to apt
+      apt_repository:
+        repo: deb https://pkgs.tailscale.com/stable/debian "{{ codename }}" main
+        state: present
+    - name: install docker
+      ansible.builtin.apt:
+        name: "{{ docker_packages }}"
+        state: present
+        update_cache: yes
+
+    - name: install tailscale
+      apt:
+        name: tailscale
+        state: latest
+
+    - name: check if docker is started properly
+      service:
+        name: docker
+        state: started
+        enabled: yes

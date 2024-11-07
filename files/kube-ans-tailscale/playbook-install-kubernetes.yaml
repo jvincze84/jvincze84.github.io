@@ -1,0 +1,141 @@
+- hosts: pve-kube02
+  become: 'yes'
+  vars:
+    kubepackages:
+      - kubelet={{ kube_version }}
+      - kubeadm={{ kube_version }}
+      - kubectl={{ kube_version }}
+
+  tasks:
+    - include_vars: myvars.yml
+    - name: Register architecture (dpkg_output)
+      command: "dpkg --print-architecture"
+      register: dpkg_output
+    - set_fact:
+        arch: "{{ dpkg_output.stdout }}"
+
+    - name: Register lsb_release
+      command: "lsb_release -cs"
+      register: release_output
+    - set_fact:
+        codename: "{{ release_output.stdout }}"
+
+
+    - name: Add Kubernetes gpg to keyring
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+
+    - name: add kubernetes repository to apt
+      apt_repository:
+        repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+
+    - name: Disable SWAP since kubernetes can't work with swap enabled (1/2)
+      shell: |
+        swapoff -a
+
+
+    - name: Disable SWAP in fstab since kubernetes can't work with swap enabled (2/2)
+      replace:
+        path: /etc/fstab
+        regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+        replace: '# \1'
+
+    - name: Enable overlay & br_netfilter module
+      ansible.builtin.copy:
+        content: |
+          overlay
+          br_netfilter
+        dest: /etc/modules-load.d/k8s.conf
+
+    - name: Running modprobe
+      shell: |
+        modprobe overlay
+        modprobe br_netfilter
+
+
+    - name: Set up sysctl /etc/sysctl.d/k8s.conf
+      ansible.builtin.copy:
+        content: |
+          net.bridge.bridge-nf-call-iptables  = 1
+          net.bridge.bridge-nf-call-ip6tables = 1
+          net.ipv4.ip_forward                 = 1
+        dest: /etc/sysctl.d/k8s.conf
+
+    - name: Add the overlay module
+      community.general.modprobe:
+        name: overlay
+        state: present
+    - name: Add the br_netfilter module
+      community.general.modprobe:
+        name: br_netfilter
+        state: present
+    - name: sysctl
+      ansible.builtin.shell: "sysctl --system"
+
+    - name: Generate default containerd config
+      ansible.builtin.shell: "containerd config default > /etc/containerd/config.toml"
+
+    - name: Change /etc/containerd/config.toml file SystemdCgroup  to true
+      ansible.builtin.replace:
+        path: /etc/containerd/config.toml
+        after: 'plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options'
+        before: 'plugins."io.containerd.grpc.v1.cri".containerd.untrusted_workload_runtime]'
+        regexp: 'SystemdCgroup.*'
+        replace: 'SystemdCgroup = true'
+      diff: yes
+
+
+    - name: Run the equivalent of "apt-get update" as a separate step
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install Kubernetes Packages
+      ansible.builtin.apt:
+        name: "{{ kubepackages }}"
+        state: present
+
+
+    - name: Prevent kubelet from being upgraded
+      ansible.builtin.dpkg_selections:
+        name: kubelet
+        selection: hold
+
+    - name: Prevent kubeadm from being upgraded
+      ansible.builtin.dpkg_selections:
+        name: kubeadm
+        selection: hold
+
+    - name: Prevent kubectl from being upgraded
+      ansible.builtin.dpkg_selections:
+        name: kubectl
+        selection: hold
+
+    - name: Prevent containerd.io from being upgraded
+      ansible.builtin.dpkg_selections:
+        name: containerd.io
+        selection: hold
+
+
+    - name: FIX CRICTRL error
+      ansible.builtin.copy:
+        content: |
+          runtime-endpoint: unix:///run/containerd/containerd.sock
+          image-endpoint: unix:///run/containerd/containerd.sock
+          timeout: 2
+          debug: false
+          pull-image-on-create: false
+        dest: /etc/crictl.yaml
+
+
+    - name: Restart service cron on centos, in all cases, also issue daemon-reload to pick up config changes
+      ansible.builtin.systemd:
+        state: restarted
+        daemon_reload: true
+        name: containerd
+
+    - name: Install docker-compose from official github repo
+      get_url:
+        url : https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: 'u+x,g+x'

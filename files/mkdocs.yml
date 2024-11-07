@@ -1,0 +1,65 @@
+site_name: Vincze Janos Blog
+site_url: https://readthedocs.vinczejanos.info
+theme:
+    name: material
+    locale: en
+    custom_dir: overrides
+    features:
+      - navigation.tracking
+      - navigation.top
+      - search.suggest
+      - search.highlight
+      - search.suggest
+      - search.highlight
+    palette:
+      - scheme: default
+        toggle:
+          icon: material/toggle-switch-off-outline
+          name: Switch to dark mode
+      - scheme: slate
+        toggle:
+          icon: material/toggle-switch
+          name: Switch to light mode
+          primary: green
+          accent: ambe
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+      toc_depth: 4
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.details
+  - pymdownx.snippets  
+  - attr_list
+nav:
+  - "How I Built This Site?": 'How_I_Built_This_Site.md'
+  - "Tips And Tricks": 'Tips_And_Tricks.md'
+  - "Old Blog Conetent":
+    - "Collect Network Statistic With Telegraf & VNSTAT": 'old/Collect_Network_Statistic_With_Telegraf_Vnstat.md'
+    - "Iptables Examples": 'old/Iptables_Examples.md'
+    - "Nokia 6120c (BB5) Forgotten Security Code": 'old/Nokia_6120c_(bb5)_Forgotten_Security_Code.md'
+    - "Sonoff Relays With OpenHab And Tasmota Firmware": 'old/Sonoff_Relays_With_Openhab_And_Tasmota_Firmware.md'    
+    - "Raspberry & Orange PI":
+      - "Move root file system to USB storage (RPI2 & RPI3)": 'old/raspberry/Move_Root_File_System_To_Usb_Storage_(rpi2_&_Rpi3).md'
+      - "Raspberry PI 3 As Wifi Range Extender": 'old/raspberry/Raspberry_Pi_3_As_Wifi_Range_Extender.md'
+      - "Install OpenALPR on Raspberry PI 3 (Part 2)": 'old/raspberry/Install_Openalpr_On_Raspberry_Pi_3_part_2.md'
+    - "NodeMCU - LUA / ESP8266":
+      - "How To Unbrick ESP8266 (Blinking Blue Led)": 'old/nodemcu/How_To_Unbrick_Esp8266_blinking_Blue_Led.md'
+      - "Logging MQTT data (subscription) to MySQL with Shell Script": 'old/nodemcu/Logging_Mqtt_Data_(subscription)_To_Mysql_With_Shell_Script.md'
+    - "Linux Tutorials":
+      - "Install mps-youtube console based youtube player": 'old/linux/Install_Mps-youtube_Console_Based_Youtube_Player.md'
+      - "Create Your Own DynDns Service with Bind (Named)": 'old/linux/create_Your_Own_Dyndns_Service_With_Bind_named.md'
+extra_css:
+  - css/extra.css
+  - css/prism.css
+extra_javascript:
+  - js/prism.js
+extra:
+  disqus: shortname-jvincze-test
+  analytics:
+    provider: google
+    property: G-3LZJ7L57GQ
+

@@ -1,0 +1,44 @@
+alias: Test - PulseTime - From MQTT
+description: ''
+trigger:
+  - platform: mqtt
+    topic: sonoff/+/stat/RESULT
+    id: frommqtt
+condition:
+  - condition: template
+    value_template: '{{ ''PulseTime'' in  trigger.payload }}'
+  - condition: template
+    value_template: >-
+      {{ trigger.topic.split('/')[1] in states('input_text.pulsetimeactualmac')
+      }}
+action:
+  - service: input_number.set_value
+    target:
+      entity_id: input_number.pulseTimeActualValue
+    data:
+      value: |
+        {% if "PulseTime1" in trigger.payload_json %}
+          {% set pulseTime =  trigger.payload_json.PulseTime1.Set | int %}
+        {% elif "PulseTime2" in trigger.payload_json %}
+          {% set pulseTime =  trigger.payload_json.PulseTime2.Set | int %}
+        {% elif "PulseTime3" in trigger.payload_json %}
+          {% set pulseTime =  trigger.payload_json.PulseTime3.Set | int %}
+        {% elif "PulseTime4" in trigger.payload_json %}
+          {% set pulseTime =  trigger.payload_json.PulseTime4.Set | int %}
+        {% else %}
+          {% set pulseTime =  "notset" %}
+        {% endif %}
+
+        {% if  pulseTime != 'notset' %}
+          {% if  pulseTime == 0 %}
+            0
+          {% else %}
+            {{ ( pulseTime | int - 100 ) / 60 }}
+          {% endif %}
+        {% endif %}
+  - service: input_text.set_value
+    target:
+      entity_id: input_text.result
+    data:
+      value: '{{trigger.payload_json}}'
+mode: single

@@ -1,0 +1,57 @@
+version: "3"
+services:
+  matrix:
+    deploy:
+      replicas: 1
+    image: matrixdotorg/synapse:latest
+    container_name: synapse-matrix
+    restart: always
+    volumes:
+      - /opt/docker/matrix/config:/config
+      - /opt/docker/matrix/data:/data
+    environment:
+      - TZ=Europe/Budapest
+      - SYNAPSE_CONFIG_DIR=/data
+      - SYNAPSE_CONFIG_PATH=/config/homeserver.yaml
+    ports:
+      - 8008:8008
+    networks:
+      - matrix
+  caddy:
+    deploy:
+      replicas: 1
+    image: caddy:latest
+    container_name: matrix-web-caddy
+    restart: always
+    volumes:
+      - /opt/docker/matrix/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - /opt/docker/matrix/caddy/srv:/srv
+      - /opt/docker/matrix/caddy/data:/data
+      - /opt/docker/matrix/caddy/config:/config
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - matrix
+  postgres:
+    deploy:
+      replicas: 1
+    image: postgres:14.0-alpine
+    container_name: matrix-postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=MatrixPass
+      - POSTGRES_USER=matrix
+      - PGDATA=/data
+      - TZ=Europe/Budapest
+    volumes:
+      - /opt/docker/matrix/postgres:/data
+    networks:
+      - matrix
+networks:
+  matrix:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+       - subnet: "10.101.0.8/29"
