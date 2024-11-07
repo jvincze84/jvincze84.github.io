@@ -98,11 +98,6 @@ markdown_extensions:
 extra_css:
   - css/width.css
 
-
-extra:
-  disqus: shortname-jvincze-test
-  analytics:
-    provider: google
     property: G-3LZJ7L57GQ
 
 
