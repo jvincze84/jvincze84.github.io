@@ -1,4 +1,4 @@
-# Tips And Tricks
+# Tips And Tricks 2024
 
 In this page I will share you some random tips and tricks I use in my daily life, and I will update this post frequently.
 Some of them will be commented, but not all.
