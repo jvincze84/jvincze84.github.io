@@ -623,7 +623,7 @@ Check if the IP address and port of `Endpoints` are matching the Postgres POD IP
 First we need to create a user and database for the homeserver, just like we did before in the compose section.
 
 ```bash linenums="1"
-kubectl -n matrix exec -it postgres-7698969f95-8c4jn -- /bin/bash
+kubectl -n matrix exec -it $(kubectl -n matrix get pod -l k8s-app=postgres -o name) -- /bin/bash
 
 # Inside the container:
 createuser --pwprompt synapse_user -U matrix
