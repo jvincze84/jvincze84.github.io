@@ -93,7 +93,21 @@ markdown_extensions:
 #      - "Install mps-youtube console based youtube player": 'old/linux/Install_Mps-youtube_Console_Based_Youtube_Player.md'
 #      - "Create Your Own DynDns Service with Bind (Named)": 'old/linux/create_Your_Own_Dyndns_Service_With_Bind_named.md'
 
-
+plugins:
+  - tags
+#  - blogging:
+#      dirs: # The directories to be included
+#        - Blog  
+#      show_total: true
+#  - blog:
+#      text-align: "right"
+#      format: "(%Y/%m/%d)"
+#      display-article-date: false
+  - git-revision-date-localized:
+      type: date
+  - git-revision-date
+  - search:
+      lang: en
 
 extra_css:
   - css/width.css
