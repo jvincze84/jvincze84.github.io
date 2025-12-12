@@ -96,6 +96,7 @@ markdown_extensions:
 
 plugins:
   - tags
+  - meta
   - blog:
       enabled: true
       text-align: "right"
