@@ -1,0 +1,93 @@
+- name: Gather Facts
+  hosts: 127.0.0.1
+  connection: local
+  tasks:
+    - include_vars: myvars.yml
+    - name: Download Yq
+      ansible.builtin.get_url:
+        url: "{{ yq_url }}"
+        dest: /tmp/yq
+        mode: '755'
+    - name: Calculate MD5
+      ansible.builtin.stat:
+        path: /tmp/yq
+        checksum_algorithm: md5
+      register: yq_md5
+    - name: Delete /tmp/yq
+      ansible.builtin.file:
+        path: /tmp/yq
+        state: absent
+
+- hosts: pve-kube02
+  name: Install
+  become: 'yes'
+  tasks:
+    - include_vars: myvars.yml
+    - name: Run the equivalent of "apt-get update" as a separate step
+      ansible.builtin.apt:
+        update_cache: yes
+    - name: Set Fact For YQ md5
+      set_fact:
+        yq_checksum: "{{ hostvars['127.0.0.1']['yq_md5'].stat.checksum }}"
+    - name: debug
+      debug:
+        msg: "MD5 hash : {{ yq_checksum }}"
+    - name: Ensure a list of packages installed
+      ansible.builtin.apt:
+        name: "{{ common_packages }}"
+        state: present
+    - name: All done!
+      debug:
+        msg: Packages have been successfully installed
+    - name: Calculate Already Existing jq hash
+      ansible.builtin.stat:
+        path: /usr/bin/yq
+        checksum_algorithm: md5
+      register: exist_yq_md5
+    - name: Print Existing yq md5 hash
+      debug:
+        msg: "MD5 hash of existing : {{ exist_yq_md5.stat.checksum }}"
+      when: exist_yq_md5.stat.exists == true
+    - name: Remove Old Version Of YQ
+      ansible.builtin.file:
+        path: /usr/bin/yq
+        state: absent
+      when: exist_yq_md5.stat.exists == false or exist_yq_md5.stat.checksum != yq_checksum
+    - name: Download Yq
+      ansible.builtin.get_url:
+        url: "{{ yq_url }}"
+        dest: /usr/bin/yq
+        mode: '755'
+      when: exist_yq_md5.stat.exists == false or exist_yq_md5.stat.checksum != yq_checksum
+    - name: Fix Vimrc
+      ansible.builtin.replace:
+        path: /etc/vim/vimrc
+        regexp: '^"\s?(let g:skip_defaults_vim.*)'
+        replace: '\1'
+    - name: Fix Vimrc 2
+      ansible.builtin.replace:
+        path: /etc/vim/vimrc
+        regexp: '^"\s?(set compatible.*)'
+        replace: '\1'
+    - name: Fix Vimrc 3
+      ansible.builtin.replace:
+        path: /etc/vim/vimrc
+        regexp: '^"\s?(set background).*'
+        replace: '\1=dark'
+    - name: Fix Vimrc 4
+      ansible.builtin.replace:
+        path: /etc/vim/vimrc
+        regexp: '^"\s?(syntax on).*'
+        replace: '\1'
+    - name: Fix Vimrc 4
+      ansible.builtin.replace:
+        path: /etc/vim/vimrc
+        regexp: '^"\s?(set mouse).*'
+        replace: '\1=c'
+    - name: Allow 'sudo' group to have passwordless sudo
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%sudo'
+        line: '%sudo   ALL=(ALL:ALL) NOPASSWD:ALL'
+        validate: visudo -cf %s

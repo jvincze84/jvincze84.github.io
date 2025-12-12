@@ -1,0 +1,2397 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://readthedocs.vinczejanos.info/Blog/">
+      
+      
+        <link rel="prev" href="../new-file/">
+      
+      
+        <link rel="next" href="../Kubernetes_Templates/ConfigMap/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Blog - Vincze Janos Blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/width.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#blog" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Vincze Janos Blog" class="md-header__button md-logo" aria-label="Vincze Janos Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Vincze Janos Blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Blog
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="light-green" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jvincze84/jvincze84.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Vincze Janos Blog" class="md-nav__button md-logo" aria-label="Vincze Janos Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Vincze Janos Blog
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jvincze84/jvincze84.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome Here
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Tips_And_Tricks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tips And Tricks 2024a
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../new-file/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ez egy uj test file
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blog
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes Templates
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Kubernetes Templates
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Kubernetes_Templates/ConfigMap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ConfigMap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Kubernetes_Templates/Deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Kubernetes_Templates/Ingress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ingress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Kubernetes_Templates/PersistentVolumeClaim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PersistentVolumeClaim
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Kubernetes_Templates/ReverseProxy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes Reverse Proxy With Ingress, Service And Endpoint
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Kubernetes_Templates/Secret/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Secret
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Kubernetes_Templates/StatefulSet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    StatefulSet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Kubernetes_Templates/services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Old Blog Contents
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Old Blog Contents
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/linux/Compile_Apache_Httpd_2.4.x_Php/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compile Apache HTTPD 2.4.X &amp; PHP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/linux/Create_Self_Signed_Certificate_For_Apache_Webserver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Create Self Signed Certificate For Apache Webserver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/linux/Install_%28compile%29_%26_Configure_Motion_Av_Tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install (compile) & Configure Motion Av Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/linux/Install_Mps-youtube_Console_Based_Youtube_Player/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install Mps youtube Console Based Youtube Player
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/linux/create_Your_Own_Dyndns_Service_With_Bind_named/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    create Your Own Dyndns Service With Bind named
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nodemcu
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nodemcu
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/nodemcu/How_To_Compile_Nodemcu_Firmware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How To Compile Nodemcu Firmware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/nodemcu/How_To_Unbrick_Esp8266_blinking_Blue_Led/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How To Unbrick Esp8266 blinking Blue Led
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/nodemcu/Install_Openalpr_On_Raspberry_Pi_3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install OpenALPR on Raspberry PI 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/nodemcu/Logging_Mqtt_Data_%28subscription%29_To_Mysql_With_Shell_Script/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logging Mqtt Data (subscription) To Mysql With Shell Script
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/nodemcu/Reliable_MQTT_conenction_with_NodeMCU/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reliable MQTT conenction with NodeMCU
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/nodemcu/Reliable_Mqtt_Connection_With_Nodemcu_%28part_2%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reliable Mqtt Connection With Nodemcu (part 2)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/nodemcu/Very_Simple_Way_To_Send_Email_Using_Nodemcu_Firmware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Very Simple Way to Send Email Using NodeMCU firmware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Other
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/other/Collect_Network_Statistic_With_Telegraf_Vnstat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collect Network Statistic With Telegraf &amp; VNSTAT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/other/Iptables_Examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Iptables Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/other/Nokia_6120c_%28bb5%29_Forgotten_Security_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nokia 6120c (BB5) Forgotten Security Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/other/Sonoff_Relays_With_Openhab_And_Tasmota_Firmware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sonoff Relays With OpenHab And Tasmota Firmware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raspberry
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Raspberry
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/raspberry/Compile_Go_Language_On_Raspberry_Pi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compile Go Language On Raspberry Pi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/raspberry/Google_Cloud_Print_With_Orange_Pi_or_Rpi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google Cloud Print With Orange Pi or Rpi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/raspberry/How_To_Install_Nodered_On_Raspberry_Pi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How To Install Nodered On Raspberry Pi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/raspberry/Install_Debian_Jessie_To_Orange_Pi_Plus_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install Debian Jessie to Orange PI Plus 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/raspberry/Install_Openalpr_On_Raspberry_Pi_3_part_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install Openalpr On Raspberry Pi 3 part 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/raspberry/Mount_Sd_Card_Image_partitioned_Image_Wo_Kpartx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mount SD card image (partitioned image) w/o kpartx
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/raspberry/Move_Root_File_System_To_Usb_Storage_%28rpi2_%26_Rpi3%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Move root file system to USB storage (RPI2 &amp; RPI3)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/raspberry/Raspberry_Pi_2_As_Print_Server_Airprint/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raspberry Pi 2 As Print Server Airprint
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Old_Blog_Contents/raspberry/Raspberry_Pi_3_As_Wifi_Range_Extender/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raspberry Pi 3 As Wifi Range Extender
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#upgrade-postgressql-on-kubernetes-with-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upgrade PostgresSQL On Kubernetes With Job
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-kubernetes-cluster-behind-tailscale-vpn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install Kubernetes Cluster Behind Tailscale VPN
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-elasticsearch-cluster-kibaba-on-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deploy Elasticsearch Cluster &amp; Kibaba On Kubernetes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-mkdocs-meterial-in-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How To Use Mkdocs + Meterial In Kubernetes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-install-jitsi-on-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How To Install Jitsi On Kubernetes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yet-another-article-about-docker-logging-with-fluentd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yet Another Article About Docker Logging With Fluentd
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#centralised-backup-with-borg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Centralised Backup With Borg
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#home-assistant-switch-timer-with-tasmota-pulsetime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Home Assistant Switch Timer With Tasmota Pulsetime
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-matrix-home-server-on-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install Matrix Home Server On Kubernetes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-started-with-portainer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get Started With Portainer
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content" data-md-component="content">
+    <div class="md-content__inner">
+      <header class="md-typeset">
+        <h1 id="blog">Blog<a class="headerlink" href="#blog" title="Permanent link">&para;</a></h1>
+      </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2023-04-28 00:00:00+00:00">April 28, 2023</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              8 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="upgrade-postgressql-on-kubernetes-with-job"><a class="toclink" href="2023/04/28/upgrade-postgressql-on-kubernetes-with-job/">Upgrade PostgresSQL On Kubernetes With Job</a></h2>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>UNFINISHED POST!!!!</p>
+</div>
+<h3 id="preface"><a class="toclink" href="2023/04/28/upgrade-postgressql-on-kubernetes-with-job/#preface">Preface</a></h3>
+<p>Initially I wrote this script &amp; job to myself, but I found that it can be useful for others as well. This article is not a kind of "use as is", and need some deeper knowledge to adapt it to your environment. So use my post as a skeleton, and modify according to your needs.</p>
+
+    
+      <nav class="md-post__action">
+        <a href="2023/04/28/upgrade-postgressql-on-kubernetes-with-job/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2023-04-21 00:00:00+00:00">April 21, 2023</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              26 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="install-kubernetes-cluster-behind-tailscale-vpn"><a class="toclink" href="2023/04/21/install-kubernetes-cluster-behind-tailscale-vpn/">Install Kubernetes Cluster Behind Tailscale VPN</a></h2>
+<h3 id="tldr"><a class="toclink" href="2023/04/21/install-kubernetes-cluster-behind-tailscale-vpn/#tldr">TL;DR</a></h3>
+<p>In this post we will install a <strong>multi-master</strong> Kubernetes cluster behind Tailscale VPN.
+This scenario can be useful when:</p>
+<ul>
+<li>Your Kubernetes nodes are not in the same subnet. </li>
+<li>You are building a home-lab system, and the nodes are behind two or more NAT-ted network, or even behind CGNAT.</li>
+<li>Your nodes are running in separate data centers, and don't want to publish API ports on the public internet. </li>
+<li>You want to access your cluster only from private VPN network.</li>
+<li>You want extra security by encrypted connection between nodes.</li>
+<li>Or the mixture of above scenarios. </li>
+</ul>
+
+    
+      <nav class="md-post__action">
+        <a href="2023/04/21/install-kubernetes-cluster-behind-tailscale-vpn/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2022-11-18 00:00:00+00:00">November 18, 2022</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              11 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="deploy-elasticsearch-cluster-kibaba-on-kubernetes"><a class="toclink" href="2022/11/18/deploy-elasticsearch-cluster--kibaba-on-kubernetes/">Deploy Elasticsearch Cluster &amp; Kibaba On Kubernetes</a></h2>
+<h3 id="preface"><a class="toclink" href="2022/11/18/deploy-elasticsearch-cluster--kibaba-on-kubernetes/#preface">Preface</a></h3>
+<p>Nowadays maybe the most advanced and widly used log management and analizis system is the ELK stack. I have to  mention Graylog and Grafana Loki which are also great and advanced tools for montioring your environments and collect log files from them.</p>
+<p>There is another enterprise ready and feature rich log management system which based on Elasticsearch and Kibana: OpenSearch. If you are looking for a free alternaive to Elasticsearch you may want to give OpenSearch a try. I'm going to post about OpenSearch as well, but at this time I want to show you a method to install Elasticsearch &amp; Kibana on your Kubernetes cluster.</p>
+
+    
+      <nav class="md-post__action">
+        <a href="2022/11/18/deploy-elasticsearch-cluster--kibaba-on-kubernetes/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2022-10-20 00:00:00+00:00">October 20, 2022</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              4 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="how-to-use-mkdocs-meterial-in-kubernetes"><a class="toclink" href="2022/10/20/how-to-use-mkdocs--meterial-in-kubernetes/">How To Use Mkdocs + Meterial In Kubernetes</a></h2>
+<h3 id="preface"><a class="toclink" href="2022/10/20/how-to-use-mkdocs--meterial-in-kubernetes/#preface">Preface</a></h3>
+<p>In this guide I show you how I use mkdocs in my Kubernetes cluster. <br />
+There are uncountable ways to do something similar, but I think this post can be useful for you.<br />
+The main ascpect of my solution is to build the documentation in an init container, and serve the page with nginx. This way the only thing you have to do is rollout the deployment after new version of your mkdocs is released (pushed to your repository).</p>
+
+    
+      <nav class="md-post__action">
+        <a href="2022/10/20/how-to-use-mkdocs--meterial-in-kubernetes/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2022-10-17 00:00:00+00:00">October 17, 2022</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              6 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="how-to-install-jitsi-on-kubernetes"><a class="toclink" href="2022/10/17/how-to-install-jitsi-on-kubernetes/">How To Install Jitsi On Kubernetes</a></h2>
+<h3 id="preface"><a class="toclink" href="2022/10/17/how-to-install-jitsi-on-kubernetes/#preface">Preface</a></h3>
+<p>Jitsi can be installed several way, maybe the easiest way is using docker-compose.</p>
+<p>Link: <a href="https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-docker/">https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-docker/</a></p>
+<p>But if you have a Kubernetes cluster you may want to install Jitsi on you cluster. </p>
+<p>I found another article about thist topic, but it is a little different from my solution: <a href="https://sesamedisk.com/video-conferencing-with-jitsi-on-k8s/">https://sesamedisk.com/video-conferencing-with-jitsi-on-k8s/</a>
+The most notifable different that I use only one deployment for all component (web, prosody, jicofo and jvb). (One pod, multiple container.) However this way make almost impossible to scale your jitsi instance, but far enough for minimal deployment. Running multiple instance of Jitsi is not in my scope at this time. 
+Unfortunately the Official Jitsi documentation does not say too much about scaling: <a href="https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-manual">https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-manual</a> </p>
+<p>Kubernetes sclaing article: <a href="https://blog.mi.hdm-stuttgart.de/index.php/2021/03/11/how-to-scale-jitsi-meet/">https://blog.mi.hdm-stuttgart.de/index.php/2021/03/11/how-to-scale-jitsi-meet/</a>
+I have never tried to scale jitsi, maybe later i give it a try.</p>
+<p>I don't want to write a lot of unnecessary lines here, so let's see how I deployed Jitsi on my K8S cluster.</p>
+
+    
+      <nav class="md-post__action">
+        <a href="2022/10/17/how-to-install-jitsi-on-kubernetes/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2021-12-18 00:00:00+00:00">December 18, 2021</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              5 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="yet-another-article-about-docker-logging-with-fluentd"><a class="toclink" href="2021/12/18/yet-another-article-about-docker-logging-with-fluentd/">Yet Another Article About Docker Logging With Fluentd</a></h2>
+<h3 id="motivation"><a class="toclink" href="2021/12/18/yet-another-article-about-docker-logging-with-fluentd/#motivation">Motivation</a></h3>
+<p>I have three hosts with Docker + Portainer:</p>
+<ul>
+<li>Two VPS server with public IP address</li>
+<li>A home server behind NAT</li>
+</ul>
+<p>I want to show all the logs from containers in one place. </p>
+<p>I already have a Kubernetes cluster at home, on which I have Kibana and Elasticsearch deployed for the cluster logging. It is obvious to use my already existing logging solution to collect logs from the Docker hosts.</p>
+<h3 id="install-fluentd-on-docker-hosts"><a class="toclink" href="2021/12/18/yet-another-article-about-docker-logging-with-fluentd/#install-fluentd-on-docker-hosts">Install Fluentd On Docker Hosts</a></h3>
+<p>Official Documentation: <a href="https://docs.fluentd.org/installation/install-by-deb">https://docs.fluentd.org/installation/install-by-deb</a></p>
+<p>Example installation on Debian bullseye:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://toolbelt.treasuredata.com/sh/install-debian-bullseye-td-agent4.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</code></pre></div>
+
+    
+      <nav class="md-post__action">
+        <a href="2021/12/18/yet-another-article-about-docker-logging-with-fluentd/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2021-12-11 00:00:00+00:00">December 11, 2021</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              9 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="centralised-backup-with-borg"><a class="toclink" href="2021/12/11/centralised-backup-with-borg/">Centralised Backup With Borg</a></h2>
+<h3 id="tldr"><a class="toclink" href="2021/12/11/centralised-backup-with-borg/#tldr">TL;DR</a></h3>
+<p>Why I Abandoned Duplicati?</p>
+<p>I use to use <a href="https://www.duplicati.com">Duplicati</a> as backup solution for ages. It's a really good backup solution with a handy user interface. Everything can be done on it's interface. </p>
+<p>My requirements toward a backup software:</p>
+<ul>
+<li>Differential backups on daily basis</li>
+<li>Support linux operation system</li>
+<li>Google Drive support for storing backup remotly</li>
+<li>Encryption, of course</li>
+<li>Be as lightweight as possible</li>
+</ul>
+<p>I know Google Drive support a bit unusall, but I have 2TB storage and I don't want to pay for an other service. Duplicati fulfills all my requirments. There are only two weakness because of why I looked for another solution: resource consumption and speed:</p>
+<ul>
+<li>Duplicati can be really slow on restore from Google Drive if you store a lot of files.</li>
+<li>Duplicati uses [Mono](https://www.mono-project.com. (Cross platform, open source .NET framework). Running .NET on linux is not my taste, and sometimes consumes too much resource, especially on a Raspberry PI3.</li>
+</ul>
+<p>After some hours of Googling and trying some softwares I found <a href="https://borgbackup.readthedocs.io/en/stable/">Borg Backup</a>.</p>
+<p>The only missing feature is the Google Drive, but it can be achieved with <code>rclone</code>.</p>
+<p>I don't want to write pages about my choice, features, advantages, disadvantages, etc. If you are reading this article you probably want to try or use Borg.</p>
+
+    
+      <nav class="md-post__action">
+        <a href="2021/12/11/centralised-backup-with-borg/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2021-12-11 00:00:00+00:00">December 11, 2021</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              11 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="home-assistant-switch-timer-with-tasmota-pulsetime"><a class="toclink" href="2021/12/11/home-assistant-switch-timer-with-tasmota-pulsetime/">Home Assistant Switch Timer With Tasmota Pulsetime</a></h2>
+<h3 id="motivation"><a class="toclink" href="2021/12/11/home-assistant-switch-timer-with-tasmota-pulsetime/#motivation">Motivation</a></h3>
+<p>I have several switches in my house and garden which can be controlled from Home Assistant. But sometimes I forget to turn them off. So there are some lights in the garden which should turn off after a certain time. For example I almost always forgot to turn off the light which directed to front gate of my garden after my arrives home.<br />
+All of my devices are flahed with <a href="https://tasmota.github.io/docs/">Tasmota</a> firmware. Tasmota has a built in command to turn off the relay after certain period of time called "Pulsetime":</p>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p>PulseTime<x>  Display the amount of PulseTime remaining on the corresponding Relay<x>  </p>
+<p><value> Set the duration to keep Relay<x> ON when Power<x> ON command is issued. After this amount of time, the power will be turned OFF.<br />
+0 / OFF = disable use of PulseTime for Relay<x><br />
+1..111 = set PulseTime for Relay<x> in 0.1 second increments<br />
+112..64900 = set PulseTime for Relay<x>, offset by 100, in 1 second increments. Add 100 to desired interval in seconds, e.g., PulseTime 113 = 13 seconds and PulseTime 460 = 6   minutes (i.e., 360 seconds)  <br />
+Note if you have more than 8 relays:<br />
+Defined PulseTime for relays &lt;1-8&gt; will also be active for correspondent Relay &lt;9-16&gt;.</p>
+</div>
+
+    
+      <nav class="md-post__action">
+        <a href="2021/12/11/home-assistant-switch-timer-with-tasmota-pulsetime/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2021-10-27 00:00:00+00:00">October 27, 2021</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              17 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="install-matrix-home-server-on-kubernetes"><a class="toclink" href="2021/10/27/install-matrix-home-server-on-kubernetes/">Install Matrix Home Server On Kubernetes</a></h2>
+<h3 id="preface"><a class="toclink" href="2021/10/27/install-matrix-home-server-on-kubernetes/#preface">Preface</a></h3>
+<p><strong>What is Matrix?</strong></p>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p>Matrix is an open standard for interoperable, decentralised, real-time communication over IP. It can be used to power Instant Messaging, VoIP/WebRTC signalling, Internet of Things communication - or anywhere you need a standard HTTP API for publishing and subscribing to data whilst tracking the conversation history.</p>
+</div>
+<p>Link: <a href="https://matrix.org/faq/#what-is-matrix%3F">https://matrix.org/faq/#what-is-matrix%3F</a></p>
+<p>So we are about to install a private real time messaging (Chat) server. It can be useful for you if you want to replace Whatsapp, Telegram, FB messenger, Viber, etc, or just want your own messaging server. Or if you don't trust in these services and want a service which focuses on your privacy. Another question is how your partners with whom you want to chat trust your server.</p>
+<p>I'm wondering if you have ever thought  about having your own messaging server. If the answer is yes, it's time to build one. I hope you will easily achieve  this with the help of this article.</p>
+<h3 id="requirements"><a class="toclink" href="2021/10/27/install-matrix-home-server-on-kubernetes/#requirements">Requirements</a></h3>
+<ul>
+<li>First and most important to have a valid domain name. If you don't have any you can pick up one free from <a href="https://www.duckdns.org">DuckDNS</a></li>
+<li>Installed Kubernets cluster</li>
+<li>Public Internet access. </li>
+<li>At least 2 GB of free RAM. </li>
+</ul>
+<p>I assume you build this server for your family and friends, and don't want to share with the whole World. For some tens of people you don't need to purchase an expensive server, but according to the number of attachments (file, pictures, videos,etc) you may need some hundreds of GB disk space.</p>
+
+    
+      <nav class="md-post__action">
+        <a href="2021/10/27/install-matrix-home-server-on-kubernetes/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2021-10-10 00:00:00+00:00">October 10, 2021</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              13 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="get-started-with-portainer"><a class="toclink" href="2021/10/10/get-started-with-portainer/">Get Started With Portainer</a></h2>
+<h3 id="tldr"><a class="toclink" href="2021/10/10/get-started-with-portainer/#tldr">TL;DR</a></h3>
+<p>Nowadays everybody talking and writing about containers, Docker, Kubernetes, OpenShift, etc. I don't want to explain here what are these meaning, instead give some practical use cases. I'm always testing my solutions at home with low cost HWs.<br />
+I have an article about installing single node Kubernetes cluster, but now I step back to Docker containers. This is because deploying a container orchestrator not always the goal. This article could be useful for home users, or developers who want learn about containers. </p>
+
+    
+      <nav class="md-post__action">
+        <a href="2021/10/10/get-started-with-portainer/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+      
+        
+          
+
+
+
+<nav class="md-pagination">
+  <span class="md-pagination__current">1</span> <a class="md-pagination__link" href="page/2/">2</a>
+</nav>
+        
+      
+    </div>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <!-- Cookie Consent by https://www.CookieConsent.com -->
+<script type="text/javascript" src="//www.cookieconsent.com/releases/4.0.0/cookie-consent.js" charset="UTF-8"></script>
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({"notice_banner_type":"headline","consent_type":"express","palette":"light","language":"en","page_load_consent_levels":["strictly-necessary"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"website_name":"Blog"});
+});
+</script>
+
+<noscript>ePrivacy and GPDR Cookie Consent by <a href="https://www.CookieConsent.com/" rel="nofollow noopener">Cookie Consent</a></noscript>
+<!-- End Cookie Consent by https://www.CookieConsent.com -->
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "search.highlight", "header.autohide", "content.code.annotate", "content.code.copy"], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  </body>
+</html>

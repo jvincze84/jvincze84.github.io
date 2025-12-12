@@ -1,0 +1,2505 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://readthedocs.vinczejanos.info/Old_Blog_Contents/raspberry/Raspberry_Pi_3_As_Wifi_Range_Extender/">
+      
+      
+        <link rel="prev" href="../Raspberry_Pi_2_As_Print_Server_Airprint/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Raspberry Pi 3 As Wifi Range Extender - Vincze Janos Blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/width.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#raspberry-pi-3-as-wifi-range-extender" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Vincze Janos Blog" class="md-header__button md-logo" aria-label="Vincze Janos Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Vincze Janos Blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Raspberry Pi 3 As Wifi Range Extender
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="light-green" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jvincze84/jvincze84.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Vincze Janos Blog" class="md-nav__button md-logo" aria-label="Vincze Janos Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Vincze Janos Blog
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jvincze84/jvincze84.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome Here
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Tips_And_Tricks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tips And Tricks 2024a
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../new-file/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ez egy uj test file
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../Blog/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blog
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes Templates
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Kubernetes Templates
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Kubernetes_Templates/ConfigMap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ConfigMap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Kubernetes_Templates/Deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Kubernetes_Templates/Ingress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ingress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Kubernetes_Templates/PersistentVolumeClaim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PersistentVolumeClaim
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Kubernetes_Templates/ReverseProxy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes Reverse Proxy With Ingress, Service And Endpoint
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Kubernetes_Templates/Secret/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Secret
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Kubernetes_Templates/StatefulSet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    StatefulSet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Kubernetes_Templates/services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Old Blog Contents
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Old Blog Contents
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/Compile_Apache_Httpd_2.4.x_Php/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compile Apache HTTPD 2.4.X &amp; PHP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/Create_Self_Signed_Certificate_For_Apache_Webserver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Create Self Signed Certificate For Apache Webserver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/Install_%28compile%29_%26_Configure_Motion_Av_Tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install (compile) & Configure Motion Av Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/Install_Mps-youtube_Console_Based_Youtube_Player/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install Mps youtube Console Based Youtube Player
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/create_Your_Own_Dyndns_Service_With_Bind_named/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    create Your Own Dyndns Service With Bind named
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nodemcu
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nodemcu
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodemcu/How_To_Compile_Nodemcu_Firmware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How To Compile Nodemcu Firmware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodemcu/How_To_Unbrick_Esp8266_blinking_Blue_Led/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How To Unbrick Esp8266 blinking Blue Led
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodemcu/Install_Openalpr_On_Raspberry_Pi_3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install OpenALPR on Raspberry PI 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodemcu/Logging_Mqtt_Data_%28subscription%29_To_Mysql_With_Shell_Script/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logging Mqtt Data (subscription) To Mysql With Shell Script
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodemcu/Reliable_MQTT_conenction_with_NodeMCU/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reliable MQTT conenction with NodeMCU
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodemcu/Reliable_Mqtt_Connection_With_Nodemcu_%28part_2%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reliable Mqtt Connection With Nodemcu (part 2)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodemcu/Very_Simple_Way_To_Send_Email_Using_Nodemcu_Firmware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Very Simple Way to Send Email Using NodeMCU firmware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Other
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/Collect_Network_Statistic_With_Telegraf_Vnstat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collect Network Statistic With Telegraf &amp; VNSTAT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/Iptables_Examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Iptables Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/Nokia_6120c_%28bb5%29_Forgotten_Security_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nokia 6120c (BB5) Forgotten Security Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/Sonoff_Relays_With_Openhab_And_Tasmota_Firmware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sonoff Relays With OpenHab And Tasmota Firmware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raspberry
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Raspberry
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Compile_Go_Language_On_Raspberry_Pi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compile Go Language On Raspberry Pi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Google_Cloud_Print_With_Orange_Pi_or_Rpi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google Cloud Print With Orange Pi or Rpi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../How_To_Install_Nodered_On_Raspberry_Pi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How To Install Nodered On Raspberry Pi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Install_Debian_Jessie_To_Orange_Pi_Plus_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install Debian Jessie to Orange PI Plus 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Install_Openalpr_On_Raspberry_Pi_3_part_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install Openalpr On Raspberry Pi 3 part 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Mount_Sd_Card_Image_partitioned_Image_Wo_Kpartx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mount SD card image (partitioned image) w/o kpartx
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Move_Root_File_System_To_Usb_Storage_%28rpi2_%26_Rpi3%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Move root file system to USB storage (RPI2 &amp; RPI3)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Raspberry_Pi_2_As_Print_Server_Airprint/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raspberry Pi 2 As Print Server Airprint
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raspberry Pi 3 As Wifi Range Extender
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raspberry Pi 3 As Wifi Range Extender
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-the-necessary-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install the necessary packages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-bridge-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuring Bridge Interface
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-wifi-device-configure-hostapd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check Wifi Device &amp; Configure Hostapd
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-thoughts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Thoughts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#some-useful-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Some Useful Commands
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-the-necessary-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install the necessary packages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-bridge-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuring Bridge Interface
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-wifi-device-configure-hostapd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check Wifi Device &amp; Configure Hostapd
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-thoughts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Thoughts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#some-useful-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Some Useful Commands
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p><strong>This page has been updated a long time ago.</strong>  Information found here could be outdated and may lead to missconfiguration.<br />
+Some of the links and references may be broken or lead to non existing pages.<br />
+Please use this docs carefully. Most of the information here now is only for reference or example!</p>
+</div>
+<h1 id="raspberry-pi-3-as-wifi-range-extender">Raspberry PI 3 As Wifi Range Extender<a class="headerlink" href="#raspberry-pi-3-as-wifi-range-extender" title="Permanent link">&para;</a></h1>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<p>I have a Workshop in our backyard, and there are some ESPs inside. Unfortunately my router is far away from them and the Wifi connection often breaks. This is a real problem for me because the ESPs are controlling my lighting in the garden and it's a bit irritating when I cannot turn on the lights. (The ESPs automatically turn off all relay channels when the Wifi disconnects, so turning off is not an issue.)
+As I have wired LAN access (almost) everywhere in my house and even in my Workshop I was thinking about how to extend my Wifi range. OK. I know. There are a lot of possibilities to do it, but I wanted to choose the best and the most reliable way, and I wanted to use something I have already have.<br />
+I use a Mikrotik router with a lot of switches all around the house. Since I don't like Wifi networks I'm trying to connect as much devices as I can wired to my network, but the ESPs needs Wifi connection. There is a  Raspberry PI3 already running in the workshop so it is reasonable to use that. Of course the PI has Ethernet connection to my Mikrotik router. :)</p>
+<p><mark>Update:</mark> I haven't published this post yet, and I've already had an update. <br />
+<del>To make it work was much easier than I thought.</del> --&gt; To make it work was much complicated then I've ever thought and took more days. :(</p>
+<p>As you will see I faced a lot of problems. But I want to believe that this post will be helpful. </p>
+<h2 id="install-the-necessary-packages">Install the necessary packages<a class="headerlink" href="#install-the-necessary-packages" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>hostapd<span class="w"> </span>bridge-utils<span class="w"> </span>wicd<span class="w"> </span>wicd-cli<span class="w"> </span>wpasupplicant
+</code></pre></div>
+<p>During the installation the wicd-daemon will ask you for the list of users who can use the wicd client. </p>
+<blockquote>
+<p>Users who should be able to run wicd clients need to be added to the group "netdev".</p>
+</blockquote>
+<p>You can modify these settings later by running <code>dpkg-reconfigure wicd-daemon</code> command.</p>
+<h2 id="configuring-bridge-interface">Configuring Bridge Interface<a class="headerlink" href="#configuring-bridge-interface" title="Permanent link">&para;</a></h2>
+<p>My setup looks like that:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>auto<span class="w"> </span>lo
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>iface<span class="w"> </span>lo<span class="w"> </span>inet<span class="w"> </span>loopback
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>iface<span class="w"> </span>eth0<span class="w"> </span>inet<span class="w"> </span>manual
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>iface<span class="w"> </span>wlan0<span class="w"> </span>inet<span class="w"> </span>manual
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>auto<span class="w"> </span>br0
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>iface<span class="w"> </span>br0<span class="w"> </span>inet<span class="w"> </span>dhcp
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span>bridge_ports<span class="w"> </span>eth0<span class="w"> </span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span>bridge_stp<span class="w"> </span>off
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span>bridge_fd<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span>bridge_maxwait<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span>bridge_waitport<span class="w"> </span><span class="m">0</span>
+</code></pre></div></p>
+<p>Now you should restart your PI, after that you can check your config:</p>
+<p><div class="highlight"><span class="filename">Command</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>brctl<span class="w"> </span>show
+</code></pre></div>
+<div class="highlight"><span class="filename">Output</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>bridge name bridge id       STP enabled interfaces
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>br0     8000.b827eb26993d   no      eth0
+</code></pre></div></p>
+<h2 id="check-wifi-device-configure-hostapd">Check Wifi Device &amp; Configure Hostapd<a class="headerlink" href="#check-wifi-device-configure-hostapd" title="Permanent link">&para;</a></h2>
+<p>First it is recommended to <strong>check if your Wireless device supports AP mode</strong> or not. It is only necessary for example if you are using an RPI which is older than PI3. (RPI3 has built-n WiFi chip, which supports AP mode.)</p>
+<ul>
+<li><strong>Check your interface list</strong>
+<div class="highlight"><span class="filename">Command</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>iw<span class="w"> </span>dev<span class="w">  </span>
+</code></pre></div>
+<div class="highlight"><span class="filename">Output</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>phy#0
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    Interface wlan0
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>        ifindex 3
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>        wdev 0x1
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>        addr b8:27:eb:73:cc:68
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>        type managed
+</code></pre></div></li>
+</ul>
+<p>You can see I have only one interface: <code>phy#0</code>. Here is an example when there are multiple interfaces:</p>
+<p><div class="highlight"><span class="filename">Command</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>iw<span class="w"> </span>dev<span class="w">  </span>
+</code></pre></div>
+<div class="highlight"><span class="filename">Output</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>phy#1
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    Interface wlan1
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>        ifindex 4
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>        wdev 0x100000001
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>        addr 00:e0:32:00:00:8b
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>        type managed
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>        channel 8 (2447 MHz), width: 20 MHz, center1: 2447 MHz
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>phy#0
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    Interface wlan0
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>        ifindex 3
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>        wdev 0x1
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>        addr b8:27:eb:f9:dd:be
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>        ssid Vinyo-Net
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>        type AP
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>        channel 2 (2417 MHz), width: 20 MHz, center1: 2417 MHz
+</code></pre></div></p>
+<ul>
+<li><strong>Check "Supported interface modes"</strong>
+<div class="highlight"><span class="filename">Command</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>iw<span class="w"> </span>phy<span class="w"> </span>phy0<span class="w"> </span>info
+</code></pre></div>
+<div class="highlight"><span class="filename">Output</span><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Wiphy phy0
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    max # scan SSIDs: 10
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    max scan IEs length: 2048 bytes
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    Retry short limit: 7
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    Retry long limit: 4
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    Coverage class: 0 (up to 0m)
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    Device supports T-DLS.
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    Supported Ciphers:
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>        * WEP40 (00-0f-ac:1)
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>        * WEP104 (00-0f-ac:5)
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>        * TKIP (00-0f-ac:2)
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>        * CCMP (00-0f-ac:4)
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>    Available Antennas: TX 0 RX 0
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>    Supported interface modes:
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>         * IBSS
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>         * managed
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>         * AP
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>         * P2P-client
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>         * P2P-GO
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>         * P2P-device
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>    Band 1:
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>        Capabilities: 0x1020
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>            HT20
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>            Static SM Power Save
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>            RX HT20 SGI
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a>            No RX STBC
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a>            Max AMSDU length: 3839 bytes
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a>            DSSS/CCK HT40
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a>...
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a>...
+</code></pre></div></li>
+</ul>
+<p>As you can see, our built-in Wifi device supports the AP mode.
+(By running this command (<code>iw phy phy0 info</code>) you get a lot of information about your Wifi device.)</p>
+<ul>
+<li><strong>Configure Hostapd</strong></li>
+</ul>
+<p>I don't know why, but the /etc/hostapd directory does not contain default/sample configuration file, but you can find sample configuration files here: <code>/usr/share/doc/hostapd/examples</code>
+I used this command to get examples:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>gunzip<span class="w"> </span>-c<span class="w"> </span>/usr/share/doc/hostapd/examples/hostapd.conf.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
+</code></pre></div>
+<p>I advise you to use a different SSID firstly then you already have to test a vanilla setup.</p>
+<p>Here is working example file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ctrl_interface=/var/run/hostapd
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>macaddr_acl=0 
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>driver=nl80211
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>interface=wlan0
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>bridge=br0
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>country_code=HU
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>hw_mode=g
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>ieee80211n=1
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>channel=2
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>ssid=WS-TST-01
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>auth_algs=1
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>ignore_broadcast_ssid=0
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>wpa=2
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>wpa_passphrase=12345678
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>wpa_key_mgmt=WPA-PSK
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>wpa_pairwise=CCMP
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>rsn_pairwise=CCMP
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Use a channel which is different from the one your primary device uses.</p>
+</div>
+<p><img alt="" src="/assets/images/2017/08/wirelessfreqchart.png" /></p>
+<p>After the configuration file is created you can try to start hostapd.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="hll">hostapd<span class="w"> </span>/etc/hostapd/hostapd.conf<span class="w"> </span>
+</span><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Configuration<span class="w"> </span>file:<span class="w"> </span>/etc/hostapd/hostapd.conf
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Failed<span class="w"> </span>to<span class="w"> </span>create<span class="w"> </span>interface<span class="w"> </span>mon.wlan0:<span class="w"> </span>-95<span class="w"> </span><span class="o">(</span>Operation<span class="w"> </span>not<span class="w"> </span>supported<span class="o">)</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>wlan0:<span class="w"> </span>interface<span class="w"> </span>state<span class="w"> </span>UNINITIALIZED-&gt;COUNTRY_UPDATE
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>wlan0:<span class="w"> </span>Could<span class="w"> </span>not<span class="w"> </span>connect<span class="w"> </span>to<span class="w"> </span>kernel<span class="w"> </span>driver
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>Using<span class="w"> </span>interface<span class="w"> </span>wlan0<span class="w"> </span>with<span class="w"> </span>hwaddr<span class="w"> </span>b8:27:eb:73:cc:68<span class="w"> </span>and<span class="w"> </span>ssid<span class="w"> </span><span class="s2">&quot;WS-TST-01&quot;</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>wlan0:<span class="w"> </span>interface<span class="w"> </span>state<span class="w"> </span>COUNTRY_UPDATE-&gt;ENABLED
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>wlan0:<span class="w"> </span>AP-ENABLED<span class="w"> </span>
+</code></pre></div>
+<p>We get two error messages:</p>
+<ul>
+<li><code>Failed to create interface mon.wlan0: -95 (Operation not supported)</code></li>
+<li><code>wlan0: Could not connect to kernel driver</code></li>
+</ul>
+<p>I did a lot of Google searches, but failed to find any solution for this issue. Despite the failures the "AP-ENABLED" messages shows us that everything should work.
+Now you can try to connect your new Wifi AP: <code>WS-TST-01</code></p>
+<ul>
+<li><strong>Enable Auto Start hostapd daemon</strong></li>
+</ul>
+<p>By default the hostapd doesn't start at boot time. To enable it change this file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="gd">--- hostapd_orig    2017-08-15 11:14:58.673575799 +0200</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="gi">+++ hostapd    2017-08-14 21:25:47.684546287 +0200</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="gu">@@ -7,7 +7,7 @@</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w"> </span># file and hostapd will be started during system boot. An example configuration
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w"> </span># file can be found at /usr/share/doc/hostapd/examples/hostapd.conf.gz
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w"> </span>#
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="gd">-DAEMON_CONF=&quot;&quot;</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="gi">+DAEMON_CONF=&quot;/etc/hostapd/hostapd.conf&quot;</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w"> </span># Additional daemon options to be appended to hostapd command:-
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w"> </span>#     -d   show more debug messages (-dd for even more)
+</code></pre></div>
+<p><strong>At this point</strong> I was facing a very strange and serious issue. :( It took days to find a working solution or only a workaround instead. </p>
+<p>The problem: After restarting my PI everything seemed fine, but none of devices could see the SSID. But it could be solved with restarting the hostapd daemon. At the bottom of this post in the references section you can find some article which discuss similar issues, but without any "real" solution (only workarounds). (Example: control the hostapd daemon from interface config, ifup.d). </p>
+<p>Now I sharing you my experiences I got during the investigation, It may (or may not) be useful.
+You have to know I made uncountable tries to configure hostapd, dhcpcd, dhcp-client, bridge, etc, but none of them led to success. </p>
+<p><strong>1. Replace the original System V init service to systemd.</strong></p>
+<p>By default the hostapd daemon is started by an init.d scripts  (/etc/init.d/hostapd). I wanted to move the service start to the end of the boot process to make sure that every necessary service started before hostapd. So I wrote a custom systemd config file and removed it from /etc/rc3.d.</p>
+<p>My SystemD script:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>[Unit]
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>Description=HOSTAPD
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>Requires=multi-user.target network-online.target avahi-daemon.service smbd.service
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>After=avahi-daemon.service smbd.service multi-user.target
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>[Service]
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>Type=forking
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>GuessMainPID=yes  
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>ExecStart=/usr/sbin/hostapd -d -t -B -P /run/hostapd.pid -f /var/log/hostapd.log /etc/hostapd/hostapd.conf
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>ExecStop=/usr/bin/kill -SIGINT $MAINPID  
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>PIDFile=/run/hostapd.pid
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>Restart=always
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>User=root
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>[Install]
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>WantedBy=multi-user.target
+</code></pre></div>
+<p>You can check the boot order by issuing the command (after reboot):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>systemd-analyze<span class="w"> </span>plot<span class="w"> </span>&gt;/tmp/plot3.svg
+</code></pre></div>
+<p>This .svg file can be opened with any type of browser. I saw that the hostapd service was started almost at the end of the boot process (I think it was the penultimate one before systemd-update-utmp-runlevel.service and after the multi-user.target).</p>
+<p>But It did not solved my problem.</p>
+<p><strong>2. Restart hostapd daemon after the IP address bounded (br0)</strong></p>
+<p>I was reading the log files a lot, and found that something happens after the boot process has been finished with the interfaces (br0,wlan0,eth0):</p>
+<p>In the log files you can see that the boot process has been finished at 11:09:11.
+<code>Aug 26 11:09:11 ws-rpi3 systemd[1]: Startup finished in 3.918s (kernel) + 29.036s (userspace) = 32.954s.</code></p>
+<p>But after some seconds:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Aug 26 11:09:14 ws-rpi3 kernel: [   36.241794] smsc95xx 1-1.1:1.0 eth0: hardware isn&#39;t capable of remote wakeup
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>Aug 26 11:09:14 ws-rpi3 kernel: [   36.242140] br0: port 1(eth0) entered disabled state
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>Aug 26 11:09:14 ws-rpi3 kernel: [   36.342138] smsc95xx 1-1.1:1.0 eth0: hardware isn&#39;t capable of remote wakeup
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>Aug 26 11:09:14 ws-rpi3 kernel: [   36.342435] br0: port 1(eth0) entered blocking state
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>Aug 26 11:09:14 ws-rpi3 kernel: [   36.342446] br0: port 1(eth0) entered forwarding state
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>Aug 26 11:09:14 ws-rpi3 kernel: [   36.474142] smsc95xx 1-1.1:1.0 eth0: hardware isn&#39;t capable of remote wakeup
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>Aug 26 11:09:14 ws-rpi3 kernel: [   36.474380] br0: port 1(eth0) entered disabled state
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>Aug 26 11:09:14 ws-rpi3 dhcpcd[1046]: dhcpcd not running
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>Aug 26 11:09:14 ws-rpi3 kernel: [   36.591789] smsc95xx 1-1.1:1.0 eth0: hardware isn&#39;t capable of remote wakeup
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>Aug 26 11:09:14 ws-rpi3 kernel: [   36.592070] br0: port 1(eth0) entered blocking state
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>Aug 26 11:09:14 ws-rpi3 kernel: [   36.592074] br0: port 1(eth0) entered forwarding state
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>Aug 26 11:09:16 ws-rpi3 kernel: [   38.073773] smsc95xx 1-1.1:1.0 eth0: link up, 100Mbps, full-duplex, lpa 0xC5E1
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>Aug 26 11:09:16 ws-rpi3 dhcpcd[1051]: version 6.7.1 starting
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>Aug 26 11:09:16 ws-rpi3 dhcpcd[1051]: eth0: interface not found or invalid
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>Aug 26 11:09:16 ws-rpi3 dhcpcd[1051]: exited
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>Aug 26 11:09:21 ws-rpi3 dhcpcd[1089]: dhcpcd not running
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>Aug 26 11:09:21 ws-rpi3 kernel: [   43.735165] brcmfmac: power management disabled
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>Aug 26 11:09:22 ws-rpi3 dhcpcd[1113]: dhcpcd not running
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>Aug 26 11:09:22 ws-rpi3 kernel: [   43.866789] smsc95xx 1-1.1:1.0 eth0: hardware isn&#39;t capable of remote wakeup
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>Aug 26 11:09:22 ws-rpi3 kernel: [   43.866935] br0: port 1(eth0) entered disabled state
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>Aug 26 11:09:22 ws-rpi3 kernel: [   43.962974] smsc95xx 1-1.1:1.0 eth0: hardware isn&#39;t capable of remote wakeup
+<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>Aug 26 11:09:22 ws-rpi3 kernel: [   43.963452] br0: port 1(eth0) entered blocking state
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a>Aug 26 11:09:22 ws-rpi3 kernel: [   43.963460] br0: port 1(eth0) entered forwarding state
+<a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a>Aug 26 11:09:23 ws-rpi3 kernel: [   45.581772] smsc95xx 1-1.1:1.0 eth0: link up, 100Mbps, full-duplex, lpa 0xC5E1
+</code></pre></div></p>
+<p>This is the only possible reason I could find. For some reason the interfaces changed to down and up again. I run the ping command from a remote machine and during this period the packages were lost.
+(When I was fast I could see the SSID on my phone for some seconds before it disappeared.)</p>
+<p>Here I was facing another big issue. I could not find any errors in the log files or anything else on the RPI side with which the restart could have been triggered. This means that everything seemed fine on the RPI side, but the SSID was not visible. </p>
+<p>First I thought it is a good idea to restart hostapd daemon when the br0 get the IP address from the DHCP server (BOUND), but it wasn't. :( The dhcp client "only" renews the IP address. </p>
+<p>Only for information I paste here my dhcp related config (<code>/etc/dhcp/dhclient-enter-hooks.d/jvincze_custom</code>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="ch">#!/bin/sh</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="k">case</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$reason</span><span class="s2">&quot;</span><span class="w"> </span><span class="k">in</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">    </span>BOUND<span class="o">)</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[ </span><span class="k">$(</span>date<span class="w"> </span>+%F<span class="se">\ </span>%T<span class="w"> </span><span class="k">)</span><span class="s2"> ] - (</span><span class="nv">$0</span><span class="s2">) DHCP REASON: </span><span class="nv">$reason</span><span class="s2"> (</span><span class="nv">$new_ip_address</span><span class="s2"> , </span><span class="nv">$interface</span><span class="s2">)&quot;</span><span class="w"> </span>&gt;&gt;/var/log/jvinczedhcp.log
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="w">        </span><span class="nv">PID</span><span class="o">=</span><span class="k">$(</span><span class="w"> </span>ps<span class="w"> </span>aux<span class="p">|</span>grep<span class="w"> </span>hostapd<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>grep<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $2}&#39;</span><span class="w"> </span><span class="k">)</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-z<span class="w"> </span><span class="nv">$PID</span><span class="w"> </span><span class="o">]</span><span class="w"> </span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="w">        </span><span class="k">then</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">          </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[ </span><span class="k">$(</span>date<span class="w"> </span>+%F<span class="se">\ </span>%T<span class="w"> </span><span class="k">)</span><span class="s2"> ] - KILLING </span><span class="nv">$PID</span><span class="s2"> pid&quot;</span><span class="w"> </span>&gt;&gt;/var/log/jvinczedhcp.log
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="w">          </span>sleep<span class="w"> </span><span class="m">30</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="w">          </span><span class="nb">kill</span><span class="w"> </span><span class="nv">$PID</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="w">        </span><span class="k">fi</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="w">        </span><span class="p">;;</span>
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="w">    </span>*<span class="o">)</span>
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[ </span><span class="k">$(</span>date<span class="w"> </span>+%F<span class="se">\ </span>%T<span class="w"> </span><span class="k">)</span><span class="s2"> ] - (</span><span class="nv">$0</span><span class="s2">) DHCP REASON: </span><span class="nv">$reason</span><span class="s2"> (</span><span class="nv">$new_ip_address</span><span class="s2"> , </span><span class="nv">$interface</span><span class="s2">)&quot;</span><span class="w"> </span>&gt;&gt;/var/log/jvinczedhcp.log
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="w">       </span><span class="p">;;</span><span class="w"> </span>
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a><span class="k">esac</span>
+</code></pre></div>
+<p>First I tried this (instead of killing the process):</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1">#[ ! -z $PID ] &amp;&amp; while kill $PID  2&gt; /dev/null;  do sleep 1 ;  done;</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="c1">#sleep 4</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="c1">#/usr/sbin/hostapd -t -B -P /run/hostapd.pid -f /var/log/hostapd.log /etc/hostapd/hostapd.conf</span>
+</code></pre></div>
+I did not like this, because this file contains the command line parameter of hostapd. It is not a "real" problem, but with this way this file has to be synchronized with the .service file.</p>
+<p>After I slept a bit I found out that I can kill the process if I use <code>Restart=always</code> and <code>Type=forking</code> in the .service file (systemd will restart the process when it's dead/killed/etc.)</p>
+<p>But nothing changed. :(</p>
+<p>It could be a solution to modify the script to restart hostapd daemon when ip address is renewed, but in case of long lease time I could lose the wifi connection for hours. (And I did not want to change a network parameter which affects my entire network and devices.)</p>
+<p><mark>NOTE:</mark> After finding my final WA, I did not remove this script to make sure if the interface br0 get a new ip address hostapd will be restarted. (I don't know if it is necessary or not, but think this won't cause further problems.) 
+If you have more than one interface using dhcp to assign IP address you can write an "if" condition to specify the interface to check. Example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-z<span class="w"> </span><span class="nv">$PID</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$interface</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;br0&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</code></pre></div>
+<p><strong>3. Another tries</strong></p>
+<p>Start hostapd from systemd with this command line options:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>ExecStart=/usr/sbin/hostapd -d -S -P /run/hostapd.pid -f /var/log/hostapd.log /etc/hostapd/hostapd.conf
+</code></pre></div></p>
+<p>After the RPI restarted, I stopped hostapd, backed-up/removed the hostapd.log files, and started the hostapd (again). Then I compared the two log files.</p>
+<p>You can download my diff file from here: <a href="https://drive.google.com/file/d/0B4xTxuaiVCZyTklFaEJRVzBtZ1E/view?usp=sharing">LINK</a>
+Example .svg file. <a href="https://drive.google.com/file/d/0B4xTxuaiVCZyczg3Wm5vY2xEeXc/view?usp=sharing">LINK</a></p>
+<p>I tried to find something special to search in google, but all of my searches led to nothing. :( So I finally gave up searching in the log files. It is obvious that this behavior was caused by the interface changes after boot. Syslog:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>...
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>Aug 30 21:05:33 ws-rpi3 kernel: [   44.726888] br0: port 2(wlan0) entered disabled state
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>Aug 30 21:05:33 ws-rpi3 dhcpcd[1020]: dhcpcd not running
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>Aug 30 21:05:33 ws-rpi3 kernel: [   44.969033] smsc95xx 1-1.1:1.0 eth0: hardware isn&#39;t capable of remote wakeup
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>Aug 30 21:05:33 ws-rpi3 kernel: [   44.969368] br0: port 1(eth0) entered disabled state
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>...
+</code></pre></div></p>
+<p>Of course I did a lot of search for syslog entries but I could not find any relating, or useful article. </p>
+<p><strong>4. Final Solution (WA)</strong></p>
+<p>I tried a lot of things in order to make this work, but the only way is the "delayed start". :(</p>
+<p>I completely disabled the hostapd service and restarted the PI, waited some time (~1min) and started the hostapd daemon. Everything was fine. Now the "only" thing was to figuring out how to start hostapd service delayed. </p>
+<p>My first solution was this (.service file):
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="o">[</span>Service<span class="o">]</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="nv">ExecStartPre</span><span class="o">=</span>/bin/sleep<span class="w"> </span><span class="m">30</span>
+</code></pre></div>
+It is a working but ugly workaround. With this method the whole boot process is delayed. :( And you can see in the boot order (.svg) that the hostapd starting process take +30s compared with the "normal" case. :(</p>
+<p>Finally I set up a systemd timer:</p>
+<ul>
+<li><strong>hostapd.timer</strong></li>
+</ul>
+<div class="highlight"><span class="filename">cat /lib/systemd/system/hostapd.timer</span><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>[Unit]
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>Description=Runs hostapd
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>After=multi-user.target
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>[Timer]
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>OnBootSec=1min
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>Unit=hostapd.service
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>[Install]
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>WantedBy=multi-user.target
+</code></pre></div>
+<p>I think 1 minute enough delay after boot to start hostapd.  </p>
+<ul>
+<li><strong>hostapd.service</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>cat<span class="w"> </span>/lib/systemd/system/hostapd.service<span class="w"> </span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="o">[</span>Unit<span class="o">]</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="nv">Description</span><span class="o">=</span>HOSTAPD
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="nv">Requires</span><span class="o">=</span>multi-user.target<span class="w"> </span>network-online.target<span class="w"> </span>avahi-daemon.service<span class="w"> </span>smbd.service
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="nv">After</span><span class="o">=</span>avahi-daemon.service<span class="w"> </span>smbd.service<span class="w"> </span>multi-user.target<span class="w"> </span>sockets.targee
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="o">[</span>Service<span class="o">]</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="nv">Type</span><span class="o">=</span>forking
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="nv">GuessMainPID</span><span class="o">=</span>yes<span class="w">  </span>
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="nv">ExecStart</span><span class="o">=</span>/usr/sbin/hostapd<span class="w"> </span>-d<span class="w"> </span>-t<span class="w"> </span>-B<span class="w"> </span>-P<span class="w"> </span>/run/hostapd.pid<span class="w"> </span>-f<span class="w"> </span>/var/log/hostapd.log<span class="w"> </span>/etc/hostapd/hostapd.conf
+<a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a><span class="c1">#ExecStart=/usr/sbin/hostapd -d -S -t -B -P /run/hostapd.pid -f /var/log/hostapd.log /etc/hostapd/hostapd.conf</span>
+<a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a><span class="c1">#ExecStart=/usr/sbin/hostapd -t -B  -f /var/log/hostapd.log /etc/hostapd/hostapd.conf</span>
+<a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a><span class="nv">ExecStop</span><span class="o">=</span>/usr/bin/kill<span class="w"> </span>-SIGINT<span class="w"> </span><span class="nv">$MAINPID</span><span class="w">  </span>
+<a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a><span class="nv">PIDFile</span><span class="o">=</span>/run/hostapd.pid
+<a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a><span class="nv">Restart</span><span class="o">=</span>always
+<a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a><span class="nv">User</span><span class="o">=</span>root
+<a id="__codelineno-24-17" name="__codelineno-24-17" href="#__codelineno-24-17"></a>
+<a id="__codelineno-24-18" name="__codelineno-24-18" href="#__codelineno-24-18"></a><span class="c1">#[Install]</span>
+<a id="__codelineno-24-19" name="__codelineno-24-19" href="#__codelineno-24-19"></a><span class="c1">#WantedBy=multi-user.target</span>
+</code></pre></div>
+Commands:
+<div class="highlight"><span class="filename">Command</span><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>systemctl<span class="w"> </span>daemon-reload
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>systemctl<span class="w"> </span>disable<span class="w"> </span>hostapd.service
+</code></pre></div>
+<div class="highlight"><span class="filename">Output</span><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Removed symlink /etc/systemd/system/multi-user.target.wants/hostapd.service.
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>systemctl enable hostapd.timer
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>Created symlink from /etc/systemd/system/multi-user.target.wants/hostapd.timer to /lib/systemd/system/hostapd.timer.
+</code></pre></div></p>
+<h2 id="final-thoughts">Final Thoughts<a class="headerlink" href="#final-thoughts" title="Permanent link">&para;</a></h2>
+<p>When I started to write this post I thought configuring hostapd must consist of some easy steps. Actually it is right because configuring hostapd is pretty easy, I had(/have) problems with autostart on boot time. </p>
+<p>I have been running this setup since weeks without any problem. Maybe later when I have time for this, I'll continue the investigation, or maybe in the future there will be a new kernel and/or hostapd daemon with which this problem won't occur.</p>
+<p>If you have any idea how to solve this please let me a post on Disqus.  :)</p>
+<h2 id="some-useful-commands">Some Useful Commands<a class="headerlink" href="#some-useful-commands" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Check Connected Devices</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>hostapd_cli<span class="w"> </span>all_sta
+</code></pre></div>
+<ul>
+<li><strong>Check Connected Devices (only MAC addresses)</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>hostapd_cli<span class="w"> </span>all_sta<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w">  </span>-E<span class="w"> </span><span class="s1">&#39;^([0-9|a-f|A-F]{2,2}\:?){6,6}&#39;</span>
+</code></pre></div>
+<ul>
+<li><strong>Check Connected Devices &amp; Query MAC address on MIKROTIK router</strong></li>
+</ul>
+<p><div class="highlight"><span class="filename">Command</span><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="k">for</span><span class="w"> </span>MAC<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>hostapd_cli<span class="w"> </span>all_sta<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w">  </span>-E<span class="w"> </span><span class="s1">&#39;^([0-9|a-f|A-F]{2,2}\:?){6,6}&#39;</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;########## </span><span class="nv">$MAC</span><span class="s2"> ##########&quot;</span><span class="w"> </span><span class="p">;</span><span class="w"> </span>ssh<span class="w"> </span>admin@172.16.0.1<span class="w"> </span><span class="s2">&quot;ip dhcp-server lease print where mac-address=</span><span class="nv">$MAC</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
+</code></pre></div>
+<div class="highlight"><span class="filename">Output</span><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>########## 60:01:94:08:31:48 ##########
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>Flags: X - disabled, R - radius, D - dynamic, B - blocked
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a> # ADDRESS                                      MAC-ADDRESS       HO SER.. RA
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a> 0   172.20.0.15                                  60:01:94:08:31:48 NO def..
+</code></pre></div></p>
+<ul>
+<li><strong>Check bridge interface</strong>
+<div class="highlight"><span class="filename">Command</span><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>brctl<span class="w"> </span>show
+</code></pre></div>
+<div class="highlight"><span class="filename">Output</span><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>bridge name bridge id       STP enabled interfaces
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>br0     8000.b827eb26993d   no      eth0
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>                            wlan0
+</code></pre></div></li>
+</ul>
+<p><mark>NOTE:</mark> If the hostapd have been started successfully you have to see WLAN0 in the interface list.</p>
+<ul>
+<li><strong>Analyze boot order</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>systemd-analyze<span class="w"> </span>plot<span class="w"> </span>&gt;/tmp/plot.svg
+</code></pre></div>
+<p>You can open the created file in your browser.</p>
+<ul>
+<li><strong>Enable packet forwarding by kernel</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="nb">echo</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>&gt;<span class="w"> </span>/proc/sys/net/ipv4/ip_forward
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>iptables<span class="w"> </span>--append<span class="w"> </span>FORWARD<span class="w"> </span>--in-interface<span class="w"> </span>eth1<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+</code></pre></div>
+<p>Or permanently, add this line to <code>/etc/sysctl.conf</code>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>net.ipv4.ip_forward=1
+</code></pre></div></p>
+<p>Alternatively:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>sudo<span class="w"> </span>sysctl<span class="w"> </span>-w<span class="w"> </span>net.ipv4.ip_forward<span class="o">=</span><span class="m">1</span>
+</code></pre></div>
+<ul>
+<li><strong>Disable interface in dhcpcd.conf</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>denyinterfaces wlan0
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>denyinterfaces br0
+</code></pre></div>
+<ul>
+<li><strong>Disable ipv6 (sysctl.conf)</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>net.ipv6.conf.all.disable_ipv6 = 1
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>net.ipv6.conf.default.disable_ipv6 = 1
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>net.ipv6.conf.lo.disable_ipv6 = 1
+</code></pre></div>
+<ul>
+<li><strong>Wifi Channel Setup (hostapd.conf)</strong></li>
+</ul>
+<p>If you build a WiFi infrastructure you must use different channel in all devices.
+References:</p>
+<ul>
+<li><a href="https://www.extremetech.com/computing/179344-how-to-boost-your-wifi-speed-by-choosing-the-right-channel">https://www.extremetech.com/computing/179344-how-to-boost-your-wifi-speed-by-choosing-the-right-channel</a></li>
+<li><a href="https://www.hanselman.com/blog/ConfiguringTwoWirelessRoutersWithOneSSIDNetworkNameAtHomeForFreeRoaming.aspx">https://www.hanselman.com/blog/ConfiguringTwoWirelessRoutersWithOneSSIDNetworkNameAtHomeForFreeRoaming.aspx</a></li>
+</ul>
+<p>From hostapd example conf:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a># Channel number (IEEE 802.11)
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a># (default: 0, i.e., not set)
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a># Please note that some drivers do not use this value from hostapd and the
+<a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a># channel will need to be configured separately with iwconfig.
+<a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>#
+<a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a># If CONFIG_ACS build option is enabled, the channel can be selected
+<a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a># automatically at run time by setting channel=acs_survey or channel=0, both of
+<a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a># which will enable the ACS survey based algorithm.
+<a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a>channel=1
+</code></pre></div>
+<ul>
+<li><strong>Bonus - Connect To Existing WiFi Network</strong></li>
+</ul>
+<p>It can be useful when you have two WiFi adapters, and you want to use your raspberry to extend WiFi signal range without ETH connection. I haven't tested this, but I think based on this post and the linked articles it can be done easily.</p>
+<ul>
+<li>Install necessary packages
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>apt-get<span class="w"> </span>install<span class="w"> </span>wpasupplicant<span class="w"> </span>wicd<span class="w"> </span>wicd-cli
+</code></pre></div></li>
+<li>Search for Wifi Networks
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>iwlist<span class="w"> </span>wlan1<span class="w"> </span>scan<span class="w">  </span>
+</code></pre></div></li>
+<li>Create Config File
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>wpa_passphrase<span class="w">  </span>Wifi-NetWork<span class="w"> </span><span class="m">12345678</span><span class="w"> </span>&gt;wifi.config
+</code></pre></div></li>
+<li>Test you connection
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>wpa_supplicant<span class="w"> </span>-i<span class="w"> </span>wlan1<span class="w"> </span>-D<span class="w"> </span>nl80211<span class="w"> </span>-c<span class="w"> </span>wifi.config<span class="w">  </span>
+</code></pre></div></li>
+<li>Edit Interface Config (/etc/network/interfaces)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>auto wlan1  
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>allow-hotplug wlan1  
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>iface wlan1 inet dhcp  
+<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>    wpa-conf /root/wifi.config
+</code></pre></div></li>
+</ul>
+<p><mark><strong>References:</strong></mark></p>
+<ul>
+<li><a href="https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd/">https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd/</a></li>
+<li><a href="http://www.instructables.com/id/How-to-make-a-WiFi-Access-Point-out-of-a-Raspberry/">http://www.instructables.com/id/How-to-make-a-WiFi-Access-Point-out-of-a-Raspberry/</a></li>
+<li><a href="http://www.catonrug.net/2016/07/use-phone-tablet-as-raspberry-pi-3-wireless-screen-part-2.html">http://www.catonrug.net/2016/07/use-phone-tablet-as-raspberry-pi-3-wireless-screen-part-2.html</a></li>
+<li><a href="https://www.raspberrypi.org/forums/viewtopic.php?t=141807">https://www.raspberrypi.org/forums/viewtopic.php?t=141807</a></li>
+<li><a href="https://wiki.debian.org/BridgeNetworkConnections">https://wiki.debian.org/BridgeNetworkConnections</a></li>
+<li><a href="https://askubuntu.com/questions/617973/fatal-error-netlink-genl-genl-h-no-such-file-or-directory">https://askubuntu.com/questions/617973/fatal-error-netlink-genl-genl-h-no-such-file-or-directory</a></li>
+<li><a href="https://unix.stackexchange.com/questions/119209/hostapd-will-not-start-via-service-but-will-start-directly">https://unix.stackexchange.com/questions/119209/hostapd-will-not-start-via-service-but-will-start-directly</a></li>
+<li><a href="https://superuser.com/questions/676918/hostapd-requires-manual-restart-for-devices-to-connect">https://superuser.com/questions/676918/hostapd-requires-manual-restart-for-devices-to-connect</a></li>
+<li><a href="https://learn.adafruit.com/setting-up-a-raspberry-pi-as-a-wifi-access-point/install-software">https://learn.adafruit.com/setting-up-a-raspberry-pi-as-a-wifi-access-point/install-software</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo="jvincze84/jvincze84.github.io"
+        data-repo-id="R_kgDOGJolJg"
+        data-category-id="DIC_kwDOGJolJs4CPryr"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="transparent_dark"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <!-- Cookie Consent by https://www.CookieConsent.com -->
+<script type="text/javascript" src="//www.cookieconsent.com/releases/4.0.0/cookie-consent.js" charset="UTF-8"></script>
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({"notice_banner_type":"headline","consent_type":"express","palette":"light","language":"en","page_load_consent_levels":["strictly-necessary"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"website_name":"Blog"});
+});
+</script>
+
+<noscript>ePrivacy and GPDR Cookie Consent by <a href="https://www.CookieConsent.com/" rel="nofollow noopener">Cookie Consent</a></noscript>
+<!-- End Cookie Consent by https://www.CookieConsent.com -->
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "search.highlight", "header.autohide", "content.code.annotate", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  </body>
+</html>

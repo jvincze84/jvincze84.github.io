@@ -1,0 +1,8 @@
+- hosts: pve-kube02
+  name: Install
+  tasks:
+    - name: Run Included Task - Upgrade Ddebian
+      ansible.builtin.import_tasks:
+        file: task_allow_release_info_change.yaml
+    - name: Reboot the machine 
+      ansible.builtin.reboot:

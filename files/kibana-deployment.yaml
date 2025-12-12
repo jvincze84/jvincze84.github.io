@@ -1,0 +1,58 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: kibana
+  namespace: logging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: kibana
+  template:
+    metadata:
+      name: kibana
+      creationTimestamp: null
+      labels:
+        k8s-app: kibana
+    spec:
+      volumes:
+        - name: es-certs
+          secret:
+            secretName: es-certs
+            defaultMode: 420
+      containers:
+        - name: kibana
+          image: kibana:8.5.1
+          env:
+            - name: ELASTICSEARCH_HOSTS
+              value: https://es-cluster:9200
+            - name: ELASTICSEARCH_USERNAME
+              value: kibana_system
+            - name: ELASTICSEARCH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kibanasystem
+                  key: kibana_system
+            - name: SERVER_PUBLICBASEURL
+              value: https://kibana.vincze.work
+            - name: ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES
+              value: config/certs/ca.crt
+          resources: {}
+          volumeMounts:
+            - name: es-certs
+              readOnly: true
+              mountPath: /usr/share/kibana/config/certs
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: false
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

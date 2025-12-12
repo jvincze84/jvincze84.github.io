@@ -1,0 +1,2855 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://readthedocs.vinczejanos.info/Blog/2021/12/11/home-assistant-switch-timer-with-tasmota-pulsetime/">
+      
+      
+        <link rel="prev" href="../../../10/27/install-matrix-home-server-on-kubernetes/">
+      
+      
+        <link rel="next" href="../centralised-backup-with-borg/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Home Assistant Switch Timer With Tasmota Pulsetime - Vincze Janos Blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../css/width.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#home-assistant-switch-timer-with-tasmota-pulsetime" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Vincze Janos Blog" class="md-header__button md-logo" aria-label="Vincze Janos Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Vincze Janos Blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home Assistant Switch Timer With Tasmota Pulsetime
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="light-green" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jvincze84/jvincze84.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Vincze Janos Blog" class="md-nav__button md-logo" aria-label="Vincze Janos Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Vincze Janos Blog
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jvincze84/jvincze84.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome Here
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Tips_And_Tricks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tips And Tricks 2024a
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../new-file/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ez egy uj test file
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blog
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes Templates
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Kubernetes Templates
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Kubernetes_Templates/ConfigMap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ConfigMap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Kubernetes_Templates/Deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Kubernetes_Templates/Ingress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ingress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Kubernetes_Templates/PersistentVolumeClaim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PersistentVolumeClaim
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Kubernetes_Templates/ReverseProxy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes Reverse Proxy With Ingress, Service And Endpoint
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Kubernetes_Templates/Secret/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Secret
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Kubernetes_Templates/StatefulSet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    StatefulSet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Kubernetes_Templates/services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Old Blog Contents
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Old Blog Contents
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/linux/Compile_Apache_Httpd_2.4.x_Php/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compile Apache HTTPD 2.4.X &amp; PHP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/linux/Create_Self_Signed_Certificate_For_Apache_Webserver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Create Self Signed Certificate For Apache Webserver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/linux/Install_%28compile%29_%26_Configure_Motion_Av_Tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install (compile) & Configure Motion Av Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/linux/Install_Mps-youtube_Console_Based_Youtube_Player/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install Mps youtube Console Based Youtube Player
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/linux/create_Your_Own_Dyndns_Service_With_Bind_named/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    create Your Own Dyndns Service With Bind named
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nodemcu
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nodemcu
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/nodemcu/How_To_Compile_Nodemcu_Firmware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How To Compile Nodemcu Firmware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/nodemcu/How_To_Unbrick_Esp8266_blinking_Blue_Led/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How To Unbrick Esp8266 blinking Blue Led
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/nodemcu/Install_Openalpr_On_Raspberry_Pi_3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install OpenALPR on Raspberry PI 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/nodemcu/Logging_Mqtt_Data_%28subscription%29_To_Mysql_With_Shell_Script/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logging Mqtt Data (subscription) To Mysql With Shell Script
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/nodemcu/Reliable_MQTT_conenction_with_NodeMCU/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reliable MQTT conenction with NodeMCU
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/nodemcu/Reliable_Mqtt_Connection_With_Nodemcu_%28part_2%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reliable Mqtt Connection With Nodemcu (part 2)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/nodemcu/Very_Simple_Way_To_Send_Email_Using_Nodemcu_Firmware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Very Simple Way to Send Email Using NodeMCU firmware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Other
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/other/Collect_Network_Statistic_With_Telegraf_Vnstat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collect Network Statistic With Telegraf &amp; VNSTAT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/other/Iptables_Examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Iptables Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/other/Nokia_6120c_%28bb5%29_Forgotten_Security_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nokia 6120c (BB5) Forgotten Security Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/other/Sonoff_Relays_With_Openhab_And_Tasmota_Firmware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sonoff Relays With OpenHab And Tasmota Firmware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raspberry
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Raspberry
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/raspberry/Compile_Go_Language_On_Raspberry_Pi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compile Go Language On Raspberry Pi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/raspberry/Google_Cloud_Print_With_Orange_Pi_or_Rpi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google Cloud Print With Orange Pi or Rpi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/raspberry/How_To_Install_Nodered_On_Raspberry_Pi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How To Install Nodered On Raspberry Pi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/raspberry/Install_Debian_Jessie_To_Orange_Pi_Plus_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install Debian Jessie to Orange PI Plus 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/raspberry/Install_Openalpr_On_Raspberry_Pi_3_part_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install Openalpr On Raspberry Pi 3 part 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/raspberry/Mount_Sd_Card_Image_partitioned_Image_Wo_Kpartx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mount SD card image (partitioned image) w/o kpartx
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/raspberry/Move_Root_File_System_To_Usb_Storage_%28rpi2_%26_Rpi3%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Move root file system to USB storage (RPI2 &amp; RPI3)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/raspberry/Raspberry_Pi_2_As_Print_Server_Airprint/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raspberry Pi 2 As Print Server Airprint
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Old_Blog_Contents/raspberry/Raspberry_Pi_3_As_Wifi_Range_Extender/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raspberry Pi 3 As Wifi Range Extender
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motivation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#end-device-configuration-tasmota-mqtt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        End Device Configuration (Tasmota - MQTT)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="End Device Configuration (Tasmota - MQTT)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#topic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Topic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#home-assistant-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Home Assistant Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#home-assistant-helpers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Home Assistant - Helpers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Home Assistant - Helpers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New Value
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actual-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actual Value
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actual-mac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actual MAC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#last-result-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Last Result Message
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drop-down-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drop Down list
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#home-assistant-automations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Home Assistant - Automations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Home Assistant - Automations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changing-the-device-in-the-dropdown-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changing The Device In The Dropdown List
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Changing The Device In The Dropdown List">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#trigger" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trigger
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Action
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#catch-mqtt-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Catch MQTT Message
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Catch MQTT Message">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#trigger_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trigger
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-new-pulsetime-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set New PulseTime Value
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Set New PulseTime Value">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#trigger_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trigger
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#action_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Action
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#home-assistant-scipts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Home Assistant Scipts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Home Assistant Scipts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pulsetime-set-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PulseTime Set New
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-debug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check Debug
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#home-assistant-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Home Assistant Dashboard
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../" class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2021-12-11 00:00:00+00:00" class="md-ellipsis">December 11, 2021</time>
+                      </div>
+                    </li>
+                    
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              11 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+
+  
+  
+
+
+<h1 id="home-assistant-switch-timer-with-tasmota-pulsetime">Home Assistant Switch Timer With Tasmota Pulsetime<a class="headerlink" href="#home-assistant-switch-timer-with-tasmota-pulsetime" title="Permanent link">&para;</a></h1>
+<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
+<p>I have several switches in my house and garden which can be controlled from Home Assistant. But sometimes I forget to turn them off. So there are some lights in the garden which should turn off after a certain time. For example I almost always forgot to turn off the light which directed to front gate of my garden after my arrives home.<br />
+All of my devices are flahed with <a href="https://tasmota.github.io/docs/">Tasmota</a> firmware. Tasmota has a built in command to turn off the relay after certain period of time called "Pulsetime":</p>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p>PulseTime<x>  Display the amount of PulseTime remaining on the corresponding Relay<x>  </p>
+<p><value> Set the duration to keep Relay<x> ON when Power<x> ON command is issued. After this amount of time, the power will be turned OFF.<br />
+0 / OFF = disable use of PulseTime for Relay<x><br />
+1..111 = set PulseTime for Relay<x> in 0.1 second increments<br />
+112..64900 = set PulseTime for Relay<x>, offset by 100, in 1 second increments. Add 100 to desired interval in seconds, e.g., PulseTime 113 = 13 seconds and PulseTime 460 = 6   minutes (i.e., 360 seconds)  <br />
+Note if you have more than 8 relays:<br />
+Defined PulseTime for relays &lt;1-8&gt; will also be active for correspondent Relay &lt;9-16&gt;.</p>
+</div>
+<!-- more -->
+
+<p>My goal is to set this <code>PulseTime</code> value from my Home Assistant dashboard. There are several ways to achieve my goal, but I wanted to use the "native" Tasmota way. Maybe the only noticeable reason for using <code>PulsTime</code> is that this solution work even if the Home Assistant server or the network become unavailable, and you turn on your light with a button or switch. Many Sonoff device have button on them with which you can control the device without network connection.</p>
+<p>Most of you may want to use the Home Assistant <a href="https://www.home-assistant.io/integrations/timer/">Timer</a> function, and there are a lot of article about this topic on the Internet, but not much which focus on the <code>PulseTime</code> feature.</p>
+<p>Before we begin I show you how it works, and you can decide to read more or leave. :D</p>
+<p>Here is a picture of my controlling Dashboard:</p>
+<figure>
+<p><img alt="Dummy image" src="/assets/images/1639139607.jpg" />
+  </p>
+<figcaption>Fig 1</figcaption>
+</figure>
+<p>I will refer to this picture a lot later in this post as <code>Fig 1</code>.</p>
+<ol>
+<li>Drop Down list: You can select which device do you want to set up.<ul>
+<li>Helper Name: <code>input_select.timer_set</code></li>
+<li>Related Automation: <a href="#changing-the-device-in-the-dropdown-list">Changing The Device In The Dropdown List</a></li>
+</ul>
+</li>
+<li>Actual Value: This widget show you the actual value of the selected device. This box is automatically updated right after you select the device from the Drop Down list.<ul>
+<li>Helper Name: <code>input_number.pulsetimeactualvalue</code></li>
+<li>Related Automation: <a href="#catch-mqtt-message">Catch MQTT Message</a></li>
+</ul>
+</li>
+<li>Input field: You can specify the new value. Right after you typed the new number the PulseTime value is sent to the device via MQTT. Meanwhile the Actual value also updated.<ul>
+<li>Helper Name: <code>input_number.number</code></li>
+<li>Related Automation: <a href="#set-new-pulsetime-value">Set New PulseTime Value</a></li>
+</ul>
+</li>
+<li>Button for send the command to the device. This can be useful if you want to set the same value for several devices. Select the first device, set the new value, then select another device and without typing the value just push the button. This button is also useful if the device did not get the message for some reason and you want to resend.<ul>
+<li>Related Script: <a href="#pulsetime-set-new">PulseTime Set New</a></li>
+</ul>
+</li>
+<li>This button updates the "Debug" Markdown filed (6.). The 5. and 6. elements are optional and only for debugging.<ul>
+<li>Related Script: <a href="#check-debug">Check Debug</a></li>
+</ul>
+</li>
+</ol>
+<p>I try to explain my solution as detailed as I can, and I hope you will be able to adopt it to your setup if you want.</p>
+<h2 id="end-device-configuration-tasmota-mqtt">End Device Configuration (Tasmota - MQTT)<a class="headerlink" href="#end-device-configuration-tasmota-mqtt" title="Permanent link">&para;</a></h2>
+<h3 id="topic">Topic<a class="headerlink" href="#topic" title="Permanent link">&para;</a></h3>
+<p>The first and really important thing is to see how I use the mqtt device topic. </p>
+<p>This is my schema: <code>sonoff/[DEVICE MAC ADDRESS]/[%prefix%]</code></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>I use the MAC address without colons. Example: <code>AABBCCDDEE</code> or <code>1E2F3D4C5A</code></p>
+</div>
+<p><strong>Screenshot Example</strong></p>
+<p><img alt="1639157794.jpg" src="/assets/images/1639157794.jpg" /></p>
+<p>Topic examples:</p>
+<ul>
+<li>Command: <code>sonoff/600194AD2A3C/cmnd/power</code></li>
+<li>Command: <code>sonoff/tasmotas/cmnd/status</code></li>
+<li>State: <code>sonoff/600194AD2A3C/tele/STATE</code></li>
+<li>Status:<code>sonoff/600194AD2A3C/stat/STATUS</code></li>
+</ul>
+<p>Why I am using MAC address? Although MAC address is not so human friendly, but unique and clearly identifies the device. Example: You can easily find the device in your router if you are using DHCP. But, later you will see that no matter what topic you are using, it does not effect the <code>PulseTime</code> configuration much, you just have to understand how it works and adopt your to topic.</p>
+<h3 id="home-assistant-integration">Home Assistant Integration<a class="headerlink" href="#home-assistant-integration" title="Permanent link">&para;</a></h3>
+<p>Official documentation: <a href="https://www.home-assistant.io/integrations/tasmota/">https://www.home-assistant.io/integrations/tasmota/</a></p>
+<p><strong>Important options:</strong></p>
+<ul>
+<li>Native discovery: <code>SetOption19 0</code></li>
+<li><code>SetOption30 0</code> for switches. (default)</li>
+<li><code>SetOption30 1</code> for lights. </li>
+<li>(Optional) <code>GroupTopic1 tasmotas</code></li>
+</ul>
+<p><strong>Other useful commands (Using <code>Grouptopic</code> and MQTT):</strong></p>
+<ul>
+<li>Set Timezone according my country.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sonoff/tasmotas/cmnd/Timezone -m &#39;99&#39;
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sonoff/tasmotas/cmnd/TimeDST -m &#39;0,0,3,1,2,120&#39;
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sonoff/tasmotas/cmnd/TimeSTD -m &#39;0,0,10,1,3,60&#39;
+</code></pre></div></li>
+<li>Set <code>teleperiod</code> to 30 secs
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sonoff/tasmotas/cmnd/TelePeriod -m &#39;30&#39;
+</code></pre></div></li>
+<li>Set Syslog server
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sonoff/tasmotas/cmnd/SysLog -m &#39;3&#39;
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sonoff/tasmotas/cmnd/LogHost -m &#39;172.16.0.100&#39;
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>sonoff/tasmotas/cmnd/LogPort -m &#39;514&#39;
+</code></pre></div></li>
+<li>Display hostname and IP address in GUI
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sonoff/tasmotas/cmnd/SetOption53 -m &#39;1&#39;
+</code></pre></div></li>
+</ul>
+<h2 id="home-assistant-helpers">Home Assistant - Helpers<a class="headerlink" href="#home-assistant-helpers" title="Permanent link">&para;</a></h2>
+<p>We have to configure some helpers on the webUI: <code>Configuration--&gt;Helpers</code></p>
+<h3 id="new-value">New Value<a class="headerlink" href="#new-value" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Fig 1 / 3</li>
+<li>Helper name: <code>input_number.number</code> (Sorry for the naming :) )</li>
+</ul>
+<p>This Helper is responsible for storing the new <code>Pulsetime</code>  value. </p>
+<p><img alt="1639158264.jpg" src="/assets/images/1639158264.jpg" /></p>
+<h3 id="actual-value">Actual Value<a class="headerlink" href="#actual-value" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Fig 1 / 2</li>
+<li>Helper name:  <code>input_number.pulsetimeactualvalue</code> </li>
+</ul>
+<p>This Helper holds the actual value of the selected Device.</p>
+<p><img alt="1639158918.jpg" src="/assets/images/1639158918.jpg" /></p>
+<h3 id="actual-mac">Actual MAC<a class="headerlink" href="#actual-mac" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Fig 1 / 6 (Actual MAC)</li>
+<li>Helper name: <code>input_text.pulsetimeactualmac</code> </li>
+</ul>
+<p>This will store the actual topic, and displayed in the debug box. (Sorry for the naming, again)</p>
+<p><img alt="1639158366.jpg" src="/assets/images/1639158366.jpg" /></p>
+<h3 id="last-result-message">Last Result Message<a class="headerlink" href="#last-result-message" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Fig 1 / 6 (Last Result)</li>
+<li>Helper name: <code>input_text.result</code> </li>
+</ul>
+<p>This stores the MQTT message from the device.</p>
+<p><img alt="1639158586.jpg" src="/assets/images/1639158586.jpg" /></p>
+<p>Example message:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;PulseTime1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">    </span><span class="nt">&quot;Set&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">    </span><span class="nt">&quot;Remaining&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<p>Unfortunately tasmota don't send the actual <code>PulseTime</code> value with any of the <code>tele</code> messages, thus manually trigger is required. There are two situation when tasmota reply with this message:</p>
+<ul>
+<li>When you set up a new value. <code>sonoff/BCDDC2802856/cmnd/pulsetime1 -m 1000</code></li>
+<li>Or send <code>null</code> message to the above topic. <code>sonoff/BCDDC2802856/cmnd/pulsetime1 -n</code></li>
+</ul>
+<h3 id="drop-down-list">Drop Down list<a class="headerlink" href="#drop-down-list" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Fig 1 / 1</li>
+<li>Helper name: <code>input_select.timer_set</code> </li>
+</ul>
+<p>Here we build a list contains all the device which we want to use with <code>Pulsetime</code>. You can use human readable name or whatever you want. </p>
+<p><img alt="1639158768.jpg" src="/assets/images/1639158768.jpg" /></p>
+<h2 id="home-assistant-automations">Home Assistant - Automations<a class="headerlink" href="#home-assistant-automations" title="Permanent link">&para;</a></h2>
+<h3 id="changing-the-device-in-the-dropdown-list">Changing The Device In The Dropdown List<a class="headerlink" href="#changing-the-device-in-the-dropdown-list" title="Permanent link">&para;</a></h3>
+<h4 id="trigger">Trigger<a class="headerlink" href="#trigger" title="Permanent link">&para;</a></h4>
+<p>This automation is triggered immediately after you have selected a new device form the drop down list.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nt">trigger</span><span class="p">:</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">state</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">    </span><span class="nt">entity_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">input_select.timer_set</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="action">Action<a class="headerlink" href="#action" title="Permanent link">&para;</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span>
+<span class="normal"><a href="#__codelineno-6-18">18</a></span>
+<span class="normal"><a href="#__codelineno-6-19">19</a></span>
+<span class="normal"><a href="#__codelineno-6-20">20</a></span>
+<span class="normal"><a href="#__codelineno-6-21">21</a></span>
+<span class="normal"><a href="#__codelineno-6-22">22</a></span>
+<span class="normal"><a href="#__codelineno-6-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="nt">action</span><span class="p">:</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">input_text.set_value</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">    </span><span class="nt">target</span><span class="p">:</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">      </span><span class="nt">entity_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">input_text.pulsetimeactualmac</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">    </span><span class="nt">data</span><span class="p">:</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w">        </span><span class="no">{% set mapper =</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w">          </span><span class="no">{ &#39;Left Side Light&#39;:&#39;sonoff/600194AD2A3C/cmnd/pulsetime1&#39;,</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="w">            </span><span class="no">&#39;Kitchen Spot&#39;:&#39;sonoff/600194AD7228/cmnd/pulsetime1&#39;,</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="w">            </span><span class="no">&#39;Front Light&#39;: &#39;sonoff/DC4F22378237/cmnd/pulsetime1&#39;,</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">            </span><span class="no">&#39;S20 - 02 - Bathroom Fan&#39;: &#39;sonoff/BCDDC28027AD/cmnd/pulsetime1&#39;,</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w">            </span><span class="no">&#39;S20 - 01 - Christmas Light&#39;: &#39;sonoff/BCDDC2802856/cmnd/pulsetime1&#39;</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="w">          </span><span class="no">} %}</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="w">        </span><span class="no">{% set mac = mapper[states(&#39;input_select.timer_set&#39;)] %}</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w">        </span><span class="no">{% if mac == NULL %}</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a><span class="w">          </span><span class="no">UNKNOWN</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="w">        </span><span class="no">{% else %}</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a><span class="w">          </span><span class="no">{{ mac }}</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19"></a><span class="w">        </span><span class="no">{% endif %}</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mqtt.publish</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21"></a><span class="w">    </span><span class="nt">data</span><span class="p">:</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22"></a><span class="w">      </span><span class="nt">topic</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23"></a><span class="w">        </span><span class="no">{{ states(&#39;input_text.pulsetimeactualmac&#39;) }}</span>
+</code></pre></div></td></tr></table></div>
+<p>As you can see we have one <code>trigger</code> and two <code>action</code>s. 
+The trigger is really simple: this automation is triggered when you select another device, as I wrote before.</p>
+<p>We have to create a <code>mapper</code> to know which topic is mapped to the selected device. This was the hardest part of the whole project, figure out how to create relation between the selected device name and the topic to which we send messages. You may think it would be easier if I used the name of the device in the topic instead of the MAC address. But no. I have some 4CH sonoff device, and in this case the we have different <code>Pulstime</code> values for each channel. (<code>Pulsetime1, Pulsetime2 . . .</code>) So we need exact match between the selected equipment  (switch) and the device plus the channel number. This <code>mapper</code> was the best solution I could find.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>You have to specify the exact text here which you entered in the <code>input_select</code> helpers (case sensitive and check the leading and trailing white spaces twice)</p>
+</div>
+<p>So the <code>input_text.pulsetimeactualmac</code> will be either one of the topic or <code>UNKNOWN</code> if no mapper found.</p>
+<p>The other action (<code>mqtt.publish</code>) publishes the previously selected topic using the mapper. Notice that we don't have <code>message</code> part here, just the topic. As I mentioned earlier this way the tasmota device will reply with the actual value in JSON format. To better understanding here is an example with Mosquitto:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>mosquitto_pub<span class="w"> </span>-h<span class="w"> </span><span class="o">[</span>MQTT<span class="w"> </span>HOST<span class="o">]</span><span class="w"> </span>-u<span class="w"> </span><span class="o">[</span>MQTT<span class="w"> </span>USERNAME<span class="o">]</span><span class="w"> </span>-P<span class="w"> </span><span class="o">[</span>MQTT<span class="w"> </span>PASSWORD<span class="o">]</span><span class="w"> </span>-t<span class="w"> </span><span class="s1">&#39;sonoff/BCDDC2802856/cmnd/pulsetime1&#39;</span><span class="w"> </span>-n
+</code></pre></div>
+<p>Reply:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sonoff/BCDDC2802856/stat/RESULT {&quot;PulseTime1&quot;:{&quot;Set&quot;:0,&quot;Remaining&quot;:0}}
+</code></pre></div></p>
+<p>We have two goals with this JSON message:</p>
+<ul>
+<li>Store the "Set" value (0) to <code>input_number.pulsetimeactualvalue</code> helper. </li>
+<li>Store the entire JSON message to <code>input_text.result</code> helper for debugging.</li>
+</ul>
+<p>But to achive this we need another automation which I named "Catch MQTT Message" and the subject of the next chapter.</p>
+<p>So the <code>mqtt.publish</code> action publishes <code>sonoff/BCDDC2802856/cmnd/pulsetime1</code> and we store the entire JSON <code>{"PulseTime1":{"Set":0,"Remaining":0}}</code> to <code>input_text.result</code> for debugging, and the '0' to <code>input_number.pulsetimeactualvalue</code>. </p>
+<p>Download entire <code>yaml</code>: <a href="https://github.com/jvincze84/jvincze84.github.io/blob/master/docs/files/hass-automation-dropdown.yaml">hass-automation-dropdown.yaml</a></p>
+<h3 id="catch-mqtt-message">Catch MQTT Message<a class="headerlink" href="#catch-mqtt-message" title="Permanent link">&para;</a></h3>
+<p>Let's see how we handle the received message.</p>
+<h4 id="trigger_1">Trigger<a class="headerlink" href="#trigger_1" title="Permanent link">&para;</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nt">trigger</span><span class="p">:</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mqtt</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="w">    </span><span class="nt">topic</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sonoff/+/stat/RESULT</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">frommqtt</span>
+</code></pre></div></td></tr></table></div>
+<p>We subsribed for the <code>sonoff/+/stat/RESULT</code> topic. </p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>If you need explanation about what the <code>+</code> sign means please visit this site: <a href="https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices/">https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices/</a><br />
+With one world: single-level wild card.</p>
+</div>
+<p>Ok. But we have a problem. Tasmota may publish other result messages than <code>Pulsetime</code>. For example when a light turned on or off. Example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sonoff/6001949C6548/stat/RESULT {&quot;POWER1&quot;:&quot;ON&quot;}
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>sonoff/6001949C6548/stat/RESULT {&quot;POWER2&quot;:&quot;ON&quot;}
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>sonoff/DC4F22378237/stat/RESULT {&quot;POWER&quot;:&quot;ON&quot;}
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>sonoff/6001949C6548/stat/RESULT {&quot;POWER3&quot;:&quot;ON&quot;}
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>sonoff/6001949C6548/stat/RESULT {&quot;POWER4&quot;:&quot;ON&quot;}
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>sonoff/6001949C6548/stat/RESULT {&quot;POWER1&quot;:&quot;OFF&quot;}
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>sonoff/DC4F22378237/stat/RESULT {&quot;POWER&quot;:&quot;OFF&quot;}
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>sonoff/6001949C6548/stat/RESULT {&quot;POWER2&quot;:&quot;OFF&quot;}
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>sonoff/6001949C6548/stat/RESULT {&quot;POWER3&quot;:&quot;OFF&quot;}
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>sonoff/6001949C6548/stat/RESULT {&quot;POWER4&quot;:&quot;OFF&quot;}
+</code></pre></div>
+<p>This will cause error when we try to parese the json... I want to explain what I'm talking about through an example.</p>
+<p>As we discussed earlier we need the actual pulsetime from the device/channel. We can parse the JSON like this:</p>
+<p><div class="highlight"><span class="filename">Command</span><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;{&quot;PulseTime1&quot;:{&quot;Set&quot;:0,&quot;Remaining&quot;:0}}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.PulseTime1.Set&#39;</span>
+</code></pre></div>
+<div class="highlight"><span class="filename">Output</span><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>0
+</code></pre></div></p>
+<p>But what happens with the <code>{"POWER4":"OFF"}</code> message:</p>
+<p><div class="highlight"><span class="filename">Command</span><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;{&quot;POWER4&quot;:&quot;OFF&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.PulseTime1.Set&#39;</span>
+</code></pre></div>
+<div class="highlight"><span class="filename">Output</span><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>null
+</code></pre></div></p>
+<p>We got a big <code>null</code>. To avoid error or warn messages in the Home Assistant log we should filter the messages and process only the relevants. That's why we have condition.</p>
+<h4 id="conditions">Conditions<a class="headerlink" href="#conditions" title="Permanent link">&para;</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span>
+<span class="normal"><a href="#__codelineno-15-4">4</a></span>
+<span class="normal"><a href="#__codelineno-15-5">5</a></span>
+<span class="normal"><a href="#__codelineno-15-6">6</a></span>
+<span class="normal"><a href="#__codelineno-15-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="nt">condition</span><span class="p">:</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">condition</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">template</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="w">    </span><span class="nt">value_template</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{{</span><span class="nv"> </span><span class="se">&#39;&#39;</span><span class="s">PulseTime</span><span class="se">&#39;&#39;</span><span class="nv"> </span><span class="s">in</span><span class="nv">  </span><span class="s">trigger.payload</span><span class="nv"> </span><span class="s">}}&#39;</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">condition</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">template</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="w">    </span><span class="nt">value_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a><span class="w">      </span><span class="no">{{ trigger.topic.split(&#39;/&#39;)[1] in states(&#39;input_text.pulsetimeactualmac&#39;)</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a><span class="w">      </span><span class="no">}}</span>
+</code></pre></div></td></tr></table></div>
+<p>The <strong>first</strong> is a really simple condition. If the received JSON contains <code>PulseTime</code> we proceed to the Actions.</p>
+<p>The <strong>second</strong> is a bit more complicated. We have to be sure that the MQTT message came from the right device. Why? I explain you:<br />
+You selected the "Kitchen Spot" from the drop down list. The <code>input_number.pulseTimeActualValue</code> and <code>input_text.pulsetimeactualmac</code> set according to the selection. That's rigth. But if you send <code>PulseTime1</code> command to another device for example from the WebUI, the Automation is triggerd and set the wrong values. Simply: we need to check the MAC address and "Pulstime" word, as well.</p>
+<h4 id="actions">Actions<a class="headerlink" href="#actions" title="Permanent link">&para;</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-16-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-16-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-16-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-16-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-16-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-16-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-16-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-16-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-16-10">10</a></span>
+<span class="normal"><a href="#__codelineno-16-11">11</a></span>
+<span class="normal"><a href="#__codelineno-16-12">12</a></span>
+<span class="normal"><a href="#__codelineno-16-13">13</a></span>
+<span class="normal"><a href="#__codelineno-16-14">14</a></span>
+<span class="normal"><a href="#__codelineno-16-15">15</a></span>
+<span class="normal"><a href="#__codelineno-16-16">16</a></span>
+<span class="normal"><a href="#__codelineno-16-17">17</a></span>
+<span class="normal"><a href="#__codelineno-16-18">18</a></span>
+<span class="normal"><a href="#__codelineno-16-19">19</a></span>
+<span class="normal"><a href="#__codelineno-16-20">20</a></span>
+<span class="normal"><a href="#__codelineno-16-21">21</a></span>
+<span class="normal"><a href="#__codelineno-16-22">22</a></span>
+<span class="normal"><a href="#__codelineno-16-23">23</a></span>
+<span class="normal"><a href="#__codelineno-16-24">24</a></span>
+<span class="normal"><a href="#__codelineno-16-25">25</a></span>
+<span class="normal"><a href="#__codelineno-16-26">26</a></span>
+<span class="normal"><a href="#__codelineno-16-27">27</a></span>
+<span class="normal"><a href="#__codelineno-16-28">28</a></span>
+<span class="normal"><a href="#__codelineno-16-29">29</a></span>
+<span class="normal"><a href="#__codelineno-16-30">30</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="nt">action</span><span class="p">:</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">input_number.set_value</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a><span class="w">    </span><span class="nt">target</span><span class="p">:</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4"></a><span class="w">      </span><span class="nt">entity_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">input_number.pulseTimeActualValue</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5"></a><span class="w">    </span><span class="nt">data</span><span class="p">:</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6"></a><span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7"></a><span class="w">        </span><span class="no">{% if &quot;PulseTime1&quot; in trigger.payload_json %}</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8"></a><span class="w">          </span><span class="no">{% set pulseTime =  trigger.payload_json.PulseTime1.Set | int %}</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9"></a><span class="w">        </span><span class="no">{% elif &quot;PulseTime2&quot; in trigger.payload_json %}</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10"></a><span class="w">          </span><span class="no">{% set pulseTime =  trigger.payload_json.PulseTime2.Set | int %}</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11"></a><span class="w">        </span><span class="no">{% elif &quot;PulseTime3&quot; in trigger.payload_json %}</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12"></a><span class="w">          </span><span class="no">{% set pulseTime =  trigger.payload_json.PulseTime3.Set | int %}</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13"></a><span class="w">        </span><span class="no">{% elif &quot;PulseTime4&quot; in trigger.payload_json %}</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14"></a><span class="w">          </span><span class="no">{% set pulseTime =  trigger.payload_json.PulseTime4.Set | int %}</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15"></a><span class="w">        </span><span class="no">{% else %}</span>
+<a id="__codelineno-16-16" name="__codelineno-16-16"></a><span class="w">          </span><span class="no">{% set pulseTime =  &quot;notset&quot; %}</span>
+<a id="__codelineno-16-17" name="__codelineno-16-17"></a><span class="w">        </span><span class="no">{% endif %}</span>
+<a id="__codelineno-16-18" name="__codelineno-16-18"></a>
+<a id="__codelineno-16-19" name="__codelineno-16-19"></a><span class="w">        </span><span class="no">{% if  pulseTime != &#39;notset&#39; %}</span>
+<a id="__codelineno-16-20" name="__codelineno-16-20"></a><span class="w">          </span><span class="no">{% if  pulseTime == 0 %}</span>
+<a id="__codelineno-16-21" name="__codelineno-16-21"></a><span class="w">            </span><span class="no">0</span>
+<a id="__codelineno-16-22" name="__codelineno-16-22"></a><span class="w">          </span><span class="no">{% else %}</span>
+<a id="__codelineno-16-23" name="__codelineno-16-23"></a><span class="w">            </span><span class="no">{{ ( pulseTime | int - 100 ) / 60 }}</span>
+<a id="__codelineno-16-24" name="__codelineno-16-24"></a><span class="w">          </span><span class="no">{% endif %}</span>
+<a id="__codelineno-16-25" name="__codelineno-16-25"></a><span class="w">        </span><span class="no">{% endif %}</span>
+<a id="__codelineno-16-26" name="__codelineno-16-26"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">input_text.set_value</span>
+<a id="__codelineno-16-27" name="__codelineno-16-27"></a><span class="w">    </span><span class="nt">target</span><span class="p">:</span>
+<a id="__codelineno-16-28" name="__codelineno-16-28"></a><span class="w">      </span><span class="nt">entity_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">input_text.result</span>
+<a id="__codelineno-16-29" name="__codelineno-16-29"></a><span class="w">    </span><span class="nt">data</span><span class="p">:</span>
+<a id="__codelineno-16-30" name="__codelineno-16-30"></a><span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{{trigger.payload_json}}&#39;</span>
+</code></pre></div></td></tr></table></div>
+<p>When a new device is selected from the drop down list (Fig 1 / 1) we want to tihngs:</p>
+<ul>
+<li>See the actual value (Fig 1 / 2) - The first action is responsible for this (<code>input_number.set_value</code>)</li>
+<li>Display the entire JSON in the Debug box (Fig 1 / 6) The second action will do this (<code>input_text.set_value</code>)</li>
+</ul>
+<p>Do remember that this Automation is closely connected to the previos one. We can say that the result of previously discussed Automation triggers this one: </p>
+<ol>
+<li>You select a new device from the drop down list</li>
+<li>"Changing The Device In The Dropdown List" Automation is triggerdm and publish MQTT message.</li>
+<li>This Automation catches the MQTT JSON message and process it.</li>
+</ol>
+<p>The first action set the value of <code>input_number.pulseTimeActualValue</code> helper. But we have problem again. What about the multi-channel devices? We want to cofigure each channel separately, right? So we have to figure out the received message related to which channel? I've solved this problem with some <code>if - elif</code> cndition: If the JSON playload contains "PulseTime1" than we parse the json and store the value of the "Set" into the <code>pulseTime</code> variable.</p>
+<p>Maybe this block have to be mentioned, as well:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span>
+<span class="normal"><a href="#__codelineno-17-4">4</a></span>
+<span class="normal"><a href="#__codelineno-17-5">5</a></span>
+<span class="normal"><a href="#__codelineno-17-6">6</a></span>
+<span class="normal"><a href="#__codelineno-17-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="w">        </span><span class="p p-Indicator">{</span><span class="err">%</span><span class="w"> </span><span class="nv">if  pulseTime != &#39;notset&#39; %</span><span class="p p-Indicator">}</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="w">          </span><span class="p p-Indicator">{</span><span class="err">%</span><span class="w"> </span><span class="nv">if  pulseTime == 0 %</span><span class="p p-Indicator">}</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a><span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">{% else %}</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">{{ ( pulseTime | int - 100 ) / 60 }}</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6"></a><span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">{% endif %}</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7"></a><span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">{% endif %}</span>
+</code></pre></div></td></tr></table></div></p>
+<p>This all magic because of this behaviour:</p>
+<div class="admonition quota">
+<p class="admonition-title">Quota</p>
+<p>112..64900 = set PulseTime for Relay<x>, offset by 100, in 1 second increments. Add 100 to desired interval in seconds, e.g., PulseTime 113 = 13 seconds and PulseTime 460 = 6 minutes (i.e., 360 seconds)</p>
+</div>
+<ul>
+<li>If we get <code>0</code> it means <code>0</code> --&gt; PulseTime is disabled</li>
+<li>If we get for example <code>160</code>  it means <code>160 - 100=60</code> seconds (1min).</li>
+</ul>
+<p>The second action (<code>input_text.set_value</code>) simply set the <code>input_text.result</code> helper value to the entire JSON message.</p>
+<p>Downlaod entire <code>yaml</code>: <a href="https://github.com/jvincze84/jvincze84.github.io/blob/master/docs/files/hass-automation-catchmqtt.yaml">hass-automation-catchmqtt.yaml</a></p>
+<h3 id="set-new-pulsetime-value">Set New PulseTime Value<a class="headerlink" href="#set-new-pulsetime-value" title="Permanent link">&para;</a></h3>
+<p>Now we have only one Automation left to discuss. Everything we did before is useless if we can't set new value. This Automation is intended for do this. I can say that this is the most simpler from all. Everithing is prepared in the previous automations, so the only purpose of this automation is to set the desired new value.</p>
+<h4 id="trigger_2">Trigger<a class="headerlink" href="#trigger_2" title="Permanent link">&para;</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span>
+<span class="normal"><a href="#__codelineno-18-2">2</a></span>
+<span class="normal"><a href="#__codelineno-18-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="nt">trigger</span><span class="p">:</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">state</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3"></a><span class="w">    </span><span class="nt">entity_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">input_number.number</span>
+</code></pre></div></td></tr></table></div>
+<p>Simple trigger: when a new value is set. I think no explanation is required.</p>
+<h4 id="action_1">Action<a class="headerlink" href="#action_1" title="Permanent link">&para;</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-19-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-19-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-19-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-19-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-19-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-19-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-19-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-19-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-19-10">10</a></span>
+<span class="normal"><a href="#__codelineno-19-11">11</a></span>
+<span class="normal"><a href="#__codelineno-19-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="nt">action</span><span class="p">:</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mqtt.publish</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3"></a><span class="w">    </span><span class="nt">data</span><span class="p">:</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4"></a><span class="w">      </span><span class="nt">topic</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5"></a><span class="w">        </span><span class="no">{{ states(&#39;input_text.pulsetimeactualmac&#39;) }}</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6"></a><span class="w">      </span><span class="nt">payload</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7"></a><span class="w">        </span><span class="no">{% set timer = ( trigger.to_state.state |  int * 60  ) + 100  %}</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8"></a><span class="w">        </span><span class="no">{% if timer == 100 %}</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9"></a><span class="w">          </span><span class="no">0</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10"></a><span class="w">        </span><span class="no">{% else %}</span>
+<a id="__codelineno-19-11" name="__codelineno-19-11"></a><span class="w">          </span><span class="no">{{ timer }}</span>
+<a id="__codelineno-19-12" name="__codelineno-19-12"></a><span class="w">        </span><span class="no">{% endif %}</span>
+</code></pre></div></td></tr></table></div>
+<p>As we discussed earlier tasmota handle the pulsetime in a bit strange way. Do remember what we did, when we needed to transform the received value:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>{{ ( pulseTime | int - 100 ) / 60 }}
+</code></pre></div></p>
+<p>Now we should do the opposite:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>{% set timer = ( trigger.to_state.state |  int * 60  ) + 100  %}
+</code></pre></div></p>
+<p>What does <code>{% if timer == 100 %}</code>  mean?<br />
+If you set the PulseTime value to zero (disable pulsetime): <code>0 * 60 + 100 = 100</code><br />
+That's why we need to specially handle the <code>100</code> value.</p>
+<details class="quota">
+<summary>Quota</summary>
+<p>112..64900 = set PulseTime for Relay<x>, offset by 100, in 1 second increments. Add 100 to desired interval in seconds, e.g., PulseTime 113 = 13 seconds and PulseTime 460 = 6 minutes (i.e., 360 seconds)</p>
+</details>
+<p>Download entire <code>yaml</code>: <a href="https://github.com/jvincze84/jvincze84.github.io/blob/master/docs/files/hass-automation-setnew.yaml">hass-automation-setnew.yaml</a></p>
+<hr />
+<h2 id="home-assistant-scipts">Home Assistant Scipts<a class="headerlink" href="#home-assistant-scipts" title="Permanent link">&para;</a></h2>
+<p>Ok we are almost done. Only two part we have to mention. Do you remember the "PulseTime Set New" and "Check Debug" buttons (Fig 1 / 4 and 5)? </p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>I don't provide download link to scripts, because the entire scripts are copied here.</p>
+</div>
+<h3 id="pulsetime-set-new">PulseTime Set New<a class="headerlink" href="#pulsetime-set-new" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-22-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-22-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-22-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-22-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-22-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-22-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-22-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-22-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-22-10">10</a></span>
+<span class="normal"><a href="#__codelineno-22-11">11</a></span>
+<span class="normal"><a href="#__codelineno-22-12">12</a></span>
+<span class="normal"><a href="#__codelineno-22-13">13</a></span>
+<span class="normal"><a href="#__codelineno-22-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PulseTime Set New</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2"></a><span class="nt">sequence</span><span class="p">:</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mqtt.publish</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4"></a><span class="w">    </span><span class="nt">data</span><span class="p">:</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5"></a><span class="w">      </span><span class="nt">topic</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6"></a><span class="w">        </span><span class="no">{{ states(&#39;input_text.pulsetimeactualmac&#39;) }}</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7"></a><span class="w">      </span><span class="nt">payload</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8"></a><span class="w">        </span><span class="no">{% set timer = ( states(&#39;input_number.number&#39;) |  int * 60  ) + 100  %}</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9"></a><span class="w">        </span><span class="no">{% if timer == 100 %}</span>
+<a id="__codelineno-22-10" name="__codelineno-22-10"></a><span class="w">          </span><span class="no">0</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11"></a><span class="w">        </span><span class="no">{% else %}</span>
+<a id="__codelineno-22-12" name="__codelineno-22-12"></a><span class="w">          </span><span class="no">{{ timer }}</span>
+<a id="__codelineno-22-13" name="__codelineno-22-13"></a><span class="w">        </span><span class="no">{% endif %}</span>
+<a id="__codelineno-22-14" name="__codelineno-22-14"></a><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">single</span>
+</code></pre></div></td></tr></table></div>
+<p>I think every part of this script is discussed earlier and I don't want to repeat myself. :D</p>
+<h3 id="check-debug">Check Debug<a class="headerlink" href="#check-debug" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span>
+<span class="normal"><a href="#__codelineno-23-2">2</a></span>
+<span class="normal"><a href="#__codelineno-23-3">3</a></span>
+<span class="normal"><a href="#__codelineno-23-4">4</a></span>
+<span class="normal"><a href="#__codelineno-23-5">5</a></span>
+<span class="normal"><a href="#__codelineno-23-6">6</a></span>
+<span class="normal"><a href="#__codelineno-23-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="nt">sequence</span><span class="p">:</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mqtt.publish</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3"></a><span class="w">    </span><span class="nt">data</span><span class="p">:</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4"></a><span class="w">      </span><span class="nt">topic</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{{</span><span class="nv"> </span><span class="s">states(</span><span class="se">&#39;&#39;</span><span class="s">input_text.pulsetimeactualmac</span><span class="se">&#39;&#39;</span><span class="s">)</span><span class="nv"> </span><span class="s">}}&#39;</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5"></a><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">single</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6"></a><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pulsetime Check Debug</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7"></a><span class="nt">icon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mdi:update</span>
+</code></pre></div></td></tr></table></div>
+<p>Simply publish to topic stored in <code>input_text.pulsetimeactualmac</code> helper.</p>
+<hr />
+<h2 id="home-assistant-dashboard">Home Assistant Dashboard<a class="headerlink" href="#home-assistant-dashboard" title="Permanent link">&para;</a></h2>
+<p>For your convenience  I share the dashboard I use (Fig 1). Here you can check how each components are used.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-24-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-24-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-24-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-24-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-24-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-24-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-24-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-24-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-24-10">10</a></span>
+<span class="normal"><a href="#__codelineno-24-11">11</a></span>
+<span class="normal"><a href="#__codelineno-24-12">12</a></span>
+<span class="normal"><a href="#__codelineno-24-13">13</a></span>
+<span class="normal"><a href="#__codelineno-24-14">14</a></span>
+<span class="normal"><a href="#__codelineno-24-15">15</a></span>
+<span class="normal"><a href="#__codelineno-24-16">16</a></span>
+<span class="normal"><a href="#__codelineno-24-17">17</a></span>
+<span class="normal"><a href="#__codelineno-24-18">18</a></span>
+<span class="normal"><a href="#__codelineno-24-19">19</a></span>
+<span class="normal"><a href="#__codelineno-24-20">20</a></span>
+<span class="normal"><a href="#__codelineno-24-21">21</a></span>
+<span class="normal"><a href="#__codelineno-24-22">22</a></span>
+<span class="normal"><a href="#__codelineno-24-23">23</a></span>
+<span class="normal"><a href="#__codelineno-24-24">24</a></span>
+<span class="normal"><a href="#__codelineno-24-25">25</a></span>
+<span class="normal"><a href="#__codelineno-24-26">26</a></span>
+<span class="normal"><a href="#__codelineno-24-27">27</a></span>
+<span class="normal"><a href="#__codelineno-24-28">28</a></span>
+<span class="normal"><a href="#__codelineno-24-29">29</a></span>
+<span class="normal"><a href="#__codelineno-24-30">30</a></span>
+<span class="normal"><a href="#__codelineno-24-31">31</a></span>
+<span class="normal"><a href="#__codelineno-24-32">32</a></span>
+<span class="normal"><a href="#__codelineno-24-33">33</a></span>
+<span class="normal"><a href="#__codelineno-24-34">34</a></span>
+<span class="normal"><a href="#__codelineno-24-35">35</a></span>
+<span class="normal"><a href="#__codelineno-24-36">36</a></span>
+<span class="normal"><a href="#__codelineno-24-37">37</a></span>
+<span class="normal"><a href="#__codelineno-24-38">38</a></span>
+<span class="normal"><a href="#__codelineno-24-39">39</a></span>
+<span class="normal"><a href="#__codelineno-24-40">40</a></span>
+<span class="normal"><a href="#__codelineno-24-41">41</a></span>
+<span class="normal"><a href="#__codelineno-24-42">42</a></span>
+<span class="normal"><a href="#__codelineno-24-43">43</a></span>
+<span class="normal"><a href="#__codelineno-24-44">44</a></span>
+<span class="normal"><a href="#__codelineno-24-45">45</a></span>
+<span class="normal"><a href="#__codelineno-24-46">46</a></span>
+<span class="normal"><a href="#__codelineno-24-47">47</a></span>
+<span class="normal"><a href="#__codelineno-24-48">48</a></span>
+<span class="normal"><a href="#__codelineno-24-49">49</a></span>
+<span class="normal"><a href="#__codelineno-24-50">50</a></span>
+<span class="normal"><a href="#__codelineno-24-51">51</a></span>
+<span class="normal"><a href="#__codelineno-24-52">52</a></span>
+<span class="normal"><a href="#__codelineno-24-53">53</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Otthon</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2"></a><span class="nt">views</span><span class="p">:</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Timer</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prtoba</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5"></a><span class="w">    </span><span class="nt">icon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mdi:hammer-wrench</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6"></a><span class="w">    </span><span class="nt">badges</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7"></a><span class="w">    </span><span class="nt">cards</span><span class="p">:</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">entities</span>
+<a id="__codelineno-24-9" name="__codelineno-24-9"></a><span class="w">        </span><span class="nt">entities</span><span class="p">:</span>
+<a id="__codelineno-24-10" name="__codelineno-24-10"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">input_select.timer_set</span>
+<a id="__codelineno-24-11" name="__codelineno-24-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">horizontal-stack</span>
+<a id="__codelineno-24-12" name="__codelineno-24-12"></a><span class="w">        </span><span class="nt">cards</span><span class="p">:</span>
+<a id="__codelineno-24-13" name="__codelineno-24-13"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">entity</span>
+<a id="__codelineno-24-14" name="__codelineno-24-14"></a><span class="w">            </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">input_number.pulsetimeactualvalue</span>
+<a id="__codelineno-24-15" name="__codelineno-24-15"></a><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Actual</span>
+<a id="__codelineno-24-16" name="__codelineno-24-16"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">entities</span>
+<a id="__codelineno-24-17" name="__codelineno-24-17"></a><span class="w">            </span><span class="nt">entities</span><span class="p">:</span>
+<a id="__codelineno-24-18" name="__codelineno-24-18"></a><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">input_number.number</span>
+<a id="__codelineno-24-19" name="__codelineno-24-19"></a><span class="w">            </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set New</span>
+<a id="__codelineno-24-20" name="__codelineno-24-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">horizontal-stack</span>
+<a id="__codelineno-24-21" name="__codelineno-24-21"></a><span class="w">        </span><span class="nt">cards</span><span class="p">:</span>
+<a id="__codelineno-24-22" name="__codelineno-24-22"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">button</span>
+<a id="__codelineno-24-23" name="__codelineno-24-23"></a><span class="w">            </span><span class="nt">tap_action</span><span class="p">:</span>
+<a id="__codelineno-24-24" name="__codelineno-24-24"></a><span class="w">              </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">toggle</span>
+<a id="__codelineno-24-25" name="__codelineno-24-25"></a><span class="w">            </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">script.pulsetime_set_new</span>
+<a id="__codelineno-24-26" name="__codelineno-24-26"></a><span class="w">            </span><span class="nt">icon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mdi:check</span>
+<a id="__codelineno-24-27" name="__codelineno-24-27"></a><span class="w">            </span><span class="nt">icon_height</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50px</span>
+<a id="__codelineno-24-28" name="__codelineno-24-28"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">button</span>
+<a id="__codelineno-24-29" name="__codelineno-24-29"></a><span class="w">            </span><span class="nt">tap_action</span><span class="p">:</span>
+<a id="__codelineno-24-30" name="__codelineno-24-30"></a><span class="w">              </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">toggle</span>
+<a id="__codelineno-24-31" name="__codelineno-24-31"></a><span class="w">            </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">script.update_all_infos</span>
+<a id="__codelineno-24-32" name="__codelineno-24-32"></a><span class="w">            </span><span class="nt">show_state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-24-33" name="__codelineno-24-33"></a><span class="w">            </span><span class="nt">show_icon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-24-34" name="__codelineno-24-34"></a><span class="w">            </span><span class="nt">icon_height</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30px</span>
+<a id="__codelineno-24-35" name="__codelineno-24-35"></a><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Check Debug</span>
+<a id="__codelineno-24-36" name="__codelineno-24-36"></a><span class="w">            </span><span class="nt">icon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mdi:eye-check-outline</span>
+<a id="__codelineno-24-37" name="__codelineno-24-37"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">markdown</span>
+<a id="__codelineno-24-38" name="__codelineno-24-38"></a><span class="w">        </span><span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|+</span>
+<a id="__codelineno-24-39" name="__codelineno-24-39"></a><span class="w">          </span><span class="no">* Last Result:</span>
+<a id="__codelineno-24-40" name="__codelineno-24-40"></a><span class="w">          </span><span class="no">```json</span>
+<a id="__codelineno-24-41" name="__codelineno-24-41"></a><span class="w">          </span><span class="no">{{ states(&#39;input_text.result&#39;) }}</span>
+<a id="__codelineno-24-42" name="__codelineno-24-42"></a><span class="w">          </span><span class="no">```</span>
+<a id="__codelineno-24-43" name="__codelineno-24-43"></a>
+<a id="__codelineno-24-44" name="__codelineno-24-44"></a><span class="w">          </span><span class="no">* Actual MAC:</span>
+<a id="__codelineno-24-45" name="__codelineno-24-45"></a><span class="w">          </span><span class="no">```json</span>
+<a id="__codelineno-24-46" name="__codelineno-24-46"></a><span class="w">          </span><span class="no">{{ states(&#39;input_text.pulsetimeactualmac&#39;) }}</span>
+<a id="__codelineno-24-47" name="__codelineno-24-47"></a><span class="w">          </span><span class="no">```</span>
+<a id="__codelineno-24-48" name="__codelineno-24-48"></a>
+<a id="__codelineno-24-49" name="__codelineno-24-49"></a><span class="w">          </span><span class="no">* Split</span>
+<a id="__codelineno-24-50" name="__codelineno-24-50"></a><span class="w">          </span><span class="no">```json</span>
+<a id="__codelineno-24-51" name="__codelineno-24-51"></a><span class="w">          </span><span class="no">{{ states(&#39;input_text.pulsetimeactualmac&#39;).split(&#39;/&#39;)[1] }}</span>
+<a id="__codelineno-24-52" name="__codelineno-24-52"></a><span class="w">          </span><span class="no">```</span>
+<a id="__codelineno-24-53" name="__codelineno-24-53"></a><span class="w">        </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Debug</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<p>I do know that there are several other easier ways to achieve this functionality, but I think using Tasmota native <code>Pulsetime</code> feature is a good approach.</p>
+<p><strong>Thank you for reading</strong>, and hope this article (or some parts of it) was helpful for you.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+<script src="https://giscus.app/client.js"
+        data-repo="jvincze84/jvincze84.github.io"
+        data-repo-id="R_kgDOGJolJg"
+        data-category-id="DIC_kwDOGJolJs4CPryr"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="transparent_dark"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <!-- Cookie Consent by https://www.CookieConsent.com -->
+<script type="text/javascript" src="//www.cookieconsent.com/releases/4.0.0/cookie-consent.js" charset="UTF-8"></script>
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({"notice_banner_type":"headline","consent_type":"express","palette":"light","language":"en","page_load_consent_levels":["strictly-necessary"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"website_name":"Blog"});
+});
+</script>
+
+<noscript>ePrivacy and GPDR Cookie Consent by <a href="https://www.CookieConsent.com/" rel="nofollow noopener">Cookie Consent</a></noscript>
+<!-- End Cookie Consent by https://www.CookieConsent.com -->
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "search.highlight", "header.autohide", "content.code.annotate", "content.code.copy"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  </body>
+</html>
