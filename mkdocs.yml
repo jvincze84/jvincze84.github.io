@@ -96,10 +96,6 @@ markdown_extensions:
 
 plugins:
   - tags
-  - blogging:
-      dirs: # The directories to be included
-        - Blog  
-      show_total: true
   - blog:
       text-align: "right"
       pagination: true
