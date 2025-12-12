@@ -11,6 +11,10 @@ In this guide I show you how I use mkdocs in my Kubernetes cluster.
 There are uncountable ways to do something similar, but I think this post can be useful for you.  
 The main ascpect of my solution is to build the documentation in an init container, and serve the page with nginx. This way the only thing you have to do is rollout the deployment after new version of your mkdocs is released (pushed to your repository).
 
+
+<!-- more -->
+
+
 ## Required Containers
 
 ### Git Downloader

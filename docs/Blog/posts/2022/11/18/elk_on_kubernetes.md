@@ -11,6 +11,9 @@ Nowadays maybe the most advanced and widly used log management and analizis syst
 
 There is another enterprise ready and feature rich log management system which based on Elasticsearch and Kibana: OpenSearch. If you are looking for a free alternaive to Elasticsearch you may want to give OpenSearch a try. I'm going to post about OpenSearch as well, but at this time I want to show you a method to install Elasticsearch & Kibana on your Kubernetes cluster.
 
+<!-- more -->
+
+
 ## Requirements
 
 * A working Kubernetes cluster. The current version of my cluster: v1.24.4

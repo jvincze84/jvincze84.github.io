@@ -25,6 +25,7 @@ Example installation on Debian bullseye:
 ```bash
 curl -fsSL https://toolbelt.treasuredata.com/sh/install-debian-bullseye-td-agent4.sh | sh
 ```
+<!-- more -->
 
 ## Configure Td-Agent
 

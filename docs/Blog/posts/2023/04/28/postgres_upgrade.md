@@ -13,6 +13,9 @@ date: 2023-04-28
 
 Initially I wrote this script & job to myself, but I found that it can be useful for others as well. This article is not a kind of "use as is", and need some deeper knowledge to adapt it to your environment. So use my post as a skeleton, and modify according to your needs.
 
+<!-- more -->
+
+
 ## Starting Point & Requirements
 
 In order to understand what I'm doing you need to know some detailed information about my environment.

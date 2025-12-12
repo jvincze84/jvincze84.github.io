@@ -23,6 +23,9 @@ I have never tried to scale jitsi, maybe later i give it a try.
 
 I don't want to write a lot of unnecessary lines here, so let's see how I deployed Jitsi on my K8S cluster.
 
+<!-- more -->
+
+
 ## Configmap
 
 Create a config maps which contains all the necessary environment variables.

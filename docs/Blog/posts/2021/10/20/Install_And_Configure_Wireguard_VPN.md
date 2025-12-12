@@ -24,6 +24,8 @@ If you are interested in how Tailscale solve the NAT and dynamic IP problems you
 
 But this article is not about Tailscale, but Wireguard.
 
+<!-- more -->
+
 ## Install Wireguard
 
 !!! quote

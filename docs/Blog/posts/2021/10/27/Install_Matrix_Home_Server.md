@@ -27,6 +27,8 @@ I'm wondering if you have ever thought  about having your own messaging server. 
 
 I assume you build this server for your family and friends, and don't want to share with the whole World. For some tens of people you don't need to purchase an expensive server, but according to the number of attachments (file, pictures, videos,etc) you may need some hundreds of GB disk space.
 
+<!-- more -->
+
 ## Docker Compose
 
 Maybe the easiest way to install everything all together is writing a Docker compose file. The compose file below can be used with `docker-compose` command or as Stack in [Portainer](https://www.portainer.io).  Later in this article we will use this compose file as reference for writing the Kubernetes manifest files (cm, deployment, sevice, pvc, etc).

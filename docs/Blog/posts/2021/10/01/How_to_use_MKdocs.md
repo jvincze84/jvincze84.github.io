@@ -18,6 +18,8 @@ I have some essential requirement against the platform I use:
 * Since I post a lot of code bloks, code highlighting is must. It should be achieved natively or using prism.js
 * Source code of the contents (*.md) should be stored in a Git repository.
 
+<!-- more -->
+
 ### What was the alternatives?
 
 * CMS Systems

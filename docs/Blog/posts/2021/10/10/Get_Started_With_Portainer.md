@@ -11,6 +11,8 @@ date: 2021-10-10
 Nowadays everybody talking and writing about containers, Docker, Kubernetes, OpenShift, etc. I don't want to explain here what are these meaning, instead give some practical use cases. I'm always testing my solutions at home with low cost HWs.  
 I have an article about installing single node Kubernetes cluster, but now I step back to Docker containers. This is because deploying a container orchestrator not always the goal. This article could be useful for home users, or developers who want learn about containers. 
 
+<!-- more -->
+
 ## Use Containers Instead Of Virtual Machines
 
 What is wrong with installing software to your Laptop or Desktop? Sooner or later you will end up in having a lot of unnecessary software on your machine. Or you have to install various software with various dependencies which could not be resolved. There are so many possibilities to separate a test environment from your host machine:

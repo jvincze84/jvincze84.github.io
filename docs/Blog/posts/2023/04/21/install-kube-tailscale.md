@@ -17,6 +17,8 @@ This scenario can be useful when:
 - You want extra security by encrypted connection between nodes.
 - Or the mixture of above scenarios. 
 
+<!-- more -->
+
 **Why Tailscale VPN?**
 
 You can use any other VPN solution like Wireguard, OpenVPN, IPSec, etc. But nowadays I think Tailscale is the easiest way to bring up a VPN network.

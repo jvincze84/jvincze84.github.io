@@ -30,6 +30,8 @@ The only missing feature is the Google Drive, but it can be achieved with `rclon
 
 I don't want to write pages about my choice, features, advantages, disadvantages, etc. If you are reading this article you probably want to try or use Borg.
 
+<!-- more -->
+
 ## Installing Borg
 
 I will create three Virtual Machine for demonstration the installation and usage. 

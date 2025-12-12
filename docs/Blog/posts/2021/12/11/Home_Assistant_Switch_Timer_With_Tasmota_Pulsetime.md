@@ -21,6 +21,7 @@ All of my devices are flahed with [Tasmota](https://tasmota.github.io/docs/) fir
     Note if you have more than 8 relays:  
     Defined PulseTime for relays <1-8> will also be active for correspondent Relay <9-16>.
 
+<!-- more -->
 
 My goal is to set this `PulseTime` value from my Home Assistant dashboard. There are several ways to achieve my goal, but I wanted to use the "native" Tasmota way. Maybe the only noticeable reason for using `PulsTime` is that this solution work even if the Home Assistant server or the network become unavailable, and you turn on your light with a button or switch. Many Sonoff device have button on them with which you can control the device without network connection.
 

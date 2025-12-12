@@ -7,6 +7,8 @@ date: 2021-09-25
 
 In this article we will install a single node kubernetes cluster on Debian 11 (bullseye). I will walk through step by step all the commands and configurations.
 
+<!-- more -->
+
 ## Prerequisite
 
 I'm using a really old system for this demonstration:
