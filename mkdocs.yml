@@ -97,6 +97,7 @@ markdown_extensions:
 plugins:
   - tags
   - blog:
+      enabled: true
       text-align: "right"
       pagination: true
       pagination_per_page: 20
