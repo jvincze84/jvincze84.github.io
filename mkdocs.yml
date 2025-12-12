@@ -98,6 +98,7 @@ plugins:
   - tags
   - blog:
       enabled: true
+      archive: false
       text-align: "right"
       pagination: true
       pagination_per_page: 20
