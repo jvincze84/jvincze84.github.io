@@ -106,9 +106,6 @@ plugins:
       blog_dir: Blog
       post_dir: "{blog}/posts"
       post_readtime_words_per_minute: 300
-  - git-revision-date-localized:
-      type: date
-  - git-revision-date
   - search:
       lang: en
 
