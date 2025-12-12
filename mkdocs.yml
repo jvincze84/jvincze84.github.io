@@ -101,7 +101,10 @@ plugins:
       show_total: true
   - blog:
       text-align: "right"
+      blog_toc: true
       format: "(%Y/%m/%d)"
+      post_url_date_format: yyyy/MM/dd
+      post_readtime_words_per_minute: 300
       display-article-date: true
   - git-revision-date-localized:
       type: date
