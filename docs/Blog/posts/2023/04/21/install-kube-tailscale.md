@@ -1,3 +1,8 @@
+---
+title: Install Kubernetes Cluster Behind Tailscale VPN
+date: 2023-04-21
+---
+
 # Install Kubernetes Cluster Behind Tailscale VPN
 
 ## TL;DR

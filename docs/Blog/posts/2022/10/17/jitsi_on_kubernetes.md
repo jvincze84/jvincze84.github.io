@@ -1,3 +1,9 @@
+---
+title: How To Install Jitsi On Kubernetes
+date: 2022-10-17
+---
+
+
 # How To Install Jitsi On Kubernetes
 
 ## Preface

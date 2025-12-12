@@ -1,3 +1,8 @@
+---
+title: Deploy Elasticsearch Cluster & Kibaba On Kubernetes
+date: 2022-11-18
+---
+
 # Deploy Elasticsearch Cluster & Kibaba On Kubernetes
 
 ## Preface

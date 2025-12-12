@@ -1,4 +1,9 @@
-﻿# How To Use MKDocs with Docker?
+﻿---
+title: How To Use MKDocs with Docker?
+date: 2021-10-01
+---
+
+# How To Use MKDocs with Docker?
 
 
 ## TL;DR

@@ -1,3 +1,8 @@
+---
+title: Install And Configure Wireguard VPN
+date: 2021-10-10
+---
+
 # Install And Configure Wireguard VPN
 
 ## Preface

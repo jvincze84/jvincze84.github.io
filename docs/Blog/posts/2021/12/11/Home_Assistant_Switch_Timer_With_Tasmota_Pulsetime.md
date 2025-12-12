@@ -1,3 +1,8 @@
+---
+title: Home Assistant Switch Timer With Tasmota Pulsetime
+date: 2021-12-11
+---
+
 # Home Assistant Switch Timer With Tasmota Pulsetime
 
 ## Motivation

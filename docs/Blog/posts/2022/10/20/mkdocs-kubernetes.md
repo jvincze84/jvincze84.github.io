@@ -1,3 +1,8 @@
+---
+title: How To Use Mkdocs + Meterial In Kubernetes
+date: 2022-10-20
+---
+
 # How To Use Mkdocs + Meterial In Kubernetes
 
 ## Preface

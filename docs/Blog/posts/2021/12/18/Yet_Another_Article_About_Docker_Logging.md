@@ -1,3 +1,8 @@
+---
+title: Yet Another Article About Docker Logging With Fluentd
+date: 2021-12-18
+---
+
 # Yet Another Article About Docker Logging With Fluentd
 
 ## Motivation

@@ -1,3 +1,8 @@
+---
+title: Centralised Backup With Borg
+date: 2021-12-11
+---
+
 # Centralised Backup With Borg
 
 ## TL;DR

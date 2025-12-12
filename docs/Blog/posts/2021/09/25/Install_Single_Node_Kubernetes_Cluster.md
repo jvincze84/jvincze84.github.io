@@ -1,3 +1,8 @@
+---
+title: Install A Single Node Kubernetes "Cluster"
+date: 2021-09-25
+---
+
 # Install A Single Node Kubernetes "Cluster"
 
 In this article we will install a single node kubernetes cluster on Debian 11 (bullseye). I will walk through step by step all the commands and configurations.

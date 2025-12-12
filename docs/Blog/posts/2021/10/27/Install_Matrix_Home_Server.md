@@ -1,3 +1,8 @@
+---
+title: Install Matrix Home Server On Kubernetes
+date: 2021-10-27
+---
+
 # Install Matrix Home Server On Kubernetes
 
 ## Preface
