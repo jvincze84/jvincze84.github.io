@@ -95,14 +95,14 @@ markdown_extensions:
 
 plugins:
   - tags
-#  - blogging:
-#      dirs: # The directories to be included
-#        - Blog  
-#      show_total: true
-#  - blog:
-#      text-align: "right"
-#      format: "(%Y/%m/%d)"
-#      display-article-date: false
+  - blogging:
+      dirs: # The directories to be included
+        - Blog  
+      show_total: true
+  - blog:
+      text-align: "right"
+      format: "(%Y/%m/%d)"
+      display-article-date: true
   - git-revision-date-localized:
       type: date
   - git-revision-date
