@@ -104,7 +104,6 @@ plugins:
       post_url_format: "{date}/{slug}"
       blog_toc: true
       blog_dir: Blog
-      post_dir: "{blog}/posts"
       post_readtime_words_per_minute: 300
   - search:
       lang: en
