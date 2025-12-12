@@ -1,4 +1,4 @@
-site_name: Vincze Janos Blog
+ite_name: Vincze Janos Blog
 repo_url: https://github.com/jvincze84/jvincze84.github.io
 site_url: https://readthedocs.vinczejanos.info
 
@@ -101,6 +101,8 @@ plugins:
       text-align: "right"
       pagination: true
       pagination_per_page: 20
+      post_url_date_format: yyyy/MM/dd
+      post_url_format: "{date}/{slug}"
       blog_toc: true
       blog_dir: Blog
       post_readtime_words_per_minute: 300
