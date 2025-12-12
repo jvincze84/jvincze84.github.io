@@ -99,10 +99,8 @@ plugins:
   - blog:
       enabled: true
       archive: false
-      text-align: "right"
-      post_url_date_format: yyyy/MM/dd
-      post_url_format: "{date}/{slug}"
       blog_dir: Blog
+      blog_toc: true
       post_readtime_words_per_minute: 300
   - search:
       lang: en
