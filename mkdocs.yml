@@ -8,7 +8,6 @@ theme:
     locale: en
     custom_dir: overrides
     features:
-      - navigation.indexes    
 #      - navigation.expand
 #      - navigation.sections
 #      - navigation.expand
