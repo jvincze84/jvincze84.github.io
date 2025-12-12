@@ -1,12 +1,6 @@
 # Welcome Here
 
-## New Articles
 
-{{ blog_content }}
-
-## TOC
-
-{{ blog_toc }}
 
 
 ## Old Contents Warning

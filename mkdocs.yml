@@ -57,7 +57,8 @@ markdown_extensions:
   - md_in_html
 
 
-#nav:
+nav:
+  - Home: 'Blog/index.md'
 #  - "Install Matrix Home Server": 'Install_Matrix_Home_Server.md'
 #  - "Install And Configure Wireguard VPN": 'Install_And_Configure_Wireguard_VPN.md'
 #  - "Get Started With Portainer": 'Get_Started_With_Portainer.md'
