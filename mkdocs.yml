@@ -101,7 +101,6 @@ plugins:
       show_total: true
   - blog:
       text-align: "right"
-      pagination: false
       blog_toc: true
       format: "(%Y/%m/%d)"
       post_url_date_format: yyyy/MM/dd
